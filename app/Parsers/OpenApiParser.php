@@ -14,8 +14,10 @@ use Crescat\SaloonSdkGenerator\Data\Generator\Endpoint;
 use Crescat\SaloonSdkGenerator\Data\Generator\Parameter;
 use Crescat\SaloonSdkGenerator\Parsers\OpenApiParser as Parser;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Str;
 use Override;
 
+use function collect;
 use function in_array;
 use function is_null;
 
@@ -32,9 +34,18 @@ class OpenApiParser extends Parser
     #[Override] // @phpstan-ignore-line
     protected function parseEndpoint(Operation $operation, $pathParams, string $path, string $method): ?Endpoint // @phpstan-ignore-line
     {
+        /** @var Endpoint $endpoint */
         $endpoint = parent::parseEndpoint($operation, $pathParams, $path, $method);
 
-        $endpoint->bodyParameters = $this->parseBodyParameters($operation); // @phpstan-ignore-line
+        $endpoint->bodyParameters = $this->parseBodyParameters($operation);
+
+        // Filter out query parameters that are already defined in the path parameters (case insensitive)
+        $endpoint->queryParameters = collect($endpoint->queryParameters)
+            ->filter(fn (Parameter $parameter): bool => ! collect($endpoint->pathParameters)->contains(
+                fn (Parameter $pathParameter): bool => Str::lower($pathParameter->name) === Str::lower($parameter->name)
+            ))
+            ->values()
+            ->all();
 
         return $endpoint;
     }
@@ -70,7 +81,11 @@ class OpenApiParser extends Parser
             );
         }
 
-        return $parameters;
+        // required parameters first
+        return collect($parameters)
+            ->sort(fn (Parameter $a, Parameter $b): int => (int) $a->nullable <=> (int) $b->nullable)
+            ->values()
+            ->all();
     }
 
     protected function resolveAllOfProperties(Schema $schema): array

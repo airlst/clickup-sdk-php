@@ -1,32 +1,27 @@
 <?php
 
+declare(strict_types=1);
+
 namespace ClickUp\V2\Requests\Spaces;
 
-use DateTime;
 use Saloon\Enums\Method;
 use Saloon\Http\Request;
 
 /**
- * DeleteSpace
+ * DeleteSpace.
  *
  * Delete a Space from your Workspace.
  */
 class DeleteSpace extends Request
 {
-	protected Method $method = Method::DELETE;
+    protected Method $method = Method::DELETE;
 
+    public function __construct(
+        protected float|int $spaceId,
+    ) {}
 
-	public function resolveEndpoint(): string
-	{
-		return "/v2/space/{$this->spaceId}";
-	}
-
-
-	/**
-	 * @param float|int $spaceId
-	 */
-	public function __construct(
-		protected float|int $spaceId,
-	) {
-	}
+    public function resolveEndpoint(): string
+    {
+        return "/v2/space/{$this->spaceId}";
+    }
 }

@@ -1,40 +1,33 @@
 <?php
 
+declare(strict_types=1);
+
 namespace ClickUp\V2\Requests\Lists;
 
-use DateTime;
 use Saloon\Enums\Method;
 use Saloon\Http\Request;
 
 /**
- * GetLists
+ * GetLists.
  *
  * View the Lists within a Folder.
  */
 class GetLists extends Request
 {
-	protected Method $method = Method::GET;
+    protected Method $method = Method::GET;
 
+    public function __construct(
+        protected float|int $folderId,
+        protected ?bool $archived = null,
+    ) {}
 
-	public function resolveEndpoint(): string
-	{
-		return "/v2/folder/{$this->folderId}/list";
-	}
+    public function resolveEndpoint(): string
+    {
+        return "/v2/folder/{$this->folderId}/list";
+    }
 
-
-	/**
-	 * @param float|int $folderId
-	 * @param null|bool $archived
-	 */
-	public function __construct(
-		protected float|int $folderId,
-		protected ?bool $archived = null,
-	) {
-	}
-
-
-	public function defaultQuery(): array
-	{
-		return array_filter(['archived' => $this->archived]);
-	}
+    protected function defaultQuery(): array
+    {
+        return array_filter(['archived' => $this->archived]);
+    }
 }

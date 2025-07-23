@@ -1,40 +1,36 @@
 <?php
 
+declare(strict_types=1);
+
 namespace ClickUp\V2\Requests\Goals;
 
-use DateTime;
 use Saloon\Enums\Method;
 use Saloon\Http\Request;
 
 /**
- * GetGoals
+ * GetGoals.
  *
  * View the Goals available in a Workspace.
  */
 class GetGoals extends Request
 {
-	protected Method $method = Method::GET;
+    protected Method $method = Method::GET;
 
+    /**
+     * @param float|int $teamId Workspace ID
+     */
+    public function __construct(
+        protected float|int $teamId,
+        protected ?bool $includeCompleted = null,
+    ) {}
 
-	public function resolveEndpoint(): string
-	{
-		return "/v2/team/{$this->teamId}/goal";
-	}
+    public function resolveEndpoint(): string
+    {
+        return "/v2/team/{$this->teamId}/goal";
+    }
 
-
-	/**
-	 * @param float|int $teamId Workspace ID
-	 * @param null|bool $includeCompleted
-	 */
-	public function __construct(
-		protected float|int $teamId,
-		protected ?bool $includeCompleted = null,
-	) {
-	}
-
-
-	public function defaultQuery(): array
-	{
-		return array_filter(['include_completed' => $this->includeCompleted]);
-	}
+    protected function defaultQuery(): array
+    {
+        return array_filter(['include_completed' => $this->includeCompleted]);
+    }
 }

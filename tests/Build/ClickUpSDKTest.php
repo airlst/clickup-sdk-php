@@ -2,10 +2,9 @@
 
 declare(strict_types=1);
 
+use ClickUp\V2\ClickUpSDK;
 use ClickUp\V2\Requests\Tasks\GetTask;
 use ClickUp\V2\Resource\Tasks;
-use ClickUp\V2\Requests\Clients\FetchAllTenantsFormerlyClients;
-use ClickUp\V2\ClickUpSDK;
 use Saloon\Http\Auth\TokenAuthenticator;
 
 /** @var ClickUp\V2\SDKBuilder\Tests\TestCase $this */

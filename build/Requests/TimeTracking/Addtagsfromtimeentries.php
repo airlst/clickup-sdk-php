@@ -1,46 +1,41 @@
 <?php
 
+declare(strict_types=1);
+
 namespace ClickUp\V2\Requests\TimeTracking;
 
-use DateTime;
 use Saloon\Contracts\Body\HasBody;
 use Saloon\Enums\Method;
 use Saloon\Http\Request;
 use Saloon\Traits\Body\HasJsonBody;
 
 /**
- * Addtagsfromtimeentries
+ * Addtagsfromtimeentries.
  *
  * Add a label to a time entry.
  */
 class Addtagsfromtimeentries extends Request implements HasBody
 {
-	use HasJsonBody;
+    use HasJsonBody;
 
-	protected Method $method = Method::POST;
+    protected Method $method = Method::POST;
 
+    /**
+     * @param float|int $teamId Workspace ID
+     */
+    public function __construct(
+        protected float|int $teamId,
+        protected array $timeEntryIds,
+        protected array $tags,
+    ) {}
 
-	public function resolveEndpoint(): string
-	{
-		return "/v2/team/{$this->teamId}/time_entries/tags";
-	}
+    public function resolveEndpoint(): string
+    {
+        return "/v2/team/{$this->teamId}/time_entries/tags";
+    }
 
-
-	/**
-	 * @param float|int $teamId Workspace ID
-	 * @param array $timeEntryIds
-	 * @param array $tags
-	 */
-	public function __construct(
-		protected float|int $teamId,
-		protected array $timeEntryIds,
-		protected array $tags,
-	) {
-	}
-
-
-	public function defaultBody(): array
-	{
-		return array_filter(['time_entry_ids' => $this->timeEntryIds, 'tags' => $this->tags]);
-	}
+    public function defaultBody(): array
+    {
+        return array_filter(['time_entry_ids' => $this->timeEntryIds, 'tags' => $this->tags]);
+    }
 }

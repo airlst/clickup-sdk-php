@@ -1,13 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace ClickUp\V2\Requests\Lists;
 
-use DateTime;
 use Saloon\Enums\Method;
 use Saloon\Http\Request;
 
 /**
- * RemoveTaskFromList
+ * RemoveTaskFromList.
  *
  * Remove a task from an additional List. You can't remove a task from its home List. \
  *  \
@@ -18,22 +19,15 @@ use Saloon\Http\Request;
  */
 class RemoveTaskFromList extends Request
 {
-	protected Method $method = Method::DELETE;
+    protected Method $method = Method::DELETE;
 
+    public function __construct(
+        protected float|int $listId,
+        protected string $taskId,
+    ) {}
 
-	public function resolveEndpoint(): string
-	{
-		return "/v2/list/{$this->listId}/task/{$this->taskId}";
-	}
-
-
-	/**
-	 * @param float|int $listId
-	 * @param string $taskId
-	 */
-	public function __construct(
-		protected float|int $listId,
-		protected string $taskId,
-	) {
-	}
+    public function resolveEndpoint(): string
+    {
+        return "/v2/list/{$this->listId}/task/{$this->taskId}";
+    }
 }

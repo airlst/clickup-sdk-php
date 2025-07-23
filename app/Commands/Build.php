@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace ClickUp\V2\SDKBuilder\Commands;
 
+use ClickUp\V2\SDKBuilder\Generators\ConnectorGenerator;
+use ClickUp\V2\SDKBuilder\Generators\ResourceGenerator;
 use ClickUp\V2\SDKBuilder\Parsers\OpenApiParser;
 use Crescat\SaloonSdkGenerator\CodeGenerator;
 use Crescat\SaloonSdkGenerator\Data\Generator\Config;
@@ -13,8 +15,6 @@ use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 use LaravelZero\Framework\Commands\Command;
 use Nette\PhpGenerator\PhpFile;
-use ClickUp\V2\SDKBuilder\Generators\ConnectorGenerator;
-use ClickUp\V2\SDKBuilder\Generators\ResourceGenerator;
 
 use function base_path;
 use function dirname;

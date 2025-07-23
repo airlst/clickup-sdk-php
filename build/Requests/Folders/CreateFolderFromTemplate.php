@@ -1,15 +1,16 @@
 <?php
 
+declare(strict_types=1);
+
 namespace ClickUp\V2\Requests\Folders;
 
-use DateTime;
 use Saloon\Contracts\Body\HasBody;
 use Saloon\Enums\Method;
 use Saloon\Http\Request;
 use Saloon\Traits\Body\HasJsonBody;
 
 /**
- * CreateFolderFromTemplate
+ * CreateFolderFromTemplate.
  *
  * Create a new Folder using a Folder template within a Space. This endpoint allows you to create a
  * folder with all its nested assets (lists, tasks, etc.) from a predefined template.
@@ -18,34 +19,30 @@ use Saloon\Traits\Body\HasJsonBody;
  */
 class CreateFolderFromTemplate extends Request implements HasBody
 {
-	use HasJsonBody;
+    use HasJsonBody;
 
-	protected Method $method = Method::POST;
+    protected Method $method = Method::POST;
 
+    /**
+     * @param string     $spaceId    ID of the Space where the Folder will be created
+     * @param string     $templateId ID of the Folder template to use
+     * @param string     $name       Name of the new Folder
+     * @param array|null $options    Options for creating the Folder
+     */
+    public function __construct(
+        protected string $spaceId,
+        protected string $templateId,
+        protected string $name,
+        protected ?array $options = null,
+    ) {}
 
-	public function resolveEndpoint(): string
-	{
-		return "/v2/space/{$this->spaceId}/folder_template/{$this->templateId}";
-	}
+    public function resolveEndpoint(): string
+    {
+        return "/v2/space/{$this->spaceId}/folder_template/{$this->templateId}";
+    }
 
-
-	/**
-	 * @param string $spaceId ID of the Space where the Folder will be created
-	 * @param string $templateId ID of the Folder template to use.
-	 * @param string $name Name of the new Folder
-	 * @param null|array $options Options for creating the Folder
-	 */
-	public function __construct(
-		protected string $spaceId,
-		protected string $templateId,
-		protected string $name,
-		protected ?array $options = null,
-	) {
-	}
-
-
-	public function defaultBody(): array
-	{
-		return array_filter(['name' => $this->name, 'options' => $this->options]);
-	}
+    public function defaultBody(): array
+    {
+        return array_filter(['name' => $this->name, 'options' => $this->options]);
+    }
 }

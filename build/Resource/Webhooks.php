@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace ClickUp\V2\Resource;
 
 use ClickUp\V2\Requests\Webhooks\CreateWebhook;
@@ -11,55 +13,43 @@ use Saloon\Http\Response;
 
 class Webhooks extends Resource
 {
-	/**
-	 * @param float|int $teamId Workspace ID
-	 */
-	public function getWebhooks(float|int $teamId): Response
-	{
-		return $this->connector->send(new GetWebhooks($teamId));
-	}
+    /**
+     * @param float|int $teamId Workspace ID
+     */
+    public function getWebhooks(float|int $teamId): Response
+    {
+        return $this->connector->send(new GetWebhooks($teamId));
+    }
 
+    /**
+     * @param float|int $teamId Workspace ID
+     * @param array     $events See [documentation](doc:webhooks#task-webhooks) for available event options. Use `*` to subscribe to all events.
+     */
+    public function createWebhook(
+        float|int $teamId,
+        string $endpoint,
+        array $events,
+        ?int $spaceId = null,
+        ?int $folderId = null,
+        ?int $listId = null,
+        ?string $taskId = null,
+    ): Response {
+        return $this->connector->send(new CreateWebhook($teamId, $endpoint, $events, $spaceId, $folderId, $listId, $taskId));
+    }
 
-	/**
-	 * @param float|int $teamId Workspace ID
-	 * @param string $endpoint
-	 * @param array $events See [documentation](doc:webhooks#task-webhooks) for available event options. Use `*` to subscribe to all events.
-	 * @param int $spaceId
-	 * @param int $folderId
-	 * @param int $listId
-	 * @param string $taskId
-	 */
-	public function createWebhook(
-		float|int $teamId,
-		string $endpoint,
-		array $events,
-		?int $spaceId = null,
-		?int $folderId = null,
-		?int $listId = null,
-		?string $taskId = null,
-	): Response
-	{
-		return $this->connector->send(new CreateWebhook($teamId, $endpoint, $events, $spaceId, $folderId, $listId, $taskId));
-	}
+    /**
+     * @param string $webhookId e506-4a29-9d42-26e504e3435e (uuid)
+     */
+    public function updateWebhook(string $webhookId, string $endpoint, string $events, string $status): Response
+    {
+        return $this->connector->send(new UpdateWebhook($webhookId, $endpoint, $events, $status));
+    }
 
-
-	/**
-	 * @param string $webhookId e506-4a29-9d42-26e504e3435e (uuid)
-	 * @param string $endpoint
-	 * @param string $events
-	 * @param string $status
-	 */
-	public function updateWebhook(string $webhookId, string $endpoint, string $events, string $status): Response
-	{
-		return $this->connector->send(new UpdateWebhook($webhookId, $endpoint, $events, $status));
-	}
-
-
-	/**
-	 * @param string $webhookId e506-4a29-9d42-26e504e3435e (uuid)
-	 */
-	public function deleteWebhook(string $webhookId): Response
-	{
-		return $this->connector->send(new DeleteWebhook($webhookId));
-	}
+    /**
+     * @param string $webhookId e506-4a29-9d42-26e504e3435e (uuid)
+     */
+    public function deleteWebhook(string $webhookId): Response
+    {
+        return $this->connector->send(new DeleteWebhook($webhookId));
+    }
 }

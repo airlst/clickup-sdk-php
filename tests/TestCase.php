@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace ClickUp\V2\SDKBuilder\Tests;
 
+use ClickUp\V2\ClickUpSDK;
 use LaravelZero\Framework\Testing\TestCase as BaseTestCase;
 use Override;
 use Saloon\Config;
 use Saloon\Http\Faking\MockClient;
 use Saloon\Http\Faking\MockResponse;
-use ClickUp\V2\ClickUpSDK;
 
 abstract class TestCase extends BaseTestCase
 {

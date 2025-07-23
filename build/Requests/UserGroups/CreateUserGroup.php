@@ -1,15 +1,16 @@
 <?php
 
+declare(strict_types=1);
+
 namespace ClickUp\V2\Requests\UserGroups;
 
-use DateTime;
 use Saloon\Contracts\Body\HasBody;
 use Saloon\Enums\Method;
 use Saloon\Http\Request;
 use Saloon\Traits\Body\HasJsonBody;
 
 /**
- * CreateUserGroup
+ * CreateUserGroup.
  *
  * This endpoint creates a [User
  * Group](https://docs.clickup.com/en/articles/4010016-teams-how-to-create-user-groups) within a
@@ -32,34 +33,27 @@ use Saloon\Traits\Body\HasJsonBody;
  */
 class CreateUserGroup extends Request implements HasBody
 {
-	use HasJsonBody;
+    use HasJsonBody;
 
-	protected Method $method = Method::POST;
+    protected Method $method = Method::POST;
 
+    /**
+     * @param float|int $teamId Workspace ID
+     */
+    public function __construct(
+        protected float|int $teamId,
+        protected string $name,
+        protected array $members,
+        protected ?string $handle = null,
+    ) {}
 
-	public function resolveEndpoint(): string
-	{
-		return "/v2/team/{$this->teamId}/group";
-	}
+    public function resolveEndpoint(): string
+    {
+        return "/v2/team/{$this->teamId}/group";
+    }
 
-
-	/**
-	 * @param float|int $teamId Workspace ID
-	 * @param string $name
-	 * @param null|string $handle
-	 * @param array $members
-	 */
-	public function __construct(
-		protected float|int $teamId,
-		protected string $name,
-		protected ?string $handle = null,
-		protected array $members,
-	) {
-	}
-
-
-	public function defaultBody(): array
-	{
-		return array_filter(['name' => $this->name, 'handle' => $this->handle, 'members' => $this->members]);
-	}
+    public function defaultBody(): array
+    {
+        return array_filter(['name' => $this->name, 'members' => $this->members, 'handle' => $this->handle]);
+    }
 }

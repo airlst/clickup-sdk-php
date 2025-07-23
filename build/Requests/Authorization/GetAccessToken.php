@@ -1,15 +1,16 @@
 <?php
 
+declare(strict_types=1);
+
 namespace ClickUp\V2\Requests\Authorization;
 
-use DateTime;
 use Saloon\Contracts\Body\HasBody;
 use Saloon\Enums\Method;
 use Saloon\Http\Request;
 use Saloon\Traits\Body\HasJsonBody;
 
 /**
- * GetAccessToken
+ * GetAccessToken.
  *
  * These are the routes for authing the API and going through the [OAuth flow](doc:authentication).\
  *
@@ -22,32 +23,28 @@ use Saloon\Traits\Body\HasJsonBody;
  */
 class GetAccessToken extends Request implements HasBody
 {
-	use HasJsonBody;
+    use HasJsonBody;
 
-	protected Method $method = Method::POST;
+    protected Method $method = Method::POST;
 
+    /**
+     * @param string $clientId     OAuth app client id
+     * @param string $clientSecret OAuth app client secret
+     * @param string $code         Code given in redirect url
+     */
+    public function __construct(
+        protected string $clientId,
+        protected string $clientSecret,
+        protected string $code,
+    ) {}
 
-	public function resolveEndpoint(): string
-	{
-		return "/v2/oauth/token";
-	}
+    public function resolveEndpoint(): string
+    {
+        return '/v2/oauth/token';
+    }
 
-
-	/**
-	 * @param string $clientId OAuth app client id
-	 * @param string $clientSecret OAuth app client secret
-	 * @param string $code Code given in redirect url
-	 */
-	public function __construct(
-		protected string $clientId,
-		protected string $clientSecret,
-		protected string $code,
-	) {
-	}
-
-
-	public function defaultBody(): array
-	{
-		return array_filter(['client_id' => $this->clientId, 'client_secret' => $this->clientSecret, 'code' => $this->code]);
-	}
+    public function defaultBody(): array
+    {
+        return array_filter(['client_id' => $this->clientId, 'client_secret' => $this->clientSecret, 'code' => $this->code]);
+    }
 }

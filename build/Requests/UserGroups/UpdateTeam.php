@@ -1,13 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace ClickUp\V2\Requests\UserGroups;
 
-use DateTime;
 use Saloon\Enums\Method;
 use Saloon\Http\Request;
 
 /**
- * UpdateTeam
+ * UpdateTeam.
  *
  * This endpoint is used to manage [User
  * Groups](https://docs.clickup.com/en/articles/4010016-teams-how-to-create-user-groups), which are
@@ -27,32 +28,25 @@ use Saloon\Http\Request;
  */
 class UpdateTeam extends Request
 {
-	protected Method $method = Method::PUT;
+    protected Method $method = Method::PUT;
 
+    /**
+     * @param string $groupId User Group ID
+     */
+    public function __construct(
+        protected string $groupId,
+        protected ?string $name = null,
+        protected ?string $handle = null,
+        protected ?array $members = null,
+    ) {}
 
-	public function resolveEndpoint(): string
-	{
-		return "/v2/group/{$this->groupId}";
-	}
+    public function resolveEndpoint(): string
+    {
+        return "/v2/group/{$this->groupId}";
+    }
 
-
-	/**
-	 * @param string $groupId User Group ID
-	 * @param null|string $name
-	 * @param null|string $handle
-	 * @param null|array $members
-	 */
-	public function __construct(
-		protected string $groupId,
-		protected ?string $name = null,
-		protected ?string $handle = null,
-		protected ?array $members = null,
-	) {
-	}
-
-
-	public function defaultBody(): array
-	{
-		return array_filter(['name' => $this->name, 'handle' => $this->handle, 'members' => $this->members]);
-	}
+    public function defaultBody(): array
+    {
+        return array_filter(['name' => $this->name, 'handle' => $this->handle, 'members' => $this->members]);
+    }
 }

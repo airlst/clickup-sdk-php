@@ -1,15 +1,16 @@
 <?php
 
+declare(strict_types=1);
+
 namespace ClickUp\V2\Requests\Lists;
 
-use DateTime;
 use Saloon\Contracts\Body\HasBody;
 use Saloon\Enums\Method;
 use Saloon\Http\Request;
 use Saloon\Traits\Body\HasJsonBody;
 
 /**
- * CreateFolderListFromTemplate
+ * CreateFolderListFromTemplate.
  *
  * Create a new list using a list template in a Folder.
  * This request runs synchronously by default with
@@ -23,34 +24,30 @@ use Saloon\Traits\Body\HasJsonBody;
  */
 class CreateFolderListFromTemplate extends Request implements HasBody
 {
-	use HasJsonBody;
+    use HasJsonBody;
 
-	protected Method $method = Method::POST;
+    protected Method $method = Method::POST;
 
+    /**
+     * @param string     $folderId   ID of the Folder where the List will be created
+     * @param string     $templateId ID of the template to use
+     * @param string     $name       Name of the new List
+     * @param array|null $options    Options for creating the List
+     */
+    public function __construct(
+        protected string $folderId,
+        protected string $templateId,
+        protected string $name,
+        protected ?array $options = null,
+    ) {}
 
-	public function resolveEndpoint(): string
-	{
-		return "/v2/folder/{$this->folderId}/list_template/{$this->templateId}";
-	}
+    public function resolveEndpoint(): string
+    {
+        return "/v2/folder/{$this->folderId}/list_template/{$this->templateId}";
+    }
 
-
-	/**
-	 * @param string $folderId ID of the Folder where the List will be created
-	 * @param string $templateId ID of the template to use
-	 * @param string $name Name of the new List
-	 * @param null|array $options Options for creating the List
-	 */
-	public function __construct(
-		protected string $folderId,
-		protected string $templateId,
-		protected string $name,
-		protected ?array $options = null,
-	) {
-	}
-
-
-	public function defaultBody(): array
-	{
-		return array_filter(['name' => $this->name, 'options' => $this->options]);
-	}
+    public function defaultBody(): array
+    {
+        return array_filter(['name' => $this->name, 'options' => $this->options]);
+    }
 }

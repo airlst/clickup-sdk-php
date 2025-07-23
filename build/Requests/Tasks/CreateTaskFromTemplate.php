@@ -1,46 +1,38 @@
 <?php
 
+declare(strict_types=1);
+
 namespace ClickUp\V2\Requests\Tasks;
 
-use DateTime;
 use Saloon\Contracts\Body\HasBody;
 use Saloon\Enums\Method;
 use Saloon\Http\Request;
 use Saloon\Traits\Body\HasJsonBody;
 
 /**
- * CreateTaskFromTemplate
+ * CreateTaskFromTemplate.
  *
  * Create a new task using a task template.
  */
 class CreateTaskFromTemplate extends Request implements HasBody
 {
-	use HasJsonBody;
+    use HasJsonBody;
 
-	protected Method $method = Method::POST;
+    protected Method $method = Method::POST;
 
+    public function __construct(
+        protected float|int $listId,
+        protected string $templateId,
+        protected string $name,
+    ) {}
 
-	public function resolveEndpoint(): string
-	{
-		return "/v2/list/{$this->listId}/taskTemplate/{$this->templateId}";
-	}
+    public function resolveEndpoint(): string
+    {
+        return "/v2/list/{$this->listId}/taskTemplate/{$this->templateId}";
+    }
 
-
-	/**
-	 * @param float|int $listId
-	 * @param string $templateId
-	 * @param string $name
-	 */
-	public function __construct(
-		protected float|int $listId,
-		protected string $templateId,
-		protected string $name,
-	) {
-	}
-
-
-	public function defaultBody(): array
-	{
-		return array_filter(['name' => $this->name]);
-	}
+    public function defaultBody(): array
+    {
+        return array_filter(['name' => $this->name]);
+    }
 }

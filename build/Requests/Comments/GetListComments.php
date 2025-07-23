@@ -1,13 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace ClickUp\V2\Requests\Comments;
 
-use DateTime;
 use Saloon\Enums\Method;
 use Saloon\Http\Request;
 
 /**
- * GetListComments
+ * GetListComments.
  *
  * View the comments added to a List. \
  *  \
@@ -19,30 +20,25 @@ use Saloon\Http\Request;
  */
 class GetListComments extends Request
 {
-	protected Method $method = Method::GET;
+    protected Method $method = Method::GET;
 
+    /**
+     * @param int|null    $start   enter the `date` of a List info comment using Unix time in milliseconds
+     * @param string|null $startId enter the Comment `id` of a List info comment
+     */
+    public function __construct(
+        protected float|int $listId,
+        protected ?int $start = null,
+        protected ?string $startId = null,
+    ) {}
 
-	public function resolveEndpoint(): string
-	{
-		return "/v2/list/{$this->listId}/comment";
-	}
+    public function resolveEndpoint(): string
+    {
+        return "/v2/list/{$this->listId}/comment";
+    }
 
-
-	/**
-	 * @param float|int $listId
-	 * @param null|int $start Enter the `date` of a List info comment using Unix time in milliseconds.
-	 * @param null|string $startId Enter the Comment `id` of a List info comment.
-	 */
-	public function __construct(
-		protected float|int $listId,
-		protected ?int $start = null,
-		protected ?string $startId = null,
-	) {
-	}
-
-
-	public function defaultQuery(): array
-	{
-		return array_filter(['start' => $this->start, 'start_id' => $this->startId]);
-	}
+    protected function defaultQuery(): array
+    {
+        return array_filter(['start' => $this->start, 'start_id' => $this->startId]);
+    }
 }

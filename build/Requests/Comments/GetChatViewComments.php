@@ -1,13 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace ClickUp\V2\Requests\Comments;
 
-use DateTime;
 use Saloon\Enums\Method;
 use Saloon\Http\Request;
 
 /**
- * GetChatViewComments
+ * GetChatViewComments.
  *
  * View comments from a Chat view. \
  *  \
@@ -19,30 +20,26 @@ use Saloon\Http\Request;
  */
 class GetChatViewComments extends Request
 {
-	protected Method $method = Method::GET;
+    protected Method $method = Method::GET;
 
+    /**
+     * @param string      $viewId  105 (string)
+     * @param int|null    $start   enter the `date` of a Chat view comment using Unix time in milliseconds
+     * @param string|null $startId enter the Comment `id` of a Chat view comment
+     */
+    public function __construct(
+        protected string $viewId,
+        protected ?int $start = null,
+        protected ?string $startId = null,
+    ) {}
 
-	public function resolveEndpoint(): string
-	{
-		return "/v2/view/{$this->viewId}/comment";
-	}
+    public function resolveEndpoint(): string
+    {
+        return "/v2/view/{$this->viewId}/comment";
+    }
 
-
-	/**
-	 * @param string $viewId 105 (string)
-	 * @param null|int $start Enter the `date` of a Chat view comment using Unix time in milliseconds.
-	 * @param null|string $startId Enter the Comment `id` of a Chat view comment.
-	 */
-	public function __construct(
-		protected string $viewId,
-		protected ?int $start = null,
-		protected ?string $startId = null,
-	) {
-	}
-
-
-	public function defaultQuery(): array
-	{
-		return array_filter(['start' => $this->start, 'start_id' => $this->startId]);
-	}
+    protected function defaultQuery(): array
+    {
+        return array_filter(['start' => $this->start, 'start_id' => $this->startId]);
+    }
 }

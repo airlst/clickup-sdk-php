@@ -1,15 +1,16 @@
 <?php
 
+declare(strict_types=1);
+
 namespace ClickUp\V2\Requests\Tasks;
 
-use DateTime;
 use Saloon\Contracts\Body\HasBody;
 use Saloon\Enums\Method;
 use Saloon\Http\Request;
 use Saloon\Traits\Body\HasJsonBody;
 
 /**
- * mergeTasks
+ * mergeTasks.
  *
  * Merge multiple tasks into a target task. The target task is specified by the task_id parameter,
  * while the source tasks to be merged are provided in the request body. Custom Task IDs are not
@@ -17,30 +18,26 @@ use Saloon\Traits\Body\HasJsonBody;
  */
 class MergeTasks extends Request implements HasBody
 {
-	use HasJsonBody;
+    use HasJsonBody;
 
-	protected Method $method = Method::POST;
+    protected Method $method = Method::POST;
 
+    /**
+     * @param string $taskId        ID of the target task that other tasks will be merged into
+     * @param array  $sourceTaskIds array of task IDs to merge into the target task
+     */
+    public function __construct(
+        protected string $taskId,
+        protected array $sourceTaskIds,
+    ) {}
 
-	public function resolveEndpoint(): string
-	{
-		return "/v2/task/{$this->taskId}/merge";
-	}
+    public function resolveEndpoint(): string
+    {
+        return "/v2/task/{$this->taskId}/merge";
+    }
 
-
-	/**
-	 * @param string $taskId ID of the target task that other tasks will be merged into.
-	 * @param array $sourceTaskIds Array of task IDs to merge into the target task.
-	 */
-	public function __construct(
-		protected string $taskId,
-		protected array $sourceTaskIds,
-	) {
-	}
-
-
-	public function defaultBody(): array
-	{
-		return array_filter(['source_task_ids' => $this->sourceTaskIds]);
-	}
+    public function defaultBody(): array
+    {
+        return array_filter(['source_task_ids' => $this->sourceTaskIds]);
+    }
 }

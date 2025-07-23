@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace ClickUp\V2\Resource;
 
 use ClickUp\V2\Requests\Authorization\GetAccessToken;
@@ -10,25 +12,23 @@ use Saloon\Http\Response;
 
 class Authorization extends Resource
 {
-	/**
-	 * @param string $clientId OAuth app client id
-	 * @param string $clientSecret OAuth app client secret
-	 * @param string $code Code given in redirect url
-	 */
-	public function getAccessToken(string $clientId, string $clientSecret, string $code): Response
-	{
-		return $this->connector->send(new GetAccessToken($clientId, $clientSecret, $code));
-	}
+    /**
+     * @param string $clientId     OAuth app client id
+     * @param string $clientSecret OAuth app client secret
+     * @param string $code         Code given in redirect url
+     */
+    public function getAccessToken(string $clientId, string $clientSecret, string $code): Response
+    {
+        return $this->connector->send(new GetAccessToken($clientId, $clientSecret, $code));
+    }
 
+    public function getAuthorizedUser(): Response
+    {
+        return $this->connector->send(new GetAuthorizedUser());
+    }
 
-	public function getAuthorizedUser(): Response
-	{
-		return $this->connector->send(new GetAuthorizedUser());
-	}
-
-
-	public function getAuthorizedTeams(): Response
-	{
-		return $this->connector->send(new GetAuthorizedTeams());
-	}
+    public function getAuthorizedTeams(): Response
+    {
+        return $this->connector->send(new GetAuthorizedTeams());
+    }
 }

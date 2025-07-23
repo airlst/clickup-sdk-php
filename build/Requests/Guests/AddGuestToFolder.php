@@ -1,15 +1,16 @@
 <?php
 
+declare(strict_types=1);
+
 namespace ClickUp\V2\Requests\Guests;
 
-use DateTime;
 use Saloon\Contracts\Body\HasBody;
 use Saloon\Enums\Method;
 use Saloon\Http\Request;
 use Saloon\Traits\Body\HasJsonBody;
 
 /**
- * AddGuestToFolder
+ * AddGuestToFolder.
  *
  * Share a Folder with a guest. \
  *  \
@@ -18,40 +19,33 @@ use Saloon\Traits\Body\HasJsonBody;
  */
 class AddGuestToFolder extends Request implements HasBody
 {
-	use HasJsonBody;
+    use HasJsonBody;
 
-	protected Method $method = Method::POST;
+    protected Method $method = Method::POST;
 
+    /**
+     * @param string    $permissionLevel can be `read` (view only), `comment`, `edit`, or `create` (full)
+     * @param bool|null $includeShared   Exclude details of items shared with the guest by setting this parameter to `false`. By default this parameter is set to `true`.
+     */
+    public function __construct(
+        protected float|int $folderId,
+        protected float|int $guestId,
+        protected string $permissionLevel,
+        protected ?bool $includeShared = null,
+    ) {}
 
-	public function resolveEndpoint(): string
-	{
-		return "/v2/folder/{$this->folderId}/guest/{$this->guestId}";
-	}
+    public function resolveEndpoint(): string
+    {
+        return "/v2/folder/{$this->folderId}/guest/{$this->guestId}";
+    }
 
+    public function defaultBody(): array
+    {
+        return array_filter(['permission_level' => $this->permissionLevel]);
+    }
 
-	/**
-	 * @param float|int $folderId
-	 * @param float|int $guestId
-	 * @param string $permissionLevel Can be `read` (view only), `comment`, `edit`, or `create` (full).
-	 * @param null|bool $includeShared Exclude details of items shared with the guest by setting this parameter to `false`. By default this parameter is set to `true`.
-	 */
-	public function __construct(
-		protected float|int $folderId,
-		protected float|int $guestId,
-		protected string $permissionLevel,
-		protected ?bool $includeShared = null,
-	) {
-	}
-
-
-	public function defaultBody(): array
-	{
-		return array_filter(['permission_level' => $this->permissionLevel]);
-	}
-
-
-	public function defaultQuery(): array
-	{
-		return array_filter(['include_shared' => $this->includeShared]);
-	}
+    protected function defaultQuery(): array
+    {
+        return array_filter(['include_shared' => $this->includeShared]);
+    }
 }

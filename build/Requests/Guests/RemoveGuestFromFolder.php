@@ -1,13 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace ClickUp\V2\Requests\Guests;
 
-use DateTime;
 use Saloon\Enums\Method;
 use Saloon\Http\Request;
 
 /**
- * RemoveGuestFromFolder
+ * RemoveGuestFromFolder.
  *
  * Revoke a guest's access to a Folder. \
  *  \
@@ -16,30 +17,24 @@ use Saloon\Http\Request;
  */
 class RemoveGuestFromFolder extends Request
 {
-	protected Method $method = Method::DELETE;
+    protected Method $method = Method::DELETE;
 
+    /**
+     * @param bool|null $includeShared Exclude details of items shared with the guest by setting this parameter to `false`. By default this parameter is set to `true`.
+     */
+    public function __construct(
+        protected float|int $folderId,
+        protected float|int $guestId,
+        protected ?bool $includeShared = null,
+    ) {}
 
-	public function resolveEndpoint(): string
-	{
-		return "/v2/folder/{$this->folderId}/guest/{$this->guestId}";
-	}
+    public function resolveEndpoint(): string
+    {
+        return "/v2/folder/{$this->folderId}/guest/{$this->guestId}";
+    }
 
-
-	/**
-	 * @param float|int $folderId
-	 * @param float|int $guestId
-	 * @param null|bool $includeShared Exclude details of items shared with the guest by setting this parameter to `false`. By default this parameter is set to `true`.
-	 */
-	public function __construct(
-		protected float|int $folderId,
-		protected float|int $guestId,
-		protected ?bool $includeShared = null,
-	) {
-	}
-
-
-	public function defaultQuery(): array
-	{
-		return array_filter(['include_shared' => $this->includeShared]);
-	}
+    protected function defaultQuery(): array
+    {
+        return array_filter(['include_shared' => $this->includeShared]);
+    }
 }

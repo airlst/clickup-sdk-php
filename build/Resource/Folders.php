@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace ClickUp\V2\Resource;
 
 use ClickUp\V2\Requests\Folders\CreateFolder;
@@ -13,67 +15,43 @@ use Saloon\Http\Response;
 
 class Folders extends Resource
 {
-	/**
-	 * @param float|int $spaceId
-	 * @param bool $archived
-	 */
-	public function getFolders(float|int $spaceId, ?bool $archived = null): Response
-	{
-		return $this->connector->send(new GetFolders($spaceId, $archived));
-	}
+    public function getFolders(float|int $spaceId, ?bool $archived = null): Response
+    {
+        return $this->connector->send(new GetFolders($spaceId, $archived));
+    }
 
+    public function createFolder(float|int $spaceId, string $name): Response
+    {
+        return $this->connector->send(new CreateFolder($spaceId, $name));
+    }
 
-	/**
-	 * @param float|int $spaceId
-	 * @param string $name
-	 */
-	public function createFolder(float|int $spaceId, string $name): Response
-	{
-		return $this->connector->send(new CreateFolder($spaceId, $name));
-	}
+    public function getFolder(float|int $folderId): Response
+    {
+        return $this->connector->send(new GetFolder($folderId));
+    }
 
+    public function updateFolder(float|int $folderId, string $name): Response
+    {
+        return $this->connector->send(new UpdateFolder($folderId, $name));
+    }
 
-	/**
-	 * @param float|int $folderId
-	 */
-	public function getFolder(float|int $folderId): Response
-	{
-		return $this->connector->send(new GetFolder($folderId));
-	}
+    public function deleteFolder(float|int $folderId): Response
+    {
+        return $this->connector->send(new DeleteFolder($folderId));
+    }
 
-
-	/**
-	 * @param float|int $folderId
-	 * @param string $name
-	 */
-	public function updateFolder(float|int $folderId, string $name): Response
-	{
-		return $this->connector->send(new UpdateFolder($folderId, $name));
-	}
-
-
-	/**
-	 * @param float|int $folderId
-	 */
-	public function deleteFolder(float|int $folderId): Response
-	{
-		return $this->connector->send(new DeleteFolder($folderId));
-	}
-
-
-	/**
-	 * @param string $spaceId ID of the Space where the Folder will be created
-	 * @param string $templateId ID of the Folder template to use.
-	 * @param string $name Name of the new Folder
-	 * @param array $options Options for creating the Folder
-	 */
-	public function createFolderFromTemplate(
-		string $spaceId,
-		string $templateId,
-		string $name,
-		?array $options = null,
-	): Response
-	{
-		return $this->connector->send(new CreateFolderFromTemplate($spaceId, $templateId, $name, $options));
-	}
+    /**
+     * @param string $spaceId    ID of the Space where the Folder will be created
+     * @param string $templateId ID of the Folder template to use
+     * @param string $name       Name of the new Folder
+     * @param array  $options    Options for creating the Folder
+     */
+    public function createFolderFromTemplate(
+        string $spaceId,
+        string $templateId,
+        string $name,
+        ?array $options = null,
+    ): Response {
+        return $this->connector->send(new CreateFolderFromTemplate($spaceId, $templateId, $name, $options));
+    }
 }

@@ -1,13 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace ClickUp\V2\Requests\Users;
 
-use DateTime;
 use Saloon\Enums\Method;
 use Saloon\Http\Request;
 
 /**
- * EditUserOnWorkspace
+ * EditUserOnWorkspace.
  *
  * Update a user's name and role. \
  *  \
@@ -16,34 +17,26 @@ use Saloon\Http\Request;
  */
 class EditUserOnWorkspace extends Request
 {
-	protected Method $method = Method::PUT;
+    protected Method $method = Method::PUT;
 
+    /**
+     * @param float|int $teamId Workspace ID
+     */
+    public function __construct(
+        protected float|int $teamId,
+        protected float|int $userId,
+        protected string $username,
+        protected bool $admin,
+        protected int $customRoleId,
+    ) {}
 
-	public function resolveEndpoint(): string
-	{
-		return "/v2/team/{$this->teamId}/user/{$this->userId}";
-	}
+    public function resolveEndpoint(): string
+    {
+        return "/v2/team/{$this->teamId}/user/{$this->userId}";
+    }
 
-
-	/**
-	 * @param float|int $teamId Workspace ID
-	 * @param float|int $userId
-	 * @param string $username
-	 * @param bool $admin
-	 * @param int $customRoleId
-	 */
-	public function __construct(
-		protected float|int $teamId,
-		protected float|int $userId,
-		protected string $username,
-		protected bool $admin,
-		protected int $customRoleId,
-	) {
-	}
-
-
-	public function defaultBody(): array
-	{
-		return array_filter(['username' => $this->username, 'admin' => $this->admin, 'custom_role_id' => $this->customRoleId]);
-	}
+    public function defaultBody(): array
+    {
+        return array_filter(['username' => $this->username, 'admin' => $this->admin, 'custom_role_id' => $this->customRoleId]);
+    }
 }

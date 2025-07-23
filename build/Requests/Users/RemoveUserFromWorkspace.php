@@ -1,13 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace ClickUp\V2\Requests\Users;
 
-use DateTime;
 use Saloon\Enums\Method;
 use Saloon\Http\Request;
 
 /**
- * RemoveUserFromWorkspace
+ * RemoveUserFromWorkspace.
  *
  * Deactivate a user from a Workspace. \
  *  \
@@ -16,22 +17,18 @@ use Saloon\Http\Request;
  */
 class RemoveUserFromWorkspace extends Request
 {
-	protected Method $method = Method::DELETE;
+    protected Method $method = Method::DELETE;
 
+    /**
+     * @param float|int $teamId Workspace ID
+     */
+    public function __construct(
+        protected float|int $teamId,
+        protected float|int $userId,
+    ) {}
 
-	public function resolveEndpoint(): string
-	{
-		return "/v2/team/{$this->teamId}/user/{$this->userId}";
-	}
-
-
-	/**
-	 * @param float|int $teamId Workspace ID
-	 * @param float|int $userId
-	 */
-	public function __construct(
-		protected float|int $teamId,
-		protected float|int $userId,
-	) {
-	}
+    public function resolveEndpoint(): string
+    {
+        return "/v2/team/{$this->teamId}/user/{$this->userId}";
+    }
 }
