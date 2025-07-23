@@ -14,7 +14,10 @@ use Saloon\Http\Request;
  *  \
  * This endpoint only includes tasks where the specified
  * `list_id` is their home List. Tasks added to the `list_id` with a different home List are not
- * included in the response.
+ * included in the response. \
+ *  \
+ * The `time_spent` field displays time tracked in milliseconds, and is
+ * only included in the response for tasks with time entries.
  */
 class GetTasks extends Request
 {

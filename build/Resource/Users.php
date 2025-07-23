@@ -13,10 +13,18 @@ class Users extends Resource
 {
 	/**
 	 * @param float|int $teamId Workspace ID
+	 * @param string $email
+	 * @param bool $admin
+	 * @param int $customRoleId
 	 */
-	public function inviteUserToWorkspace(float|int $teamId): Response
+	public function inviteUserToWorkspace(
+		float|int $teamId,
+		string $email,
+		bool $admin,
+		?int $customRoleId = null,
+	): Response
 	{
-		return $this->connector->send(new InviteUserToWorkspace($teamId));
+		return $this->connector->send(new InviteUserToWorkspace($teamId, $email, $admin, $customRoleId));
 	}
 
 
@@ -34,10 +42,19 @@ class Users extends Resource
 	/**
 	 * @param float|int $teamId Workspace ID
 	 * @param float|int $userId
+	 * @param string $username
+	 * @param bool $admin
+	 * @param int $customRoleId
 	 */
-	public function editUserOnWorkspace(float|int $teamId, float|int $userId): Response
+	public function editUserOnWorkspace(
+		float|int $teamId,
+		float|int $userId,
+		string $username,
+		bool $admin,
+		int $customRoleId,
+	): Response
 	{
-		return $this->connector->send(new EditUserOnWorkspace($teamId, $userId));
+		return $this->connector->send(new EditUserOnWorkspace($teamId, $userId, $username, $admin, $customRoleId));
 	}
 
 

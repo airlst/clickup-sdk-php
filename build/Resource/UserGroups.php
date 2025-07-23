@@ -13,19 +13,30 @@ class UserGroups extends Resource
 {
 	/**
 	 * @param float|int $teamId Workspace ID
+	 * @param string $name
+	 * @param string $handle
+	 * @param array $members
 	 */
-	public function createUserGroup(float|int $teamId): Response
+	public function createUserGroup(float|int $teamId, string $name, ?string $handle = null, array $members): Response
 	{
-		return $this->connector->send(new CreateUserGroup($teamId));
+		return $this->connector->send(new CreateUserGroup($teamId, $name, $handle, $members));
 	}
 
 
 	/**
 	 * @param string $groupId User Group ID
+	 * @param string $name
+	 * @param string $handle
+	 * @param array $members
 	 */
-	public function updateTeam(string $groupId): Response
+	public function updateTeam(
+		string $groupId,
+		?string $name = null,
+		?string $handle = null,
+		?array $members = null,
+	): Response
 	{
-		return $this->connector->send(new UpdateTeam($groupId));
+		return $this->connector->send(new UpdateTeam($groupId, $name, $handle, $members));
 	}
 
 

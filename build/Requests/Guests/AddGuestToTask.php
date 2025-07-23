@@ -32,6 +32,7 @@ class AddGuestToTask extends Request implements HasBody
 	/**
 	 * @param string $taskId
 	 * @param float|int $guestId
+	 * @param string $permissionLevel Can be `read` (view only), `comment`, `edit`, or `create` (full).
 	 * @param null|bool $includeShared Exclude details of items shared with the guest by setting this parameter to `false`. By default this parameter is set to `true`.
 	 * @param null|bool $customTaskIds If you want to reference a task by it's custom task id, this value must be `true`.
 	 * @param null|float|int $teamId When the `custom_task_ids` parameter is set to `true`, the Workspace ID must be provided using the `team_id` parameter.
@@ -41,10 +42,17 @@ class AddGuestToTask extends Request implements HasBody
 	public function __construct(
 		protected string $taskId,
 		protected float|int $guestId,
+		protected string $permissionLevel,
 		protected ?bool $includeShared = null,
 		protected ?bool $customTaskIds = null,
 		protected float|int|null $teamId = null,
 	) {
+	}
+
+
+	public function defaultBody(): array
+	{
+		return array_filter(['permission_level' => $this->permissionLevel]);
 	}
 
 

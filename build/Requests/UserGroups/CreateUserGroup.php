@@ -45,9 +45,21 @@ class CreateUserGroup extends Request implements HasBody
 
 	/**
 	 * @param float|int $teamId Workspace ID
+	 * @param string $name
+	 * @param null|string $handle
+	 * @param array $members
 	 */
 	public function __construct(
 		protected float|int $teamId,
+		protected string $name,
+		protected ?string $handle = null,
+		protected array $members,
 	) {
+	}
+
+
+	public function defaultBody(): array
+	{
+		return array_filter(['name' => $this->name, 'handle' => $this->handle, 'members' => $this->members]);
 	}
 }

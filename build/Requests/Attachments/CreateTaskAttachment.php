@@ -31,6 +31,7 @@ class CreateTaskAttachment extends Request implements HasBody
 
 	/**
 	 * @param string $taskId
+	 * @param null|array $attachment
 	 * @param null|bool $customTaskIds If you want to reference a task by its custom task id, this value must be `true`.
 	 * @param null|float|int $teamId When the `custom_task_ids` parameter is set to `true`, the Workspace ID must be provided using the `team_id` parameter.
 	 *  \
@@ -38,9 +39,16 @@ class CreateTaskAttachment extends Request implements HasBody
 	 */
 	public function __construct(
 		protected string $taskId,
+		protected ?array $attachment = null,
 		protected ?bool $customTaskIds = null,
 		protected float|int|null $teamId = null,
 	) {
+	}
+
+
+	public function defaultBody(): array
+	{
+		return array_filter(['attachment' => $this->attachment]);
 	}
 
 

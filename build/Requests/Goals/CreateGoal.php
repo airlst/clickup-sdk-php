@@ -28,9 +28,34 @@ class CreateGoal extends Request implements HasBody
 
 	/**
 	 * @param float|int $teamId Workspace ID
+	 * @param string $name
+	 * @param int $dueDate
+	 * @param string $description
+	 * @param bool $multipleOwners
+	 * @param array $owners Array of user IDs.
+	 * @param string $color
 	 */
 	public function __construct(
 		protected float|int $teamId,
+		protected string $name,
+		protected int $dueDate,
+		protected string $description,
+		protected bool $multipleOwners,
+		protected array $owners,
+		protected string $color,
 	) {
+	}
+
+
+	public function defaultBody(): array
+	{
+		return array_filter([
+			'name' => $this->name,
+			'due_date' => $this->dueDate,
+			'description' => $this->description,
+			'multiple_owners' => $this->multipleOwners,
+			'owners' => $this->owners,
+			'color' => $this->color,
+		]);
 	}
 }

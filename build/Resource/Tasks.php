@@ -96,14 +96,66 @@ class Tasks extends Resource
 
 	/**
 	 * @param float|int $listId
+	 * @param string $name
+	 * @param string $description
+	 * @param array $assignees
+	 * @param bool $archived
+	 * @param array $groupAssignees Assign multiple user groups to the task.
+	 * @param array $tags
+	 * @param string $status
+	 * @param mixed $priority
+	 * @param int $dueDate
+	 * @param bool $dueDateTime
+	 * @param int $timeEstimate
+	 * @param int $startDate
+	 * @param bool $startDateTime
+	 * @param float|int $points Add Sprint Points to the task.
+	 * @param bool $notifyAll If `notify_all` is true, notifications will be sent to everyone including the creator of the comment.
+	 * @param mixed $parent You can create a subtask by including an existing task ID.\
+	 *  \
+	 * The `parent` task ID you include can be a subtask, but must be in the same List specified in the path parameter.
+	 * @param string $markdownContent Markdown formatted description for the task. If both `markdown_content` and `description` are provided, `markdown_content` will be used instead of `description`.
+	 * @param mixed $linksTo Include a task ID to create a linked dependency with your new task.
+	 * @param bool $checkRequiredCustomFields When creating a task via API any required Custom Fields are ignored by default (`false`).\
+	 *  \
+	 * You can enforce required Custom Fields by including `check_required_custom_fields: true`.
+	 * @param array $customFields [Filter by Custom Fields.](doc:filtertasks)
+	 * @param float|int $customItemId The custom task type ID for this task. A value of `null` (default) creates a standard task type "Task".\
+	 *  \
+	 * To get a list of available custom task type IDs for your Workspace, use the [Get Custom Task Types endpoint](ref:getcustomitems).
 	 * @param bool $customTaskIds If you want to reference a task by its custom task id, this value must be `true`.
 	 * @param float|int $teamId When the `custom_task_ids` parameter is set to `true`, the Workspace ID must be provided using the `team_id` parameter.
 	 *  \
 	 * For example: `custom_task_ids=true&team_id=123`.
 	 */
-	public function createTask(float|int $listId, ?bool $customTaskIds = null, float|int|null $teamId = null): Response
+	public function createTask(
+		float|int $listId,
+		string $name,
+		?string $description = null,
+		?array $assignees = null,
+		?bool $archived = null,
+		?array $groupAssignees = null,
+		?array $tags = null,
+		?string $status = null,
+		mixed $priority = null,
+		?int $dueDate = null,
+		?bool $dueDateTime = null,
+		?int $timeEstimate = null,
+		?int $startDate = null,
+		?bool $startDateTime = null,
+		float|int|null $points = null,
+		?bool $notifyAll = null,
+		mixed $parent = null,
+		?string $markdownContent = null,
+		mixed $linksTo = null,
+		?bool $checkRequiredCustomFields = null,
+		?array $customFields = null,
+		float|int|null $customItemId = null,
+		?bool $customTaskIds = null,
+		float|int|null $teamId = null,
+	): Response
 	{
-		return $this->connector->send(new CreateTask($listId, $customTaskIds, $teamId));
+		return $this->connector->send(new CreateTask($listId, $name, $description, $assignees, $archived, $groupAssignees, $tags, $status, $priority, $dueDate, $dueDateTime, $timeEstimate, $startDate, $startDateTime, $points, $notifyAll, $parent, $markdownContent, $linksTo, $checkRequiredCustomFields, $customFields, $customItemId, $customTaskIds, $teamId));
 	}
 
 
@@ -136,14 +188,56 @@ class Tasks extends Resource
 
 	/**
 	 * @param string $taskId
+	 * @param mixed $customItemId The custom task type ID for this task. A value of `null` (default) sets the task type to type "Task".\
+	 *  \
+	 * To get a list of available custom task type IDs for your Workspace, use the [Get Custom Task Types endpoint](ref:getcustomitems).
+	 * @param string $name
+	 * @param string $description To clear the task description, include `Description` with `" "`.
+	 * @param string $markdownContent Markdown formatted description for the task. If both `markdown_content` and `description` are provided, `markdown_content` will be used instead of `description`.
+	 * @param string $status
+	 * @param int $priority
+	 * @param int $dueDate
+	 * @param bool $dueDateTime
+	 * @param string $parent You can move a subtask to another parent task by including `"parent"` with a valid `task id`.\
+	 *  \
+	 * You cannot convert a subtask to a task by setting `"parent"` to `null`.
+	 * @param int $timeEstimate
+	 * @param int $startDate
+	 * @param bool $startDateTime
+	 * @param float|int $points Update the task's Sprint Points.
+	 * @param array $assignees
+	 * @param array $groupAssignees
+	 * @param array $watchers
+	 * @param bool $archived
 	 * @param bool $customTaskIds If you want to reference a task by its custom task id, this value must be `true`.
 	 * @param float|int $teamId When the `custom_task_ids` parameter is set to `true`, the Workspace ID must be provided using the `team_id` parameter.
 	 *  \
 	 * For example: `custom_task_ids=true&team_id=123`.
 	 */
-	public function updateTask(string $taskId, ?bool $customTaskIds = null, float|int|null $teamId = null): Response
+	public function updateTask(
+		string $taskId,
+		mixed $customItemId = null,
+		?string $name = null,
+		?string $description = null,
+		?string $markdownContent = null,
+		?string $status = null,
+		?int $priority = null,
+		?int $dueDate = null,
+		?bool $dueDateTime = null,
+		?string $parent = null,
+		?int $timeEstimate = null,
+		?int $startDate = null,
+		?bool $startDateTime = null,
+		float|int|null $points = null,
+		?array $assignees = null,
+		?array $groupAssignees = null,
+		?array $watchers = null,
+		?bool $archived = null,
+		?bool $customTaskIds = null,
+		float|int|null $teamId = null,
+	): Response
 	{
-		return $this->connector->send(new UpdateTask($taskId, $customTaskIds, $teamId));
+		return $this->connector->send(new UpdateTask($taskId, $customItemId, $name, $description, $markdownContent, $status, $priority, $dueDate, $dueDateTime, $parent, $timeEstimate, $startDate, $startDateTime, $points, $assignees, $groupAssignees, $watchers, $archived, $customTaskIds, $teamId));
 	}
 
 
@@ -252,10 +346,11 @@ class Tasks extends Resource
 
 	/**
 	 * @param string $taskId ID of the target task that other tasks will be merged into.
+	 * @param array $sourceTaskIds Array of task IDs to merge into the target task.
 	 */
-	public function mergeTasks(string $taskId): Response
+	public function mergeTasks(string $taskId, array $sourceTaskIds): Response
 	{
-		return $this->connector->send(new MergeTasks($taskId));
+		return $this->connector->send(new MergeTasks($taskId, $sourceTaskIds));
 	}
 
 
@@ -298,9 +393,10 @@ class Tasks extends Resource
 	/**
 	 * @param float|int $listId
 	 * @param string $templateId
+	 * @param string $name
 	 */
-	public function createTaskFromTemplate(float|int $listId, string $templateId): Response
+	public function createTaskFromTemplate(float|int $listId, string $templateId, string $name): Response
 	{
-		return $this->connector->send(new CreateTaskFromTemplate($listId, $templateId));
+		return $this->connector->send(new CreateTaskFromTemplate($listId, $templateId, $name));
 	}
 }

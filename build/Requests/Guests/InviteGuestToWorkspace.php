@@ -36,9 +36,37 @@ class InviteGuestToWorkspace extends Request implements HasBody
 
 	/**
 	 * @param float|int $teamId Workspace ID
+	 * @param string $email
+	 * @param null|bool $canEditTags
+	 * @param null|bool $canSeeTimeSpent
+	 * @param null|bool $canSeeTimeEstimated
+	 * @param null|bool $canCreateViews
+	 * @param null|bool $canSeePointsEstimated
+	 * @param null|int $customRoleId
 	 */
 	public function __construct(
 		protected float|int $teamId,
+		protected string $email,
+		protected ?bool $canEditTags = null,
+		protected ?bool $canSeeTimeSpent = null,
+		protected ?bool $canSeeTimeEstimated = null,
+		protected ?bool $canCreateViews = null,
+		protected ?bool $canSeePointsEstimated = null,
+		protected ?int $customRoleId = null,
 	) {
+	}
+
+
+	public function defaultBody(): array
+	{
+		return array_filter([
+			'email' => $this->email,
+			'can_edit_tags' => $this->canEditTags,
+			'can_see_time_spent' => $this->canSeeTimeSpent,
+			'can_see_time_estimated' => $this->canSeeTimeEstimated,
+			'can_create_views' => $this->canCreateViews,
+			'can_see_points_estimated' => $this->canSeePointsEstimated,
+			'custom_role_id' => $this->customRoleId,
+		]);
 	}
 }

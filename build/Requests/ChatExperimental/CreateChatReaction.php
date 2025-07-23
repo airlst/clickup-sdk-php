@@ -29,10 +29,18 @@ class CreateChatReaction extends Request implements HasBody
 	/**
 	 * @param int $workspaceId The ID of the Workspace.
 	 * @param string $messageId The ID of the specified message
+	 * @param string $reaction The name of the emoji to use for the reaction.
 	 */
 	public function __construct(
 		protected int $workspaceId,
 		protected string $messageId,
+		protected string $reaction,
 	) {
+	}
+
+
+	public function defaultBody(): array
+	{
+		return array_filter(['reaction' => $this->reaction]);
 	}
 }

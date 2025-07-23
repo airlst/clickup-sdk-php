@@ -29,9 +29,31 @@ class CreateChatChannel extends Request implements HasBody
 
 	/**
 	 * @param int $workspaceId The ID of the Workspace.
+	 * @param null|string $description The description for the Channel being created.
+	 * @param string $name The name for the Channel being created.
+	 * @param null|string $topic The topic of the Channel being created.
+	 * @param null|array $userIds Optionally specify unique user IDs, up to 100.
+	 * @param null|string $visibility The visibility of the Channel being created. If not specified, the Channel is PUBLIC.
 	 */
 	public function __construct(
 		protected int $workspaceId,
+		protected ?string $description = null,
+		protected string $name,
+		protected ?string $topic = null,
+		protected ?array $userIds = null,
+		protected ?string $visibility = null,
 	) {
+	}
+
+
+	public function defaultBody(): array
+	{
+		return array_filter([
+			'description' => $this->description,
+			'name' => $this->name,
+			'topic' => $this->topic,
+			'user_ids' => $this->userIds,
+			'visibility' => $this->visibility,
+		]);
 	}
 }

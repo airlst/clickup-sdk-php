@@ -68,14 +68,35 @@ class TimeTracking extends Resource
 
 	/**
 	 * @param float|int $teamId Workspace ID
+	 * @param string $description
+	 * @param array $tags Users on the Business Plan and above can include a time tracking label.
+	 * @param int $start
+	 * @param int $stop The `duration` parameter can be used instead of the `stop` parameter.
+	 * @param int $end
+	 * @param bool $billable
+	 * @param int $duration When there are values for both `start` and `end`, `duration` is ignored. The `stop` parameter can be used instead of the `duration` parameter.
+	 * @param int $assignee Workspace owners and admins can include any user id. Workspace members can only include their own user id.
+	 * @param string $tid
 	 * @param bool $customTaskIds If you want to reference a task by it's custom task id, this value must be `true`.
 	 * @param float|int $teamId When the `custom_task_ids` parameter is set to `true`, the Workspace ID must be provided using the `team_id` parameter.
 	 *  \
 	 * For example: `custom_task_ids=true&team_id=123`.
 	 */
-	public function createatimeentry(float|int|null $teamId = null, ?bool $customTaskIds = null): Response
+	public function createatimeentry(
+		float|int|null $teamId = null,
+		?string $description = null,
+		?array $tags = null,
+		int $start,
+		?int $stop = null,
+		?int $end = null,
+		?bool $billable = null,
+		int $duration,
+		?int $assignee = null,
+		?string $tid = null,
+		?bool $customTaskIds = null,
+	): Response
 	{
-		return $this->connector->send(new Createatimeentry($teamId, $customTaskIds, $teamId));
+		return $this->connector->send(new Createatimeentry($teamId, $description, $tags, $start, $stop, $end, $billable, $duration, $assignee, $tid, $customTaskIds, $teamId));
 	}
 
 
@@ -105,6 +126,14 @@ class TimeTracking extends Resource
 	/**
 	 * @param float|int $teamId Workspace ID
 	 * @param float|int $timerId
+	 * @param string $description
+	 * @param array $tags Users on the Business Plan and above can include a time tracking label.
+	 * @param string $tagAction
+	 * @param int $start When providing `start`, you must also provide `end`.
+	 * @param int $end When providing `end`, you must also provide `start`.
+	 * @param string $tid
+	 * @param bool $billable
+	 * @param int $duration
 	 * @param bool $customTaskIds If you want to reference a task by it's custom task id, this value must be `true`.
 	 * @param float|int $teamId When the `custom_task_ids` parameter is set to `true`, the Workspace ID must be provided using the `team_id` parameter.
 	 *  \
@@ -113,10 +142,18 @@ class TimeTracking extends Resource
 	public function updateatimeEntry(
 		float|int|null $teamId = null,
 		float|int $timerId,
+		?string $description = null,
+		array $tags,
+		?string $tagAction = null,
+		?int $start = null,
+		?int $end = null,
+		string $tid,
+		?bool $billable = null,
+		?int $duration = null,
 		?bool $customTaskIds = null,
 	): Response
 	{
-		return $this->connector->send(new UpdateatimeEntry($teamId, $timerId, $customTaskIds, $teamId));
+		return $this->connector->send(new UpdateatimeEntry($teamId, $timerId, $description, $tags, $tagAction, $start, $end, $tid, $billable, $duration, $customTaskIds, $teamId));
 	}
 
 
@@ -163,41 +200,66 @@ class TimeTracking extends Resource
 
 	/**
 	 * @param float|int $teamId Workspace ID
+	 * @param string $name
+	 * @param string $newName
+	 * @param string $tagBg
+	 * @param string $tagFg
 	 */
-	public function changetagnamesfromtimeentries(float|int $teamId): Response
+	public function changetagnamesfromtimeentries(
+		float|int $teamId,
+		string $name,
+		string $newName,
+		string $tagBg,
+		string $tagFg,
+	): Response
 	{
-		return $this->connector->send(new Changetagnamesfromtimeentries($teamId));
+		return $this->connector->send(new Changetagnamesfromtimeentries($teamId, $name, $newName, $tagBg, $tagFg));
 	}
 
 
 	/**
 	 * @param float|int $teamId Workspace ID
+	 * @param array $timeEntryIds
+	 * @param array $tags
 	 */
-	public function addtagsfromtimeentries(float|int $teamId): Response
+	public function addtagsfromtimeentries(float|int $teamId, array $timeEntryIds, array $tags): Response
 	{
-		return $this->connector->send(new Addtagsfromtimeentries($teamId));
+		return $this->connector->send(new Addtagsfromtimeentries($teamId, $timeEntryIds, $tags));
 	}
 
 
 	/**
 	 * @param float|int $teamId Workspace ID
+	 * @param array $timeEntryIds
+	 * @param array $tags
 	 */
-	public function removetagsfromtimeentries(float|int $teamId): Response
+	public function removetagsfromtimeentries(float|int $teamId, array $timeEntryIds, array $tags): Response
 	{
-		return $this->connector->send(new Removetagsfromtimeentries($teamId));
+		return $this->connector->send(new Removetagsfromtimeentries($teamId, $timeEntryIds, $tags));
 	}
 
 
 	/**
 	 * @param float|int $teamId Workspace ID
+	 * @param string $description
+	 * @param array $tags Users on the Business Plan and above can include a time tracking label.
+	 * @param string $tid
+	 * @param bool $billable
 	 * @param bool $customTaskIds If you want to reference a task by it's custom task id, this value must be `true`.
 	 * @param float|int $teamId When the `custom_task_ids` parameter is set to `true`, the Workspace ID must be provided using the `team_id` parameter.
 	 *  \
 	 * For example: `custom_task_ids=true&team_id=123`.
 	 */
-	public function startatimeEntry(float|int|null $teamId = null, ?bool $customTaskIds = null): Response
+	public function startatimeEntry(
+		float|int|null $teamId = null,
+		?string $description = null,
+		?array $tags = null,
+		?string $tid = null,
+		?bool $billable = null,
+		?bool $customTaskIds = null,
+	): Response
 	{
-		return $this->connector->send(new StartatimeEntry($teamId, $customTaskIds, $teamId));
+		return $this->connector->send(new StartatimeEntry($teamId, $description, $tags, $tid, $billable, $customTaskIds, $teamId));
 	}
 
 

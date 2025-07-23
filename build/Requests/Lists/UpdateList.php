@@ -25,9 +25,43 @@ class UpdateList extends Request
 
 	/**
 	 * @param string $listId
+	 * @param string $name
+	 * @param null|string $content
+	 * @param null|string $markdownContent Use `markdown_content` instead of `content` to format your List description.
+	 * @param null|int $dueDate
+	 * @param null|bool $dueDateTime
+	 * @param null|int $priority
+	 * @param null|string $assignee
+	 * @param null|string $status **Status** refers to the List color rather than the task Statuses available in the List.
+	 * @param null|bool $unsetStatus By default, this is `false.` To remove the List color use `unset_status: true`.
 	 */
 	public function __construct(
 		protected string $listId,
+		protected string $name,
+		protected ?string $content = null,
+		protected ?string $markdownContent = null,
+		protected ?int $dueDate = null,
+		protected ?bool $dueDateTime = null,
+		protected ?int $priority = null,
+		protected ?string $assignee = null,
+		protected ?string $status = null,
+		protected ?bool $unsetStatus = null,
 	) {
+	}
+
+
+	public function defaultBody(): array
+	{
+		return array_filter([
+			'name' => $this->name,
+			'content' => $this->content,
+			'markdown_content' => $this->markdownContent,
+			'due_date' => $this->dueDate,
+			'due_date_time' => $this->dueDateTime,
+			'priority' => $this->priority,
+			'assignee' => $this->assignee,
+			'status' => $this->status,
+			'unset_status' => $this->unsetStatus,
+		]);
 	}
 }

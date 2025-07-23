@@ -29,9 +29,34 @@ class CreateWebhook extends Request implements HasBody
 
 	/**
 	 * @param float|int $teamId Workspace ID
+	 * @param string $endpoint
+	 * @param array $events See [documentation](doc:webhooks#task-webhooks) for available event options. Use `*` to subscribe to all events.
+	 * @param null|int $spaceId
+	 * @param null|int $folderId
+	 * @param null|int $listId
+	 * @param null|string $taskId
 	 */
 	public function __construct(
 		protected float|int $teamId,
+		protected string $endpoint,
+		protected array $events,
+		protected ?int $spaceId = null,
+		protected ?int $folderId = null,
+		protected ?int $listId = null,
+		protected ?string $taskId = null,
 	) {
+	}
+
+
+	public function defaultBody(): array
+	{
+		return array_filter([
+			'endpoint' => $this->endpoint,
+			'events' => $this->events,
+			'space_id' => $this->spaceId,
+			'folder_id' => $this->folderId,
+			'list_id' => $this->listId,
+			'task_id' => $this->taskId,
+		]);
 	}
 }

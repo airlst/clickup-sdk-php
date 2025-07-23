@@ -29,9 +29,31 @@ class CreateLocationChatChannel extends Request implements HasBody
 
 	/**
 	 * @param int $workspaceId The ID of the Workspace.
+	 * @param null|string $description The description for the Channel being created.
+	 * @param null|string $topic The topic of the Channel being created.
+	 * @param null|array $userIds Optionally specify unique user IDs, up to 100.
+	 * @param null|string $visibility The visibility of the Channel being created. If not specified, the Channel is PUBLIC.
+	 * @param mixed $location The location of the Channel: Space, Folder, or List
 	 */
 	public function __construct(
 		protected int $workspaceId,
+		protected ?string $description = null,
+		protected ?string $topic = null,
+		protected ?array $userIds = null,
+		protected ?string $visibility = null,
+		protected mixed $location,
 	) {
+	}
+
+
+	public function defaultBody(): array
+	{
+		return array_filter([
+			'description' => $this->description,
+			'topic' => $this->topic,
+			'user_ids' => $this->userIds,
+			'visibility' => $this->visibility,
+			'location' => $this->location,
+		]);
 	}
 }

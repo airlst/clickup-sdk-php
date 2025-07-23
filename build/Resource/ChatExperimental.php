@@ -53,28 +53,53 @@ class ChatExperimental extends Resource
 
 	/**
 	 * @param int $workspaceId The ID of the Workspace.
+	 * @param string $description The description for the Channel being created.
+	 * @param string $name The name for the Channel being created.
+	 * @param string $topic The topic of the Channel being created.
+	 * @param array $userIds Optionally specify unique user IDs, up to 100.
+	 * @param string $visibility The visibility of the Channel being created. If not specified, the Channel is PUBLIC.
 	 */
-	public function createChatChannel(int $workspaceId): Response
+	public function createChatChannel(
+		int $workspaceId,
+		?string $description = null,
+		string $name,
+		?string $topic = null,
+		?array $userIds = null,
+		?string $visibility = null,
+	): Response
 	{
-		return $this->connector->send(new CreateChatChannel($workspaceId));
+		return $this->connector->send(new CreateChatChannel($workspaceId, $description, $name, $topic, $userIds, $visibility));
 	}
 
 
 	/**
 	 * @param int $workspaceId The ID of the Workspace.
+	 * @param string $description The description for the Channel being created.
+	 * @param string $topic The topic of the Channel being created.
+	 * @param array $userIds Optionally specify unique user IDs, up to 100.
+	 * @param string $visibility The visibility of the Channel being created. If not specified, the Channel is PUBLIC.
+	 * @param mixed $location The location of the Channel: Space, Folder, or List
 	 */
-	public function createLocationChatChannel(int $workspaceId): Response
+	public function createLocationChatChannel(
+		int $workspaceId,
+		?string $description = null,
+		?string $topic = null,
+		?array $userIds = null,
+		?string $visibility = null,
+		mixed $location,
+	): Response
 	{
-		return $this->connector->send(new CreateLocationChatChannel($workspaceId));
+		return $this->connector->send(new CreateLocationChatChannel($workspaceId, $description, $topic, $userIds, $visibility, $location));
 	}
 
 
 	/**
 	 * @param int $workspaceId The ID of the Workspace.
+	 * @param array $userIds The unique user IDs of participants in the Direct Message, up to 10. A Self DM is created when no user IDs are provided
 	 */
-	public function createDirectMessageChatChannel(int $workspaceId): Response
+	public function createDirectMessageChatChannel(int $workspaceId, ?array $userIds = null): Response
 	{
-		return $this->connector->send(new CreateDirectMessageChatChannel($workspaceId));
+		return $this->connector->send(new CreateDirectMessageChatChannel($workspaceId, $userIds));
 	}
 
 
@@ -102,10 +127,25 @@ class ChatExperimental extends Resource
 	/**
 	 * @param int $workspaceId The ID of the Workspace.
 	 * @param string $channelId The ID of the specified Channel.
+	 * @param string $contentFormat The format of content field values (Default: text/md)
+	 * @param string $description The updated description of the Channel.
+	 * @param mixed $location The updated location of the Channel: Space, Folder, or List
+	 * @param string $name The updated name of the Channel.
+	 * @param string $topic The updated topic of the Channel.
+	 * @param string $visibility The updated visibility of the Channel.
 	 */
-	public function updateChatChannel(int $workspaceId, string $channelId): Response
+	public function updateChatChannel(
+		int $workspaceId,
+		string $channelId,
+		?string $contentFormat = null,
+		?string $description = null,
+		mixed $location = null,
+		?string $name = null,
+		?string $topic = null,
+		?string $visibility = null,
+	): Response
 	{
-		return $this->connector->send(new UpdateChatChannel($workspaceId, $channelId));
+		return $this->connector->send(new UpdateChatChannel($workspaceId, $channelId, $contentFormat, $description, $location, $name, $topic, $visibility));
 	}
 
 
@@ -165,10 +205,35 @@ class ChatExperimental extends Resource
 	/**
 	 * @param int $workspaceId The ID of the Workspace.
 	 * @param string $channelId The ID of the Channel or direct message.
+	 * @param string $assignee The possible assignee of the message.
+	 * @param string $groupAssignee The possible group assignee of the message.
+	 * @param float|int $triagedAction The triaged action applied to the message.
+	 * @param string $triagedObjectId The message triaged action object id.
+	 * @param float|int $triagedObjectType The message triaged action object type.
+	 * @param string $type The type of message.
+	 * @param string $content The full content of the message to be created
+	 * @param array $reactions The reactions to the message that exist at creation time
+	 * @param array $followers The ids of the followers of the message
+	 * @param string $contentFormat The format of the message content (Default: text/md)
+	 * @param mixed $postData The data of the post message.
 	 */
-	public function createChatMessage(int $workspaceId, string $channelId): Response
+	public function createChatMessage(
+		int $workspaceId,
+		string $channelId,
+		?string $assignee = null,
+		?string $groupAssignee = null,
+		float|int|null $triagedAction = null,
+		?string $triagedObjectId = null,
+		float|int|null $triagedObjectType = null,
+		string $type,
+		string $content,
+		?array $reactions = null,
+		?array $followers = null,
+		?string $contentFormat = null,
+		mixed $postData = null,
+	): Response
 	{
-		return $this->connector->send(new CreateChatMessage($workspaceId, $channelId));
+		return $this->connector->send(new CreateChatMessage($workspaceId, $channelId, $assignee, $groupAssignee, $triagedAction, $triagedObjectId, $triagedObjectType, $type, $content, $reactions, $followers, $contentFormat, $postData));
 	}
 
 
@@ -185,10 +250,25 @@ class ChatExperimental extends Resource
 	/**
 	 * @param int $workspaceId The ID of the Workspace.
 	 * @param string $messageId The ID of the specified message
+	 * @param string $assignee The possible assignee of the message.
+	 * @param string $groupAssignee The possible group assignee of the message.
+	 * @param string $content The full content of the message to be created
+	 * @param string $contentFormat The format of the message content (Default: text/md)
+	 * @param mixed $postData The data of the post message.
+	 * @param bool $resolved The resolved status of the message.
 	 */
-	public function patchChatMessage(int $workspaceId, string $messageId): Response
+	public function patchChatMessage(
+		int $workspaceId,
+		string $messageId,
+		?string $assignee = null,
+		?string $groupAssignee = null,
+		?string $content = null,
+		?string $contentFormat = null,
+		mixed $postData = null,
+		?bool $resolved = null,
+	): Response
 	{
-		return $this->connector->send(new PatchChatMessage($workspaceId, $messageId));
+		return $this->connector->send(new PatchChatMessage($workspaceId, $messageId, $assignee, $groupAssignee, $content, $contentFormat, $postData, $resolved));
 	}
 
 
@@ -212,10 +292,11 @@ class ChatExperimental extends Resource
 	/**
 	 * @param int $workspaceId The ID of the Workspace.
 	 * @param string $messageId The ID of the specified message
+	 * @param string $reaction The name of the emoji to use for the reaction.
 	 */
-	public function createChatReaction(int $workspaceId, string $messageId): Response
+	public function createChatReaction(int $workspaceId, string $messageId, string $reaction): Response
 	{
-		return $this->connector->send(new CreateChatReaction($workspaceId, $messageId));
+		return $this->connector->send(new CreateChatReaction($workspaceId, $messageId, $reaction));
 	}
 
 
@@ -252,10 +333,35 @@ class ChatExperimental extends Resource
 	/**
 	 * @param int $workspaceId The ID of the Workspace.
 	 * @param string $messageId The ID of the specified message
+	 * @param string $assignee The possible assignee of the message.
+	 * @param string $groupAssignee The possible group assignee of the message.
+	 * @param float|int $triagedAction The triaged action applied to the message.
+	 * @param string $triagedObjectId The message triaged action object id.
+	 * @param float|int $triagedObjectType The message triaged action object type.
+	 * @param string $type The type of message.
+	 * @param string $content The full content of the message to be created
+	 * @param array $reactions The reactions to the message that exist at creation time
+	 * @param array $followers The ids of the followers of the message
+	 * @param string $contentFormat The format of the message content (Default: text/md)
+	 * @param mixed $postData The data of the post message.
 	 */
-	public function createReplyMessage(int $workspaceId, string $messageId): Response
+	public function createReplyMessage(
+		int $workspaceId,
+		string $messageId,
+		?string $assignee = null,
+		?string $groupAssignee = null,
+		float|int|null $triagedAction = null,
+		?string $triagedObjectId = null,
+		float|int|null $triagedObjectType = null,
+		string $type,
+		string $content,
+		?array $reactions = null,
+		?array $followers = null,
+		?string $contentFormat = null,
+		mixed $postData = null,
+	): Response
 	{
-		return $this->connector->send(new CreateReplyMessage($workspaceId, $messageId));
+		return $this->connector->send(new CreateReplyMessage($workspaceId, $messageId, $assignee, $groupAssignee, $triagedAction, $triagedObjectId, $triagedObjectType, $type, $content, $reactions, $followers, $contentFormat, $postData));
 	}
 
 

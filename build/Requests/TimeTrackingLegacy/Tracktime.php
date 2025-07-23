@@ -29,6 +29,9 @@ class Tracktime extends Request implements HasBody
 
 	/**
 	 * @param string $taskId
+	 * @param int $start
+	 * @param int $end
+	 * @param int $time
 	 * @param null|bool $customTaskIds If you want to reference a task by it's custom task id, this value must be `true`.
 	 * @param null|float|int $teamId When the `custom_task_ids` parameter is set to `true`, the Workspace ID must be provided using the `team_id` parameter.
 	 *  \
@@ -36,9 +39,18 @@ class Tracktime extends Request implements HasBody
 	 */
 	public function __construct(
 		protected string $taskId,
+		protected int $start,
+		protected int $end,
+		protected int $time,
 		protected ?bool $customTaskIds = null,
 		protected float|int|null $teamId = null,
 	) {
+	}
+
+
+	public function defaultBody(): array
+	{
+		return array_filter(['start' => $this->start, 'end' => $this->end, 'time' => $this->time]);
 	}
 
 

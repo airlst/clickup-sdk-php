@@ -32,10 +32,20 @@ class CreateFolderFromTemplate extends Request implements HasBody
 	/**
 	 * @param string $spaceId ID of the Space where the Folder will be created
 	 * @param string $templateId ID of the Folder template to use.
+	 * @param string $name Name of the new Folder
+	 * @param null|array $options Options for creating the Folder
 	 */
 	public function __construct(
 		protected string $spaceId,
 		protected string $templateId,
+		protected string $name,
+		protected ?array $options = null,
 	) {
+	}
+
+
+	public function defaultBody(): array
+	{
+		return array_filter(['name' => $this->name, 'options' => $this->options]);
 	}
 }

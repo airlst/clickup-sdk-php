@@ -28,10 +28,22 @@ class EditUserOnWorkspace extends Request
 	/**
 	 * @param float|int $teamId Workspace ID
 	 * @param float|int $userId
+	 * @param string $username
+	 * @param bool $admin
+	 * @param int $customRoleId
 	 */
 	public function __construct(
 		protected float|int $teamId,
 		protected float|int $userId,
+		protected string $username,
+		protected bool $admin,
+		protected int $customRoleId,
 	) {
+	}
+
+
+	public function defaultBody(): array
+	{
+		return array_filter(['username' => $this->username, 'admin' => $this->admin, 'custom_role_id' => $this->customRoleId]);
 	}
 }

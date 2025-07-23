@@ -26,20 +26,33 @@ class TimeTrackingLegacy extends Resource
 
 	/**
 	 * @param string $taskId
+	 * @param int $start
+	 * @param int $end
+	 * @param int $time
 	 * @param bool $customTaskIds If you want to reference a task by it's custom task id, this value must be `true`.
 	 * @param float|int $teamId When the `custom_task_ids` parameter is set to `true`, the Workspace ID must be provided using the `team_id` parameter.
 	 *  \
 	 * For example: `custom_task_ids=true&team_id=123`.
 	 */
-	public function tracktime(string $taskId, ?bool $customTaskIds = null, float|int|null $teamId = null): Response
+	public function tracktime(
+		string $taskId,
+		int $start,
+		int $end,
+		int $time,
+		?bool $customTaskIds = null,
+		float|int|null $teamId = null,
+	): Response
 	{
-		return $this->connector->send(new Tracktime($taskId, $customTaskIds, $teamId));
+		return $this->connector->send(new Tracktime($taskId, $start, $end, $time, $customTaskIds, $teamId));
 	}
 
 
 	/**
 	 * @param string $taskId
 	 * @param string $intervalId
+	 * @param int $start
+	 * @param int $end
+	 * @param int $time
 	 * @param bool $customTaskIds If you want to reference a task by it's custom task id, this value must be `true`.
 	 * @param float|int $teamId When the `custom_task_ids` parameter is set to `true`, the Workspace ID must be provided using the `team_id` parameter.
 	 *  \
@@ -48,11 +61,14 @@ class TimeTrackingLegacy extends Resource
 	public function edittimetracked(
 		string $taskId,
 		string $intervalId,
+		int $start,
+		int $end,
+		int $time,
 		?bool $customTaskIds = null,
 		float|int|null $teamId = null,
 	): Response
 	{
-		return $this->connector->send(new Edittimetracked($taskId, $intervalId, $customTaskIds, $teamId));
+		return $this->connector->send(new Edittimetracked($taskId, $intervalId, $start, $end, $time, $customTaskIds, $teamId));
 	}
 
 

@@ -24,9 +24,28 @@ class UpdateComment extends Request
 
 	/**
 	 * @param float|int $commentId
+	 * @param string $commentText
+	 * @param int $assignee
+	 * @param null|int $groupAssignee
+	 * @param bool $resolved
 	 */
 	public function __construct(
 		protected float|int $commentId,
+		protected string $commentText,
+		protected int $assignee,
+		protected ?int $groupAssignee = null,
+		protected bool $resolved,
 	) {
+	}
+
+
+	public function defaultBody(): array
+	{
+		return array_filter([
+			'comment_text' => $this->commentText,
+			'assignee' => $this->assignee,
+			'group_assignee' => $this->groupAssignee,
+			'resolved' => $this->resolved,
+		]);
 	}
 }

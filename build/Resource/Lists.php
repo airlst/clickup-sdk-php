@@ -30,10 +30,28 @@ class Lists extends Resource
 
 	/**
 	 * @param float|int $folderId
+	 * @param string $name
+	 * @param string $content
+	 * @param string $markdownContent Use `markdown_content` instead of `content` to format your List description.
+	 * @param int $dueDate
+	 * @param bool $dueDateTime
+	 * @param int $priority
+	 * @param int $assignee Include a `user_id` to assign this List.
+	 * @param string $status **Status** refers to the List color rather than the task Statuses available in the List.
 	 */
-	public function createList(float|int $folderId): Response
+	public function createList(
+		float|int $folderId,
+		string $name,
+		?string $content = null,
+		?string $markdownContent = null,
+		?int $dueDate = null,
+		?bool $dueDateTime = null,
+		?int $priority = null,
+		?int $assignee = null,
+		?string $status = null,
+	): Response
 	{
-		return $this->connector->send(new CreateList($folderId));
+		return $this->connector->send(new CreateList($folderId, $name, $content, $markdownContent, $dueDate, $dueDateTime, $priority, $assignee, $status));
 	}
 
 
@@ -49,10 +67,28 @@ class Lists extends Resource
 
 	/**
 	 * @param float|int $spaceId
+	 * @param string $name
+	 * @param string $content
+	 * @param string $markdownContent Use `markdown_content` instead of `content` to format your List description.
+	 * @param int $dueDate
+	 * @param bool $dueDateTime
+	 * @param int $priority
+	 * @param int $assignee Include a `user_id` to add a List owner.
+	 * @param string $status **Status** refers to the List color rather than the task Statuses available in the List.
 	 */
-	public function createFolderlessList(float|int $spaceId): Response
+	public function createFolderlessList(
+		float|int $spaceId,
+		string $name,
+		?string $content = null,
+		?string $markdownContent = null,
+		?int $dueDate = null,
+		?bool $dueDateTime = null,
+		?int $priority = null,
+		?int $assignee = null,
+		?string $status = null,
+	): Response
 	{
-		return $this->connector->send(new CreateFolderlessList($spaceId));
+		return $this->connector->send(new CreateFolderlessList($spaceId, $name, $content, $markdownContent, $dueDate, $dueDateTime, $priority, $assignee, $status));
 	}
 
 
@@ -67,10 +103,30 @@ class Lists extends Resource
 
 	/**
 	 * @param string $listId
+	 * @param string $name
+	 * @param string $content
+	 * @param string $markdownContent Use `markdown_content` instead of `content` to format your List description.
+	 * @param int $dueDate
+	 * @param bool $dueDateTime
+	 * @param int $priority
+	 * @param string $assignee
+	 * @param string $status **Status** refers to the List color rather than the task Statuses available in the List.
+	 * @param bool $unsetStatus By default, this is `false.` To remove the List color use `unset_status: true`.
 	 */
-	public function updateList(string $listId): Response
+	public function updateList(
+		string $listId,
+		string $name,
+		?string $content = null,
+		?string $markdownContent = null,
+		?int $dueDate = null,
+		?bool $dueDateTime = null,
+		?int $priority = null,
+		?string $assignee = null,
+		?string $status = null,
+		?bool $unsetStatus = null,
+	): Response
 	{
-		return $this->connector->send(new UpdateList($listId));
+		return $this->connector->send(new UpdateList($listId, $name, $content, $markdownContent, $dueDate, $dueDateTime, $priority, $assignee, $status, $unsetStatus));
 	}
 
 
@@ -106,19 +162,33 @@ class Lists extends Resource
 	/**
 	 * @param string $folderId ID of the Folder where the List will be created
 	 * @param string $templateId ID of the template to use
+	 * @param string $name Name of the new List
+	 * @param array $options Options for creating the List
 	 */
-	public function createFolderListFromTemplate(string $folderId, string $templateId): Response
+	public function createFolderListFromTemplate(
+		string $folderId,
+		string $templateId,
+		string $name,
+		?array $options = null,
+	): Response
 	{
-		return $this->connector->send(new CreateFolderListFromTemplate($folderId, $templateId));
+		return $this->connector->send(new CreateFolderListFromTemplate($folderId, $templateId, $name, $options));
 	}
 
 
 	/**
 	 * @param string $spaceId ID of the Space where the List will be created
 	 * @param string $templateId ID of the template to use
+	 * @param string $name Name of the new List
+	 * @param array $options Options for creating the List
 	 */
-	public function createSpaceListFromTemplate(string $spaceId, string $templateId): Response
+	public function createSpaceListFromTemplate(
+		string $spaceId,
+		string $templateId,
+		string $name,
+		?array $options = null,
+	): Response
 	{
-		return $this->connector->send(new CreateSpaceListFromTemplate($spaceId, $templateId));
+		return $this->connector->send(new CreateSpaceListFromTemplate($spaceId, $templateId, $name, $options));
 	}
 }

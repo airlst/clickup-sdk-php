@@ -13,14 +13,22 @@ class TaskRelationships extends Resource
 {
 	/**
 	 * @param string $taskId This is the task which is waiting on or blocking another task.
+	 * @param string $dependsOn
+	 * @param string $depedencyOf
 	 * @param bool $customTaskIds If you want to reference a task by it's custom task id, this value must be `true`.
 	 * @param float|int $teamId When the `custom_task_ids` parameter is set to `true`, the Workspace ID must be provided using the `team_id` parameter.
 	 * \
 	 * For example: `custom_task_ids=true&team_id=123`.
 	 */
-	public function addDependency(string $taskId, ?bool $customTaskIds = null, float|int|null $teamId = null): Response
+	public function addDependency(
+		string $taskId,
+		?string $dependsOn = null,
+		?string $depedencyOf = null,
+		?bool $customTaskIds = null,
+		float|int|null $teamId = null,
+	): Response
 	{
-		return $this->connector->send(new AddDependency($taskId, $customTaskIds, $teamId));
+		return $this->connector->send(new AddDependency($taskId, $dependsOn, $depedencyOf, $customTaskIds, $teamId));
 	}
 
 

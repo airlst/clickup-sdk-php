@@ -34,8 +34,8 @@ class GetAccessToken extends Request implements HasBody
 
 
 	/**
-	 * @param string $clientId Oauth app client id
-	 * @param string $clientSecret Oauth app client secret
+	 * @param string $clientId OAuth app client id
+	 * @param string $clientSecret OAuth app client secret
 	 * @param string $code Code given in redirect url
 	 */
 	public function __construct(
@@ -46,7 +46,7 @@ class GetAccessToken extends Request implements HasBody
 	}
 
 
-	public function defaultQuery(): array
+	public function defaultBody(): array
 	{
 		return array_filter(['client_id' => $this->clientId, 'client_secret' => $this->clientSecret, 'code' => $this->code]);
 	}

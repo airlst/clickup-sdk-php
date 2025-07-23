@@ -44,10 +44,20 @@ class Docs extends Resource
 
 	/**
 	 * @param float|int $workspaceId The ID of the Workspace.
+	 * @param string $name The name of the new Doc.
+	 * @param mixed $parent The parent of the new Doc.
+	 * @param string $visibility The visibility of the new Doc. For example, `PUBLIC` or `PRIVATE`.
+	 * @param bool $createPage Create a new page when creating the Doc.
 	 */
-	public function createDoc(float|int $workspaceId): Response
+	public function createDoc(
+		float|int $workspaceId,
+		?string $name = null,
+		mixed $parent = null,
+		?string $visibility = null,
+		?bool $createPage = null,
+	): Response
 	{
-		return $this->connector->send(new CreateDoc($workspaceId));
+		return $this->connector->send(new CreateDoc($workspaceId, $name, $parent, $visibility, $createPage));
 	}
 
 
@@ -96,10 +106,23 @@ class Docs extends Resource
 	/**
 	 * @param float|int $workspaceId The ID of the Workspace.
 	 * @param string $docId The ID of the Doc.
+	 * @param string $parentPageId The ID of the parent page. If this is a root page in the Doc, `parent_page_id` will not be returned.
+	 * @param string $name The name of the new page.
+	 * @param string $subTitle The subtitle of the new page.
+	 * @param string $content The content of the new page.
+	 * @param string $contentFormat The format the page content is in. For example, `text/md` for markdown or `text/plain` for plain.
 	 */
-	public function createPage(float|int $workspaceId, string $docId): Response
+	public function createPage(
+		float|int $workspaceId,
+		string $docId,
+		?string $parentPageId = null,
+		?string $name = null,
+		?string $subTitle = null,
+		?string $content = null,
+		?string $contentFormat = null,
+	): Response
 	{
-		return $this->connector->send(new CreatePage($workspaceId, $docId));
+		return $this->connector->send(new CreatePage($workspaceId, $docId, $parentPageId, $name, $subTitle, $content, $contentFormat));
 	}
 
 
@@ -124,9 +147,23 @@ class Docs extends Resource
 	 * @param float|int $workspaceId The ID of the Workspace.
 	 * @param string $docId The ID of the Doc.
 	 * @param string $pageId The ID of the page.
+	 * @param string $name The updated name of the page.
+	 * @param string $subTitle The updated subtitle of the page.
+	 * @param string $content The updated content of the page.
+	 * @param string $contentEditMode The strategy for updating content on the page. For example, `replace`, `append`, or `prepend`.
+	 * @param string $contentFormat The format the page content is in. For example, `text/md` for markdown and `text/plain` for plain.
 	 */
-	public function editPage(float|int $workspaceId, string $docId, string $pageId): Response
+	public function editPage(
+		float|int $workspaceId,
+		string $docId,
+		string $pageId,
+		?string $name = null,
+		?string $subTitle = null,
+		?string $content = null,
+		?string $contentEditMode = null,
+		?string $contentFormat = null,
+	): Response
 	{
-		return $this->connector->send(new EditPage($workspaceId, $docId, $pageId));
+		return $this->connector->send(new EditPage($workspaceId, $docId, $pageId, $name, $subTitle, $content, $contentEditMode, $contentFormat));
 	}
 }

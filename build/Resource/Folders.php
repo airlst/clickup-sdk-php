@@ -25,10 +25,11 @@ class Folders extends Resource
 
 	/**
 	 * @param float|int $spaceId
+	 * @param string $name
 	 */
-	public function createFolder(float|int $spaceId): Response
+	public function createFolder(float|int $spaceId, string $name): Response
 	{
-		return $this->connector->send(new CreateFolder($spaceId));
+		return $this->connector->send(new CreateFolder($spaceId, $name));
 	}
 
 
@@ -43,10 +44,11 @@ class Folders extends Resource
 
 	/**
 	 * @param float|int $folderId
+	 * @param string $name
 	 */
-	public function updateFolder(float|int $folderId): Response
+	public function updateFolder(float|int $folderId, string $name): Response
 	{
-		return $this->connector->send(new UpdateFolder($folderId));
+		return $this->connector->send(new UpdateFolder($folderId, $name));
 	}
 
 
@@ -62,9 +64,16 @@ class Folders extends Resource
 	/**
 	 * @param string $spaceId ID of the Space where the Folder will be created
 	 * @param string $templateId ID of the Folder template to use.
+	 * @param string $name Name of the new Folder
+	 * @param array $options Options for creating the Folder
 	 */
-	public function createFolderFromTemplate(string $spaceId, string $templateId): Response
+	public function createFolderFromTemplate(
+		string $spaceId,
+		string $templateId,
+		string $name,
+		?array $options = null,
+	): Response
 	{
-		return $this->connector->send(new CreateFolderFromTemplate($spaceId, $templateId));
+		return $this->connector->send(new CreateFolderFromTemplate($spaceId, $templateId, $name, $options));
 	}
 }

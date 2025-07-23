@@ -30,9 +30,17 @@ class MergeTasks extends Request implements HasBody
 
 	/**
 	 * @param string $taskId ID of the target task that other tasks will be merged into.
+	 * @param array $sourceTaskIds Array of task IDs to merge into the target task.
 	 */
 	public function __construct(
 		protected string $taskId,
+		protected array $sourceTaskIds,
 	) {
+	}
+
+
+	public function defaultBody(): array
+	{
+		return array_filter(['source_task_ids' => $this->sourceTaskIds]);
 	}
 }

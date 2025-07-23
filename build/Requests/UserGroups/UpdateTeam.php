@@ -38,9 +38,21 @@ class UpdateTeam extends Request
 
 	/**
 	 * @param string $groupId User Group ID
+	 * @param null|string $name
+	 * @param null|string $handle
+	 * @param null|array $members
 	 */
 	public function __construct(
 		protected string $groupId,
+		protected ?string $name = null,
+		protected ?string $handle = null,
+		protected ?array $members = null,
 	) {
+	}
+
+
+	public function defaultBody(): array
+	{
+		return array_filter(['name' => $this->name, 'handle' => $this->handle, 'members' => $this->members]);
 	}
 }

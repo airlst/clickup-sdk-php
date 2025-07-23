@@ -29,9 +29,17 @@ class CreateDirectMessageChatChannel extends Request implements HasBody
 
 	/**
 	 * @param int $workspaceId The ID of the Workspace.
+	 * @param null|array $userIds The unique user IDs of participants in the Direct Message, up to 10. A Self DM is created when no user IDs are provided
 	 */
 	public function __construct(
 		protected int $workspaceId,
+		protected ?array $userIds = null,
 	) {
+	}
+
+
+	public function defaultBody(): array
+	{
+		return array_filter(['user_ids' => $this->userIds]);
 	}
 }

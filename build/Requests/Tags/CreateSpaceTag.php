@@ -28,9 +28,17 @@ class CreateSpaceTag extends Request implements HasBody
 
 	/**
 	 * @param float|int $spaceId
+	 * @param array $tag
 	 */
 	public function __construct(
 		protected float|int $spaceId,
+		protected array $tag,
 	) {
+	}
+
+
+	public function defaultBody(): array
+	{
+		return array_filter(['tag' => $this->tag]);
 	}
 }

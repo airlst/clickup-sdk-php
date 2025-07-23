@@ -28,9 +28,17 @@ class CreateFolder extends Request implements HasBody
 
 	/**
 	 * @param float|int $spaceId
+	 * @param string $name
 	 */
 	public function __construct(
 		protected float|int $spaceId,
+		protected string $name,
 	) {
+	}
+
+
+	public function defaultBody(): array
+	{
+		return array_filter(['name' => $this->name]);
 	}
 }

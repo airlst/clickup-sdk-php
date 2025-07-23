@@ -24,9 +24,23 @@ class Changetagnamesfromtimeentries extends Request
 
 	/**
 	 * @param float|int $teamId Workspace ID
+	 * @param string $name
+	 * @param string $newName
+	 * @param string $tagBg
+	 * @param string $tagFg
 	 */
 	public function __construct(
 		protected float|int $teamId,
+		protected string $name,
+		protected string $newName,
+		protected string $tagBg,
+		protected string $tagFg,
 	) {
+	}
+
+
+	public function defaultBody(): array
+	{
+		return array_filter(['name' => $this->name, 'new_name' => $this->newName, 'tag_bg' => $this->tagBg, 'tag_fg' => $this->tagFg]);
 	}
 }

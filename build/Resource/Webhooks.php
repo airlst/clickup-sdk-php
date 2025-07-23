@@ -22,19 +22,36 @@ class Webhooks extends Resource
 
 	/**
 	 * @param float|int $teamId Workspace ID
+	 * @param string $endpoint
+	 * @param array $events See [documentation](doc:webhooks#task-webhooks) for available event options. Use `*` to subscribe to all events.
+	 * @param int $spaceId
+	 * @param int $folderId
+	 * @param int $listId
+	 * @param string $taskId
 	 */
-	public function createWebhook(float|int $teamId): Response
+	public function createWebhook(
+		float|int $teamId,
+		string $endpoint,
+		array $events,
+		?int $spaceId = null,
+		?int $folderId = null,
+		?int $listId = null,
+		?string $taskId = null,
+	): Response
 	{
-		return $this->connector->send(new CreateWebhook($teamId));
+		return $this->connector->send(new CreateWebhook($teamId, $endpoint, $events, $spaceId, $folderId, $listId, $taskId));
 	}
 
 
 	/**
 	 * @param string $webhookId e506-4a29-9d42-26e504e3435e (uuid)
+	 * @param string $endpoint
+	 * @param string $events
+	 * @param string $status
 	 */
-	public function updateWebhook(string $webhookId): Response
+	public function updateWebhook(string $webhookId, string $endpoint, string $events, string $status): Response
 	{
-		return $this->connector->send(new UpdateWebhook($webhookId));
+		return $this->connector->send(new UpdateWebhook($webhookId, $endpoint, $events, $status));
 	}
 
 

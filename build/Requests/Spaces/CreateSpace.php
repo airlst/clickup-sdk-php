@@ -28,9 +28,21 @@ class CreateSpace extends Request implements HasBody
 
 	/**
 	 * @param float|int $teamId Workspace ID
+	 * @param string $name
+	 * @param bool $multipleAssignees
+	 * @param array $features
 	 */
 	public function __construct(
 		protected float|int $teamId,
+		protected string $name,
+		protected bool $multipleAssignees,
+		protected array $features,
 	) {
+	}
+
+
+	public function defaultBody(): array
+	{
+		return array_filter(['name' => $this->name, 'multiple_assignees' => $this->multipleAssignees, 'features' => $this->features]);
 	}
 }

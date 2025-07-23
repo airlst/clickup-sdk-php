@@ -24,10 +24,13 @@ class Spaces extends Resource
 
 	/**
 	 * @param float|int $teamId Workspace ID
+	 * @param string $name
+	 * @param bool $multipleAssignees
+	 * @param array $features
 	 */
-	public function createSpace(float|int $teamId): Response
+	public function createSpace(float|int $teamId, string $name, bool $multipleAssignees, array $features): Response
 	{
-		return $this->connector->send(new CreateSpace($teamId));
+		return $this->connector->send(new CreateSpace($teamId, $name, $multipleAssignees, $features));
 	}
 
 
@@ -42,10 +45,24 @@ class Spaces extends Resource
 
 	/**
 	 * @param float|int $spaceId
+	 * @param string $name
+	 * @param string $color
+	 * @param bool $private
+	 * @param bool $adminCanManage ***Note:** Allowing or restricting admins from managing private Spaces using `"admin_can_manage"` is an [Enterprise Plan](https://clickup.com/pricing) feature.*
+	 * @param bool $multipleAssignees
+	 * @param array $features
 	 */
-	public function updateSpace(float|int $spaceId): Response
+	public function updateSpace(
+		float|int $spaceId,
+		string $name,
+		string $color,
+		bool $private,
+		bool $adminCanManage,
+		bool $multipleAssignees,
+		array $features,
+	): Response
 	{
-		return $this->connector->send(new UpdateSpace($spaceId));
+		return $this->connector->send(new UpdateSpace($spaceId, $name, $color, $private, $adminCanManage, $multipleAssignees, $features));
 	}
 
 

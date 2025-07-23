@@ -30,10 +30,30 @@ class Views extends Resource
 
 	/**
 	 * @param float|int $teamId Workspace ID
+	 * @param string $name
+	 * @param string $type The type of view to create. Options include: `list`, `board`, `calendar`, `table`, `timeline`, `workload`, `activity`, `map`, `conversation`, or `gantt`.
+	 * @param array $grouping
+	 * @param array $divide
+	 * @param array $sorting
+	 * @param array $filters
+	 * @param array $columns Custom Fields added to a view at the Everything level will be added to all tasks in your Workspace. Once Custom Fields are added to one of these views, you cannot move it to another level of the Hierarchy.
+	 * @param array $teamSidebar
+	 * @param array $settings
 	 */
-	public function createTeamView(float|int $teamId): Response
+	public function createTeamView(
+		float|int $teamId,
+		string $name,
+		string $type,
+		array $grouping,
+		array $divide,
+		array $sorting,
+		array $filters,
+		array $columns,
+		array $teamSidebar,
+		array $settings,
+	): Response
 	{
-		return $this->connector->send(new CreateTeamView($teamId));
+		return $this->connector->send(new CreateTeamView($teamId, $name, $type, $grouping, $divide, $sorting, $filters, $columns, $teamSidebar, $settings));
 	}
 
 
@@ -48,10 +68,30 @@ class Views extends Resource
 
 	/**
 	 * @param float|int $spaceId
+	 * @param string $name
+	 * @param string $type The type of view to create. Options include: `list`, `board`, `calendar`, `table`, `timeline`, `workload`, `activity`, `map`, `conversation`, or `gantt`.
+	 * @param array $grouping
+	 * @param array $divide
+	 * @param array $sorting
+	 * @param array $filters
+	 * @param array $columns Custom Fields added to a view at the Everything level will be added to all tasks in your Workspace. Once Custom Fields are added to one of these views, you cannot move it to another level of the Hierarchy.
+	 * @param array $teamSidebar
+	 * @param array $settings
 	 */
-	public function createSpaceView(float|int $spaceId): Response
+	public function createSpaceView(
+		float|int $spaceId,
+		string $name,
+		string $type,
+		array $grouping,
+		array $divide,
+		array $sorting,
+		array $filters,
+		array $columns,
+		array $teamSidebar,
+		array $settings,
+	): Response
 	{
-		return $this->connector->send(new CreateSpaceView($spaceId));
+		return $this->connector->send(new CreateSpaceView($spaceId, $name, $type, $grouping, $divide, $sorting, $filters, $columns, $teamSidebar, $settings));
 	}
 
 
@@ -66,10 +106,30 @@ class Views extends Resource
 
 	/**
 	 * @param float|int $folderId
+	 * @param string $name
+	 * @param string $type The type of view to create. Options include: `list`, `board`, `calendar`, `table`, `timeline`, `workload`, `activity`, `map`, `conversation`, or `gantt`.
+	 * @param array $grouping
+	 * @param array $divide
+	 * @param array $sorting
+	 * @param array $filters
+	 * @param array $columns Custom Fields added to a view at the Everything level will be added to all tasks in your Workspace. Once Custom Fields are added to one of these views, you cannot move it to another level of the Hierarchy.
+	 * @param array $teamSidebar
+	 * @param array $settings
 	 */
-	public function createFolderView(float|int $folderId): Response
+	public function createFolderView(
+		float|int $folderId,
+		string $name,
+		string $type,
+		array $grouping,
+		array $divide,
+		array $sorting,
+		array $filters,
+		array $columns,
+		array $teamSidebar,
+		array $settings,
+	): Response
 	{
-		return $this->connector->send(new CreateFolderView($folderId));
+		return $this->connector->send(new CreateFolderView($folderId, $name, $type, $grouping, $divide, $sorting, $filters, $columns, $teamSidebar, $settings));
 	}
 
 
@@ -84,10 +144,30 @@ class Views extends Resource
 
 	/**
 	 * @param float|int $listId
+	 * @param string $name
+	 * @param string $type The type of view to create. Options include: `list`, `board`, `calendar`, `table`, `timeline`, `workload`, `activity`, `map`, `conversation`, or `gantt`.
+	 * @param array $grouping
+	 * @param array $divide
+	 * @param array $sorting
+	 * @param array $filters
+	 * @param array $columns Custom Fields added to a view at the Everything level will be added to all tasks in your Workspace. Once Custom Fields are added to one of these views, you cannot move it to another level of the Hierarchy.
+	 * @param array $teamSidebar
+	 * @param array $settings
 	 */
-	public function createListView(float|int $listId): Response
+	public function createListView(
+		float|int $listId,
+		string $name,
+		string $type,
+		array $grouping,
+		array $divide,
+		array $sorting,
+		array $filters,
+		array $columns,
+		array $teamSidebar,
+		array $settings,
+	): Response
 	{
-		return $this->connector->send(new CreateListView($listId));
+		return $this->connector->send(new CreateListView($listId, $name, $type, $grouping, $divide, $sorting, $filters, $columns, $teamSidebar, $settings));
 	}
 
 
@@ -102,10 +182,36 @@ class Views extends Resource
 
 	/**
 	 * @param string $viewId
+	 * @param string $name
+	 * @param string $type
+	 * @param array $parent The parent parameter specifies where the view is located in the ClickUp Hierarchy. Both `id` and `type` are required. \
+	 *  \
+	 * The `id` is the id of the Workspace, Space, Folder, or List where the view is located. \
+	 *  \
+	 * The `type` value indciates the level of the Hierarchy where the view is located.
+	 * @param array $grouping
+	 * @param array $divide
+	 * @param array $sorting
+	 * @param array $filters
+	 * @param array $columns Custom Fields added to a view at the Everything level will be added to all tasks in your Workspace. Once Custom Fields are added to one of these views, you cannot move it to another level of the Hierarchy.
+	 * @param array $teamSidebar
+	 * @param array $settings
 	 */
-	public function updateView(string $viewId): Response
+	public function updateView(
+		string $viewId,
+		string $name,
+		string $type,
+		array $parent,
+		array $grouping,
+		array $divide,
+		array $sorting,
+		array $filters,
+		array $columns,
+		array $teamSidebar,
+		array $settings,
+	): Response
 	{
-		return $this->connector->send(new UpdateView($viewId));
+		return $this->connector->send(new UpdateView($viewId, $name, $type, $parent, $grouping, $divide, $sorting, $filters, $columns, $teamSidebar, $settings));
 	}
 
 

@@ -40,6 +40,10 @@ class Comments extends Resource
 
 	/**
 	 * @param string $taskId
+	 * @param string $commentText
+	 * @param int $assignee
+	 * @param string $groupAssignee
+	 * @param bool $notifyAll If `notify_all` is true, notifications will be sent to everyone including the creator of the comment.
 	 * @param bool $customTaskIds If you want to reference a task by it's custom task id, this value must be `true`.
 	 * @param float|int $teamId When the `custom_task_ids` parameter is set to `true`, the Workspace ID must be provided using the `team_id` parameter.
 	 *  \
@@ -47,11 +51,15 @@ class Comments extends Resource
 	 */
 	public function createTaskComment(
 		string $taskId,
+		string $commentText,
+		?int $assignee = null,
+		?string $groupAssignee = null,
+		bool $notifyAll,
 		?bool $customTaskIds = null,
 		float|int|null $teamId = null,
 	): Response
 	{
-		return $this->connector->send(new CreateTaskComment($taskId, $customTaskIds, $teamId));
+		return $this->connector->send(new CreateTaskComment($taskId, $commentText, $assignee, $groupAssignee, $notifyAll, $customTaskIds, $teamId));
 	}
 
 
@@ -68,10 +76,12 @@ class Comments extends Resource
 
 	/**
 	 * @param string $viewId 105 (string)
+	 * @param string $commentText
+	 * @param bool $notifyAll If `notify_all` is true, notifications will be sent to everyone including the creator of the comment.
 	 */
-	public function createChatViewComment(string $viewId): Response
+	public function createChatViewComment(string $viewId, string $commentText, bool $notifyAll): Response
 	{
-		return $this->connector->send(new CreateChatViewComment($viewId));
+		return $this->connector->send(new CreateChatViewComment($viewId, $commentText, $notifyAll));
 	}
 
 
@@ -88,19 +98,32 @@ class Comments extends Resource
 
 	/**
 	 * @param float|int $listId
+	 * @param string $commentText
+	 * @param int $assignee
+	 * @param bool $notifyAll If `notify_all` is true, notifications will be sent to everyone including the creator of the comment.
 	 */
-	public function createListComment(float|int $listId): Response
+	public function createListComment(float|int $listId, string $commentText, int $assignee, bool $notifyAll): Response
 	{
-		return $this->connector->send(new CreateListComment($listId));
+		return $this->connector->send(new CreateListComment($listId, $commentText, $assignee, $notifyAll));
 	}
 
 
 	/**
 	 * @param float|int $commentId
+	 * @param string $commentText
+	 * @param int $assignee
+	 * @param int $groupAssignee
+	 * @param bool $resolved
 	 */
-	public function updateComment(float|int $commentId): Response
+	public function updateComment(
+		float|int $commentId,
+		string $commentText,
+		int $assignee,
+		?int $groupAssignee = null,
+		bool $resolved,
+	): Response
 	{
-		return $this->connector->send(new UpdateComment($commentId));
+		return $this->connector->send(new UpdateComment($commentId, $commentText, $assignee, $groupAssignee, $resolved));
 	}
 
 
@@ -124,9 +147,19 @@ class Comments extends Resource
 
 	/**
 	 * @param float|int $commentId
+	 * @param string $commentText
+	 * @param int $assignee
+	 * @param string $groupAssignee
+	 * @param bool $notifyAll If `notify_all` is true, notifications will be sent to everyone including the creator of the comment.
 	 */
-	public function createThreadedComment(float|int $commentId): Response
+	public function createThreadedComment(
+		float|int $commentId,
+		string $commentText,
+		?int $assignee = null,
+		?string $groupAssignee = null,
+		bool $notifyAll,
+	): Response
 	{
-		return $this->connector->send(new CreateThreadedComment($commentId));
+		return $this->connector->send(new CreateThreadedComment($commentId, $commentText, $assignee, $groupAssignee, $notifyAll));
 	}
 }

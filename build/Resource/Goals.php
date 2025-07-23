@@ -27,10 +27,24 @@ class Goals extends Resource
 
 	/**
 	 * @param float|int $teamId Workspace ID
+	 * @param string $name
+	 * @param int $dueDate
+	 * @param string $description
+	 * @param bool $multipleOwners
+	 * @param array $owners Array of user IDs.
+	 * @param string $color
 	 */
-	public function createGoal(float|int $teamId): Response
+	public function createGoal(
+		float|int $teamId,
+		string $name,
+		int $dueDate,
+		string $description,
+		bool $multipleOwners,
+		array $owners,
+		string $color,
+	): Response
 	{
-		return $this->connector->send(new CreateGoal($teamId));
+		return $this->connector->send(new CreateGoal($teamId, $name, $dueDate, $description, $multipleOwners, $owners, $color));
 	}
 
 
@@ -45,10 +59,24 @@ class Goals extends Resource
 
 	/**
 	 * @param string $goalId 900e-462d-a849-4a216b06d930 (uuid)
+	 * @param string $name
+	 * @param int $dueDate
+	 * @param string $description
+	 * @param array $remOwners Array of user IDs.
+	 * @param array $addOwners Array of user IDs.
+	 * @param string $color
 	 */
-	public function updateGoal(string $goalId): Response
+	public function updateGoal(
+		string $goalId,
+		string $name,
+		int $dueDate,
+		string $description,
+		array $remOwners,
+		array $addOwners,
+		string $color,
+	): Response
 	{
-		return $this->connector->send(new UpdateGoal($goalId));
+		return $this->connector->send(new UpdateGoal($goalId, $name, $dueDate, $description, $remOwners, $addOwners, $color));
 	}
 
 
@@ -63,19 +91,39 @@ class Goals extends Resource
 
 	/**
 	 * @param string $goalId 900e-462d-a849-4a216b06d930 (uuid)
+	 * @param string $name
+	 * @param array $owners
+	 * @param string $type Target (key result) types include: `number`, `currency`, `boolean`, `percentage`, or `automatic`.
+	 * @param int $stepsStart
+	 * @param int $stepsEnd
+	 * @param string $unit
+	 * @param array $taskIds Enter an array of task IDs to link this target with one or more tasks.
+	 * @param array $listIds Enter an array of List IDs to link this target with one or more Lists.
 	 */
-	public function createKeyResult(string $goalId): Response
+	public function createKeyResult(
+		string $goalId,
+		string $name,
+		array $owners,
+		string $type,
+		int $stepsStart,
+		int $stepsEnd,
+		string $unit,
+		array $taskIds,
+		array $listIds,
+	): Response
 	{
-		return $this->connector->send(new CreateKeyResult($goalId));
+		return $this->connector->send(new CreateKeyResult($goalId, $name, $owners, $type, $stepsStart, $stepsEnd, $unit, $taskIds, $listIds));
 	}
 
 
 	/**
 	 * @param string $keyResultId 8480-49bc-8c57-e569747efe93 (uuid)
+	 * @param int $stepsCurrent
+	 * @param string $note
 	 */
-	public function editKeyResult(string $keyResultId): Response
+	public function editKeyResult(string $keyResultId, int $stepsCurrent, string $note): Response
 	{
-		return $this->connector->send(new EditKeyResult($keyResultId));
+		return $this->connector->send(new EditKeyResult($keyResultId, $stepsCurrent, $note));
 	}
 
 

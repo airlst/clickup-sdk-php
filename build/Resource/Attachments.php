@@ -10,6 +10,7 @@ class Attachments extends Resource
 {
 	/**
 	 * @param string $taskId
+	 * @param array $attachment
 	 * @param bool $customTaskIds If you want to reference a task by its custom task id, this value must be `true`.
 	 * @param float|int $teamId When the `custom_task_ids` parameter is set to `true`, the Workspace ID must be provided using the `team_id` parameter.
 	 *  \
@@ -17,10 +18,11 @@ class Attachments extends Resource
 	 */
 	public function createTaskAttachment(
 		string $taskId,
+		?array $attachment = null,
 		?bool $customTaskIds = null,
 		float|int|null $teamId = null,
 	): Response
 	{
-		return $this->connector->send(new CreateTaskAttachment($taskId, $customTaskIds, $teamId));
+		return $this->connector->send(new CreateTaskAttachment($taskId, $attachment, $customTaskIds, $teamId));
 	}
 }

@@ -25,10 +25,18 @@ class DeleteSpaceTag extends Request
 	/**
 	 * @param float|int $spaceId
 	 * @param string $tagName
+	 * @param array $tag
 	 */
 	public function __construct(
 		protected float|int $spaceId,
 		protected string $tagName,
+		protected array $tag,
 	) {
+	}
+
+
+	public function defaultBody(): array
+	{
+		return array_filter(['tag' => $this->tag]);
 	}
 }

@@ -19,10 +19,26 @@ class Guests extends Resource
 {
 	/**
 	 * @param float|int $teamId Workspace ID
+	 * @param string $email
+	 * @param bool $canEditTags
+	 * @param bool $canSeeTimeSpent
+	 * @param bool $canSeeTimeEstimated
+	 * @param bool $canCreateViews
+	 * @param bool $canSeePointsEstimated
+	 * @param int $customRoleId
 	 */
-	public function inviteGuestToWorkspace(float|int $teamId): Response
+	public function inviteGuestToWorkspace(
+		float|int $teamId,
+		string $email,
+		?bool $canEditTags = null,
+		?bool $canSeeTimeSpent = null,
+		?bool $canSeeTimeEstimated = null,
+		?bool $canCreateViews = null,
+		?bool $canSeePointsEstimated = null,
+		?int $customRoleId = null,
+	): Response
 	{
-		return $this->connector->send(new InviteGuestToWorkspace($teamId));
+		return $this->connector->send(new InviteGuestToWorkspace($teamId, $email, $canEditTags, $canSeeTimeSpent, $canSeeTimeEstimated, $canCreateViews, $canSeePointsEstimated, $customRoleId));
 	}
 
 
@@ -39,10 +55,25 @@ class Guests extends Resource
 	/**
 	 * @param float|int $teamId Workspace ID
 	 * @param float|int $guestId
+	 * @param bool $canSeePointsEstimated
+	 * @param bool $canEditTags
+	 * @param bool $canSeeTimeSpent
+	 * @param bool $canSeeTimeEstimated
+	 * @param bool $canCreateViews
+	 * @param int $customRoleId
 	 */
-	public function editGuestOnWorkspace(float|int $teamId, float|int $guestId): Response
+	public function editGuestOnWorkspace(
+		float|int $teamId,
+		float|int $guestId,
+		?bool $canSeePointsEstimated = null,
+		?bool $canEditTags = null,
+		?bool $canSeeTimeSpent = null,
+		?bool $canSeeTimeEstimated = null,
+		?bool $canCreateViews = null,
+		?int $customRoleId = null,
+	): Response
 	{
-		return $this->connector->send(new EditGuestOnWorkspace($teamId, $guestId));
+		return $this->connector->send(new EditGuestOnWorkspace($teamId, $guestId, $canSeePointsEstimated, $canEditTags, $canSeeTimeSpent, $canSeeTimeEstimated, $canCreateViews, $customRoleId));
 	}
 
 
@@ -59,6 +90,7 @@ class Guests extends Resource
 	/**
 	 * @param string $taskId
 	 * @param float|int $guestId
+	 * @param string $permissionLevel Can be `read` (view only), `comment`, `edit`, or `create` (full).
 	 * @param bool $includeShared Exclude details of items shared with the guest by setting this parameter to `false`. By default this parameter is set to `true`.
 	 * @param bool $customTaskIds If you want to reference a task by it's custom task id, this value must be `true`.
 	 * @param float|int $teamId When the `custom_task_ids` parameter is set to `true`, the Workspace ID must be provided using the `team_id` parameter.
@@ -68,12 +100,13 @@ class Guests extends Resource
 	public function addGuestToTask(
 		string $taskId,
 		float|int $guestId,
+		string $permissionLevel,
 		?bool $includeShared = null,
 		?bool $customTaskIds = null,
 		float|int|null $teamId = null,
 	): Response
 	{
-		return $this->connector->send(new AddGuestToTask($taskId, $guestId, $includeShared, $customTaskIds, $teamId));
+		return $this->connector->send(new AddGuestToTask($taskId, $guestId, $permissionLevel, $includeShared, $customTaskIds, $teamId));
 	}
 
 
@@ -101,11 +134,17 @@ class Guests extends Resource
 	/**
 	 * @param float|int $listId
 	 * @param float|int $guestId
+	 * @param string $permissionLevel Can be `read` (view only), `comment`, `edit`, or `create` (full).
 	 * @param bool $includeShared Exclude details of items shared with the guest by setting this parameter to `false`. By default this parameter is set to `true`.
 	 */
-	public function addGuestToList(float|int $listId, float|int $guestId, ?bool $includeShared = null): Response
+	public function addGuestToList(
+		float|int $listId,
+		float|int $guestId,
+		string $permissionLevel,
+		?bool $includeShared = null,
+	): Response
 	{
-		return $this->connector->send(new AddGuestToList($listId, $guestId, $includeShared));
+		return $this->connector->send(new AddGuestToList($listId, $guestId, $permissionLevel, $includeShared));
 	}
 
 
@@ -123,11 +162,17 @@ class Guests extends Resource
 	/**
 	 * @param float|int $folderId
 	 * @param float|int $guestId
+	 * @param string $permissionLevel Can be `read` (view only), `comment`, `edit`, or `create` (full).
 	 * @param bool $includeShared Exclude details of items shared with the guest by setting this parameter to `false`. By default this parameter is set to `true`.
 	 */
-	public function addGuestToFolder(float|int $folderId, float|int $guestId, ?bool $includeShared = null): Response
+	public function addGuestToFolder(
+		float|int $folderId,
+		float|int $guestId,
+		string $permissionLevel,
+		?bool $includeShared = null,
+	): Response
 	{
-		return $this->connector->send(new AddGuestToFolder($folderId, $guestId, $includeShared));
+		return $this->connector->send(new AddGuestToFolder($folderId, $guestId, $permissionLevel, $includeShared));
 	}
 
 

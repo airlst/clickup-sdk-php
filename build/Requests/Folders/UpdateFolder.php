@@ -24,9 +24,17 @@ class UpdateFolder extends Request
 
 	/**
 	 * @param float|int $folderId
+	 * @param string $name
 	 */
 	public function __construct(
 		protected float|int $folderId,
+		protected string $name,
 	) {
+	}
+
+
+	public function defaultBody(): array
+	{
+		return array_filter(['name' => $this->name]);
 	}
 }

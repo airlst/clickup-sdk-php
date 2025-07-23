@@ -28,6 +28,7 @@ class CreateChecklist extends Request implements HasBody
 
 	/**
 	 * @param string $taskId
+	 * @param string $name
 	 * @param null|bool $customTaskIds If you want to reference a task by it's custom task id, this value must be `true`.
 	 * @param null|float|int $teamId When the `custom_task_ids` parameter is set to `true`, the Workspace ID must be provided using the `team_id` parameter.
 	 *  \
@@ -35,9 +36,16 @@ class CreateChecklist extends Request implements HasBody
 	 */
 	public function __construct(
 		protected string $taskId,
+		protected string $name,
 		protected ?bool $customTaskIds = null,
 		protected float|int|null $teamId = null,
 	) {
+	}
+
+
+	public function defaultBody(): array
+	{
+		return array_filter(['name' => $this->name]);
 	}
 
 

@@ -11,8 +11,8 @@ use Saloon\Http\Response;
 class Authorization extends Resource
 {
 	/**
-	 * @param string $clientId Oauth app client id
-	 * @param string $clientSecret Oauth app client secret
+	 * @param string $clientId OAuth app client id
+	 * @param string $clientSecret OAuth app client secret
 	 * @param string $code Code given in redirect url
 	 */
 	public function getAccessToken(string $clientId, string $clientSecret, string $code): Response

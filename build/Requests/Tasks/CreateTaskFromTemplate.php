@@ -29,10 +29,18 @@ class CreateTaskFromTemplate extends Request implements HasBody
 	/**
 	 * @param float|int $listId
 	 * @param string $templateId
+	 * @param string $name
 	 */
 	public function __construct(
 		protected float|int $listId,
 		protected string $templateId,
+		protected string $name,
 	) {
+	}
+
+
+	public function defaultBody(): array
+	{
+		return array_filter(['name' => $this->name]);
 	}
 }

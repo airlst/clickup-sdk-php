@@ -24,30 +24,33 @@ class Tags extends Resource
 
 	/**
 	 * @param float|int $spaceId
+	 * @param array $tag
 	 */
-	public function createSpaceTag(float|int $spaceId): Response
+	public function createSpaceTag(float|int $spaceId, array $tag): Response
 	{
-		return $this->connector->send(new CreateSpaceTag($spaceId));
+		return $this->connector->send(new CreateSpaceTag($spaceId, $tag));
 	}
 
 
 	/**
 	 * @param float|int $spaceId
 	 * @param string $tagName
+	 * @param array $tag
 	 */
-	public function editSpaceTag(float|int $spaceId, string $tagName): Response
+	public function editSpaceTag(float|int $spaceId, string $tagName, array $tag): Response
 	{
-		return $this->connector->send(new EditSpaceTag($spaceId, $tagName));
+		return $this->connector->send(new EditSpaceTag($spaceId, $tagName, $tag));
 	}
 
 
 	/**
 	 * @param float|int $spaceId
 	 * @param string $tagName
+	 * @param array $tag
 	 */
-	public function deleteSpaceTag(float|int $spaceId, string $tagName): Response
+	public function deleteSpaceTag(float|int $spaceId, string $tagName, array $tag): Response
 	{
-		return $this->connector->send(new DeleteSpaceTag($spaceId, $tagName));
+		return $this->connector->send(new DeleteSpaceTag($spaceId, $tagName, $tag));
 	}
 
 

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace ClickUp\V2\SDKBuilder\Commands;
 
+use ClickUp\V2\SDKBuilder\Parsers\OpenApiParser;
 use Crescat\SaloonSdkGenerator\CodeGenerator;
 use Crescat\SaloonSdkGenerator\Data\Generator\Config;
 use Crescat\SaloonSdkGenerator\Data\Generator\GeneratedCode;
@@ -29,6 +30,7 @@ use function str_replace;
 class Build extends Command
 {
     protected const string NAMESPACE = 'ClickUp\V2';
+    protected const string TYPE = 'openapi';
     protected $signature = 'build {spec-url=https://developer.clickup.com/openapi/673cf4cfdca96a0019533cad} {--no-download}';
     protected $description = 'Build an SDK';
 
@@ -72,7 +74,9 @@ class Build extends Command
             connectorGenerator: new ConnectorGenerator($config),
         );
 
-        $this->dumpGeneratedFiles($generator->run(Factory::parse('openapi', $specFile)));
+        Factory::registerParser(self::TYPE, OpenApiParser::class);
+
+        $this->dumpGeneratedFiles($generator->run(Factory::parse(self::TYPE, $specFile)));
     }
 
     protected function dumpGeneratedFiles(GeneratedCode $result): void

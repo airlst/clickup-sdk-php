@@ -28,9 +28,19 @@ class CreateChecklistItem extends Request implements HasBody
 
 	/**
 	 * @param string $checklistId b8a8-48d8-a0c6-b4200788a683 (uuid)
+	 * @param null|string $name
+	 * @param null|int $assignee
 	 */
 	public function __construct(
 		protected string $checklistId,
+		protected ?string $name = null,
+		protected ?int $assignee = null,
 	) {
+	}
+
+
+	public function defaultBody(): array
+	{
+		return array_filter(['name' => $this->name, 'assignee' => $this->assignee]);
 	}
 }

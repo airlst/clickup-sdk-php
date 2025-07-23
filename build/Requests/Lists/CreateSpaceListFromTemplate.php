@@ -31,10 +31,20 @@ class CreateSpaceListFromTemplate extends Request implements HasBody
 	/**
 	 * @param string $spaceId ID of the Space where the List will be created
 	 * @param string $templateId ID of the template to use
+	 * @param string $name Name of the new List
+	 * @param null|array $options Options for creating the List
 	 */
 	public function __construct(
 		protected string $spaceId,
 		protected string $templateId,
+		protected string $name,
+		protected ?array $options = null,
 	) {
+	}
+
+
+	public function defaultBody(): array
+	{
+		return array_filter(['name' => $this->name, 'options' => $this->options]);
 	}
 }

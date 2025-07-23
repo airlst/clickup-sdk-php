@@ -32,13 +32,21 @@ class AddGuestToFolder extends Request implements HasBody
 	/**
 	 * @param float|int $folderId
 	 * @param float|int $guestId
+	 * @param string $permissionLevel Can be `read` (view only), `comment`, `edit`, or `create` (full).
 	 * @param null|bool $includeShared Exclude details of items shared with the guest by setting this parameter to `false`. By default this parameter is set to `true`.
 	 */
 	public function __construct(
 		protected float|int $folderId,
 		protected float|int $guestId,
+		protected string $permissionLevel,
 		protected ?bool $includeShared = null,
 	) {
+	}
+
+
+	public function defaultBody(): array
+	{
+		return array_filter(['permission_level' => $this->permissionLevel]);
 	}
 
 

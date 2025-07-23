@@ -32,9 +32,21 @@ class InviteUserToWorkspace extends Request implements HasBody
 
 	/**
 	 * @param float|int $teamId Workspace ID
+	 * @param string $email
+	 * @param bool $admin
+	 * @param null|int $customRoleId
 	 */
 	public function __construct(
 		protected float|int $teamId,
+		protected string $email,
+		protected bool $admin,
+		protected ?int $customRoleId = null,
 	) {
+	}
+
+
+	public function defaultBody(): array
+	{
+		return array_filter(['email' => $this->email, 'admin' => $this->admin, 'custom_role_id' => $this->customRoleId]);
 	}
 }
