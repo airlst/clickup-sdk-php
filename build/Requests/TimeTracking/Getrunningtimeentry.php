@@ -7,6 +7,8 @@ namespace ClickUp\V2\Requests\TimeTracking;
 use Saloon\Enums\Method;
 use Saloon\Http\Request;
 
+use function is_null;
+
 /**
  * Getrunningtimeentry.
  *
@@ -35,6 +37,6 @@ class Getrunningtimeentry extends Request
 
     protected function defaultQuery(): array
     {
-        return array_filter(['assignee' => $this->assignee]);
+        return array_filter(['assignee' => $this->assignee], fn (mixed $value): bool => ! is_null($value));
     }
 }

@@ -9,6 +9,8 @@ use Saloon\Enums\Method;
 use Saloon\Http\Request;
 use Saloon\Traits\Body\HasJsonBody;
 
+use function is_null;
+
 /**
  * CreateTaskComment.
  *
@@ -49,11 +51,11 @@ class CreateTaskComment extends Request implements HasBody
             'notify_all' => $this->notifyAll,
             'assignee' => $this->assignee,
             'group_assignee' => $this->groupAssignee,
-        ]);
+        ], fn (mixed $value): bool => ! is_null($value));
     }
 
     protected function defaultQuery(): array
     {
-        return array_filter(['custom_task_ids' => $this->customTaskIds, 'team_id' => $this->teamId]);
+        return array_filter(['custom_task_ids' => $this->customTaskIds, 'team_id' => $this->teamId], fn (mixed $value): bool => ! is_null($value));
     }
 }

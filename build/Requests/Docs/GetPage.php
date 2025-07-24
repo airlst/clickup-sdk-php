@@ -7,6 +7,8 @@ namespace ClickUp\V2\Requests\Docs;
 use Saloon\Enums\Method;
 use Saloon\Http\Request;
 
+use function is_null;
+
 /**
  * getPage.
  *
@@ -38,6 +40,6 @@ class GetPage extends Request
 
     protected function defaultQuery(): array
     {
-        return array_filter(['content_format' => $this->contentFormat]);
+        return array_filter(['content_format' => $this->contentFormat], fn (mixed $value): bool => ! is_null($value));
     }
 }

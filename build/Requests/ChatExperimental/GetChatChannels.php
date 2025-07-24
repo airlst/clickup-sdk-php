@@ -7,6 +7,8 @@ namespace ClickUp\V2\Requests\ChatExperimental;
 use Saloon\Enums\Method;
 use Saloon\Http\Request;
 
+use function is_null;
+
 /**
  * getChatChannels.
  *
@@ -52,6 +54,6 @@ class GetChatChannels extends Request
             'include_hidden' => $this->includeHidden,
             'with_comment_since' => $this->withCommentSince,
             'room_types' => $this->roomTypes,
-        ]);
+        ], fn (mixed $value): bool => ! is_null($value));
     }
 }

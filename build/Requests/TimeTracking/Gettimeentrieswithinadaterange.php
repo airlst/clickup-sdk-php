@@ -7,6 +7,8 @@ namespace ClickUp\V2\Requests\TimeTracking;
 use Saloon\Enums\Method;
 use Saloon\Http\Request;
 
+use function is_null;
+
 /**
  * Gettimeentrieswithinadaterange.
  *
@@ -89,6 +91,6 @@ class Gettimeentrieswithinadaterange extends Request
             'task_id' => $this->taskId,
             'custom_task_ids' => $this->customTaskIds,
             'is_billable' => $this->isBillable,
-        ]);
+        ], fn (mixed $value): bool => ! is_null($value));
     }
 }

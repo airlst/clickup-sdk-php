@@ -31,6 +31,6 @@ class GetViewTasks extends Request
 
     protected function defaultQuery(): array
     {
-        return array_filter(['page' => $this->page]);
+        return ['page' => $this->page];
     }
 }

@@ -7,6 +7,8 @@ namespace ClickUp\V2\Requests\TimeTracking;
 use Saloon\Enums\Method;
 use Saloon\Http\Request;
 
+use function is_null;
+
 /**
  * UpdateatimeEntry.
  *
@@ -53,11 +55,11 @@ class UpdateatimeEntry extends Request
             'end' => $this->end,
             'billable' => $this->billable,
             'duration' => $this->duration,
-        ]);
+        ], fn (mixed $value): bool => ! is_null($value));
     }
 
     protected function defaultQuery(): array
     {
-        return array_filter(['custom_task_ids' => $this->customTaskIds]);
+        return array_filter(['custom_task_ids' => $this->customTaskIds], fn (mixed $value): bool => ! is_null($value));
     }
 }

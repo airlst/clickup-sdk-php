@@ -7,6 +7,8 @@ namespace ClickUp\V2\Requests\Lists;
 use Saloon\Enums\Method;
 use Saloon\Http\Request;
 
+use function is_null;
+
 /**
  * GetLists.
  *
@@ -28,6 +30,6 @@ class GetLists extends Request
 
     protected function defaultQuery(): array
     {
-        return array_filter(['archived' => $this->archived]);
+        return array_filter(['archived' => $this->archived], fn (mixed $value): bool => ! is_null($value));
     }
 }

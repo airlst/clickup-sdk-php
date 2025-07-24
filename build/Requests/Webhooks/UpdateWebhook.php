@@ -33,6 +33,6 @@ class UpdateWebhook extends Request
 
     public function defaultBody(): array
     {
-        return array_filter(['endpoint' => $this->endpoint, 'events' => $this->events, 'status' => $this->status]);
+        return ['endpoint' => $this->endpoint, 'events' => $this->events, 'status' => $this->status];
     }
 }

@@ -7,6 +7,8 @@ namespace ClickUp\V2\Requests\CustomFields;
 use Saloon\Enums\Method;
 use Saloon\Http\Request;
 
+use function is_null;
+
 /**
  * RemoveCustomFieldValue.
  *
@@ -38,6 +40,6 @@ class RemoveCustomFieldValue extends Request
 
     protected function defaultQuery(): array
     {
-        return array_filter(['custom_task_ids' => $this->customTaskIds, 'team_id' => $this->teamId]);
+        return array_filter(['custom_task_ids' => $this->customTaskIds, 'team_id' => $this->teamId], fn (mixed $value): bool => ! is_null($value));
     }
 }

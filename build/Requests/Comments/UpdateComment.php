@@ -7,6 +7,8 @@ namespace ClickUp\V2\Requests\Comments;
 use Saloon\Enums\Method;
 use Saloon\Http\Request;
 
+use function is_null;
+
 /**
  * UpdateComment.
  *
@@ -36,6 +38,6 @@ class UpdateComment extends Request
             'assignee' => $this->assignee,
             'resolved' => $this->resolved,
             'group_assignee' => $this->groupAssignee,
-        ]);
+        ], fn (mixed $value): bool => ! is_null($value));
     }
 }

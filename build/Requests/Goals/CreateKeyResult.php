@@ -45,7 +45,7 @@ class CreateKeyResult extends Request implements HasBody
 
     public function defaultBody(): array
     {
-        return array_filter([
+        return [
             'name' => $this->name,
             'owners' => $this->owners,
             'type' => $this->type,
@@ -54,6 +54,6 @@ class CreateKeyResult extends Request implements HasBody
             'unit' => $this->unit,
             'task_ids' => $this->taskIds,
             'list_ids' => $this->listIds,
-        ]);
+        ];
     }
 }

@@ -9,6 +9,8 @@ use Saloon\Enums\Method;
 use Saloon\Http\Request;
 use Saloon\Traits\Body\HasJsonBody;
 
+use function is_null;
+
 /**
  * Createatimeentry.
  *
@@ -62,11 +64,11 @@ class Createatimeentry extends Request implements HasBody
             'billable' => $this->billable,
             'assignee' => $this->assignee,
             'tid' => $this->tid,
-        ]);
+        ], fn (mixed $value): bool => ! is_null($value));
     }
 
     protected function defaultQuery(): array
     {
-        return array_filter(['custom_task_ids' => $this->customTaskIds]);
+        return array_filter(['custom_task_ids' => $this->customTaskIds], fn (mixed $value): bool => ! is_null($value));
     }
 }

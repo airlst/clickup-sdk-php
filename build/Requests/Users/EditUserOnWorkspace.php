@@ -37,6 +37,6 @@ class EditUserOnWorkspace extends Request
 
     public function defaultBody(): array
     {
-        return array_filter(['username' => $this->username, 'admin' => $this->admin, 'custom_role_id' => $this->customRoleId]);
+        return ['username' => $this->username, 'admin' => $this->admin, 'custom_role_id' => $this->customRoleId];
     }
 }

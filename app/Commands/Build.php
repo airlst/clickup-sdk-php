@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace ClickUp\V2\SDKBuilder\Commands;
 
 use ClickUp\V2\SDKBuilder\Generators\ConnectorGenerator;
+use ClickUp\V2\SDKBuilder\Generators\RequestGenerator;
 use ClickUp\V2\SDKBuilder\Generators\ResourceGenerator;
 use ClickUp\V2\SDKBuilder\Parsers\OpenApiParser;
 use Crescat\SaloonSdkGenerator\CodeGenerator;
@@ -70,6 +71,7 @@ class Build extends Command
 
         $generator = new CodeGenerator(
             $config,
+            requestGenerator: new RequestGenerator($config),
             resourceGenerator: new ResourceGenerator($config),
             connectorGenerator: new ConnectorGenerator($config),
         );

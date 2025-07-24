@@ -9,6 +9,8 @@ use Saloon\Enums\Method;
 use Saloon\Http\Request;
 use Saloon\Traits\Body\HasJsonBody;
 
+use function is_null;
+
 /**
  * CreateTask.
  *
@@ -97,11 +99,11 @@ class CreateTask extends Request implements HasBody
             'check_required_custom_fields' => $this->checkRequiredCustomFields,
             'custom_fields' => $this->customFields,
             'custom_item_id' => $this->customItemId,
-        ]);
+        ], fn (mixed $value): bool => ! is_null($value));
     }
 
     protected function defaultQuery(): array
     {
-        return array_filter(['custom_task_ids' => $this->customTaskIds, 'team_id' => $this->teamId]);
+        return array_filter(['custom_task_ids' => $this->customTaskIds, 'team_id' => $this->teamId], fn (mixed $value): bool => ! is_null($value));
     }
 }

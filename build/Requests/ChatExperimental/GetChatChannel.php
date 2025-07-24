@@ -7,6 +7,8 @@ namespace ClickUp\V2\Requests\ChatExperimental;
 use Saloon\Enums\Method;
 use Saloon\Http\Request;
 
+use function is_null;
+
 /**
  * getChatChannel.
  *
@@ -34,6 +36,6 @@ class GetChatChannel extends Request
 
     protected function defaultQuery(): array
     {
-        return array_filter(['description_format' => $this->descriptionFormat]);
+        return array_filter(['description_format' => $this->descriptionFormat], fn (mixed $value): bool => ! is_null($value));
     }
 }

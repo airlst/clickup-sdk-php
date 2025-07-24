@@ -9,6 +9,8 @@ use Saloon\Enums\Method;
 use Saloon\Http\Request;
 use Saloon\Traits\Body\HasJsonBody;
 
+use function is_null;
+
 /**
  * createDoc.
  *
@@ -47,6 +49,6 @@ class CreateDoc extends Request implements HasBody
             'parent' => $this->parent,
             'visibility' => $this->visibility,
             'create_page' => $this->createPage,
-        ]);
+        ], fn (mixed $value): bool => ! is_null($value));
     }
 }

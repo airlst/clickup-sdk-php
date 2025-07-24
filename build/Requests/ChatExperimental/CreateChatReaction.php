@@ -38,6 +38,6 @@ class CreateChatReaction extends Request implements HasBody
 
     public function defaultBody(): array
     {
-        return array_filter(['reaction' => $this->reaction]);
+        return ['reaction' => $this->reaction];
     }
 }

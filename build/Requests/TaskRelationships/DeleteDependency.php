@@ -7,6 +7,8 @@ namespace ClickUp\V2\Requests\TaskRelationships;
 use Saloon\Enums\Method;
 use Saloon\Http\Request;
 
+use function is_null;
+
 /**
  * DeleteDependency.
  *
@@ -42,6 +44,6 @@ class DeleteDependency extends Request
             'dependency_of' => $this->dependencyOf,
             'custom_task_ids' => $this->customTaskIds,
             'team_id' => $this->teamId,
-        ]);
+        ], fn (mixed $value): bool => ! is_null($value));
     }
 }

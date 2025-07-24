@@ -45,7 +45,7 @@ class UpdateView extends Request
 
     public function defaultBody(): array
     {
-        return array_filter([
+        return [
             'name' => $this->name,
             'type' => $this->type,
             'parent' => $this->parent,
@@ -56,6 +56,6 @@ class UpdateView extends Request
             'columns' => $this->columns,
             'team_sidebar' => $this->teamSidebar,
             'settings' => $this->settings,
-        ]);
+        ];
     }
 }

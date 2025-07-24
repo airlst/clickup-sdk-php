@@ -37,6 +37,6 @@ class CreateSpace extends Request implements HasBody
 
     public function defaultBody(): array
     {
-        return array_filter(['name' => $this->name, 'multiple_assignees' => $this->multipleAssignees, 'features' => $this->features]);
+        return ['name' => $this->name, 'multiple_assignees' => $this->multipleAssignees, 'features' => $this->features];
     }
 }

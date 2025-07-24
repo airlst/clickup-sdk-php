@@ -7,6 +7,8 @@ namespace ClickUp\V2\Requests\TaskChecklists;
 use Saloon\Enums\Method;
 use Saloon\Http\Request;
 
+use function is_null;
+
 /**
  * EditChecklist.
  *
@@ -36,6 +38,6 @@ class EditChecklist extends Request
 
     public function defaultBody(): array
     {
-        return array_filter(['name' => $this->name, 'position' => $this->position]);
+        return array_filter(['name' => $this->name, 'position' => $this->position], fn (mixed $value): bool => ! is_null($value));
     }
 }

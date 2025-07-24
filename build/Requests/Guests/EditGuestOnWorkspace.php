@@ -7,6 +7,8 @@ namespace ClickUp\V2\Requests\Guests;
 use Saloon\Enums\Method;
 use Saloon\Http\Request;
 
+use function is_null;
+
 /**
  * EditGuestOnWorkspace.
  *
@@ -47,6 +49,6 @@ class EditGuestOnWorkspace extends Request
             'can_see_time_estimated' => $this->canSeeTimeEstimated,
             'can_create_views' => $this->canCreateViews,
             'custom_role_id' => $this->customRoleId,
-        ]);
+        ], fn (mixed $value): bool => ! is_null($value));
     }
 }

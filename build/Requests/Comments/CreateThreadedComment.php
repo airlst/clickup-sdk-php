@@ -9,6 +9,8 @@ use Saloon\Enums\Method;
 use Saloon\Http\Request;
 use Saloon\Traits\Body\HasJsonBody;
 
+use function is_null;
+
 /**
  * CreateThreadedComment.
  *
@@ -43,6 +45,6 @@ class CreateThreadedComment extends Request implements HasBody
             'notify_all' => $this->notifyAll,
             'assignee' => $this->assignee,
             'group_assignee' => $this->groupAssignee,
-        ]);
+        ], fn (mixed $value): bool => ! is_null($value));
     }
 }

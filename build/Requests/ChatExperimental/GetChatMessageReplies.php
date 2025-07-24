@@ -7,6 +7,8 @@ namespace ClickUp\V2\Requests\ChatExperimental;
 use Saloon\Enums\Method;
 use Saloon\Http\Request;
 
+use function is_null;
+
 /**
  * getChatMessageReplies.
  *
@@ -38,6 +40,6 @@ class GetChatMessageReplies extends Request
 
     protected function defaultQuery(): array
     {
-        return array_filter(['cursor' => $this->cursor, 'limit' => $this->limit, 'content_format' => $this->contentFormat]);
+        return array_filter(['cursor' => $this->cursor, 'limit' => $this->limit, 'content_format' => $this->contentFormat], fn (mixed $value): bool => ! is_null($value));
     }
 }

@@ -9,6 +9,8 @@ use Saloon\Enums\Method;
 use Saloon\Http\Request;
 use Saloon\Traits\Body\HasJsonBody;
 
+use function is_null;
+
 /**
  * StartatimeEntry.
  *
@@ -41,11 +43,11 @@ class StartatimeEntry extends Request implements HasBody
 
     public function defaultBody(): array
     {
-        return array_filter(['description' => $this->description, 'tags' => $this->tags, 'tid' => $this->tid, 'billable' => $this->billable]);
+        return array_filter(['description' => $this->description, 'tags' => $this->tags, 'tid' => $this->tid, 'billable' => $this->billable], fn (mixed $value): bool => ! is_null($value));
     }
 
     protected function defaultQuery(): array
     {
-        return array_filter(['custom_task_ids' => $this->customTaskIds]);
+        return array_filter(['custom_task_ids' => $this->customTaskIds], fn (mixed $value): bool => ! is_null($value));
     }
 }

@@ -38,6 +38,6 @@ class MergeTasks extends Request implements HasBody
 
     public function defaultBody(): array
     {
-        return array_filter(['source_task_ids' => $this->sourceTaskIds]);
+        return ['source_task_ids' => $this->sourceTaskIds];
     }
 }

@@ -32,6 +32,6 @@ class Removetagsfromtimeentries extends Request
 
     public function defaultBody(): array
     {
-        return array_filter(['time_entry_ids' => $this->timeEntryIds, 'tags' => $this->tags]);
+        return ['time_entry_ids' => $this->timeEntryIds, 'tags' => $this->tags];
     }
 }

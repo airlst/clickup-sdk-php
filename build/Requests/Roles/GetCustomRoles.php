@@ -7,6 +7,8 @@ namespace ClickUp\V2\Requests\Roles;
 use Saloon\Enums\Method;
 use Saloon\Http\Request;
 
+use function is_null;
+
 /**
  * GetCustomRoles.
  *
@@ -31,6 +33,6 @@ class GetCustomRoles extends Request
 
     protected function defaultQuery(): array
     {
-        return array_filter(['include_members' => $this->includeMembers]);
+        return array_filter(['include_members' => $this->includeMembers], fn (mixed $value): bool => ! is_null($value));
     }
 }

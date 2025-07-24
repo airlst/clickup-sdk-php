@@ -29,6 +29,6 @@ class EditSpaceTag extends Request
 
     public function defaultBody(): array
     {
-        return array_filter(['tag' => $this->tag]);
+        return ['tag' => $this->tag];
     }
 }

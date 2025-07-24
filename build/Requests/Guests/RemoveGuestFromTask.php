@@ -7,6 +7,8 @@ namespace ClickUp\V2\Requests\Guests;
 use Saloon\Enums\Method;
 use Saloon\Http\Request;
 
+use function is_null;
+
 /**
  * RemoveGuestFromTask.
  *
@@ -41,6 +43,6 @@ class RemoveGuestFromTask extends Request
 
     protected function defaultQuery(): array
     {
-        return array_filter(['include_shared' => $this->includeShared, 'custom_task_ids' => $this->customTaskIds, 'team_id' => $this->teamId]);
+        return array_filter(['include_shared' => $this->includeShared, 'custom_task_ids' => $this->customTaskIds, 'team_id' => $this->teamId], fn (mixed $value): bool => ! is_null($value));
     }
 }

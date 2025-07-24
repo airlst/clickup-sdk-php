@@ -9,6 +9,8 @@ use Saloon\Enums\Method;
 use Saloon\Http\Request;
 use Saloon\Traits\Body\HasJsonBody;
 
+use function is_null;
+
 /**
  * CreateChecklist.
  *
@@ -40,11 +42,11 @@ class CreateChecklist extends Request implements HasBody
 
     public function defaultBody(): array
     {
-        return array_filter(['name' => $this->name]);
+        return ['name' => $this->name];
     }
 
     protected function defaultQuery(): array
     {
-        return array_filter(['custom_task_ids' => $this->customTaskIds, 'team_id' => $this->teamId]);
+        return array_filter(['custom_task_ids' => $this->customTaskIds, 'team_id' => $this->teamId], fn (mixed $value): bool => ! is_null($value));
     }
 }

@@ -7,6 +7,8 @@ namespace ClickUp\V2\Requests\Docs;
 use Saloon\Enums\Method;
 use Saloon\Http\Request;
 
+use function is_null;
+
 /**
  * editPage.
  *
@@ -50,6 +52,6 @@ class EditPage extends Request
             'content' => $this->content,
             'content_edit_mode' => $this->contentEditMode,
             'content_format' => $this->contentFormat,
-        ]);
+        ], fn (mixed $value): bool => ! is_null($value));
     }
 }

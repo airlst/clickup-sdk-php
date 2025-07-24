@@ -9,6 +9,8 @@ use Saloon\Enums\Method;
 use Saloon\Http\Request;
 use Saloon\Traits\Body\HasJsonBody;
 
+use function is_null;
+
 /**
  * patchChatMessage.
  *
@@ -55,6 +57,6 @@ class PatchChatMessage extends Request implements HasBody
             'content_format' => $this->contentFormat,
             'post_data' => $this->postData,
             'resolved' => $this->resolved,
-        ]);
+        ], fn (mixed $value): bool => ! is_null($value));
     }
 }

@@ -7,6 +7,8 @@ namespace ClickUp\V2\Requests\TimeTrackingLegacy;
 use Saloon\Enums\Method;
 use Saloon\Http\Request;
 
+use function is_null;
+
 /**
  * Edittimetracked.
  *
@@ -40,11 +42,11 @@ class Edittimetracked extends Request
 
     public function defaultBody(): array
     {
-        return array_filter(['start' => $this->start, 'end' => $this->end, 'time' => $this->time]);
+        return ['start' => $this->start, 'end' => $this->end, 'time' => $this->time];
     }
 
     protected function defaultQuery(): array
     {
-        return array_filter(['custom_task_ids' => $this->customTaskIds, 'team_id' => $this->teamId]);
+        return array_filter(['custom_task_ids' => $this->customTaskIds, 'team_id' => $this->teamId], fn (mixed $value): bool => ! is_null($value));
     }
 }

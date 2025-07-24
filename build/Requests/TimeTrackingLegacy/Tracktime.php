@@ -9,6 +9,8 @@ use Saloon\Enums\Method;
 use Saloon\Http\Request;
 use Saloon\Traits\Body\HasJsonBody;
 
+use function is_null;
+
 /**
  * Tracktime.
  *
@@ -43,11 +45,11 @@ class Tracktime extends Request implements HasBody
 
     public function defaultBody(): array
     {
-        return array_filter(['start' => $this->start, 'end' => $this->end, 'time' => $this->time]);
+        return ['start' => $this->start, 'end' => $this->end, 'time' => $this->time];
     }
 
     protected function defaultQuery(): array
     {
-        return array_filter(['custom_task_ids' => $this->customTaskIds, 'team_id' => $this->teamId]);
+        return array_filter(['custom_task_ids' => $this->customTaskIds, 'team_id' => $this->teamId], fn (mixed $value): bool => ! is_null($value));
     }
 }

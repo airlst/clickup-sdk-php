@@ -9,6 +9,8 @@ use Saloon\Enums\Method;
 use Saloon\Http\Request;
 use Saloon\Traits\Body\HasJsonBody;
 
+use function is_null;
+
 /**
  * createDirectMessageChatChannel.
  *
@@ -37,6 +39,6 @@ class CreateDirectMessageChatChannel extends Request implements HasBody
 
     public function defaultBody(): array
     {
-        return array_filter(['user_ids' => $this->userIds]);
+        return array_filter(['user_ids' => $this->userIds], fn (mixed $value): bool => ! is_null($value));
     }
 }

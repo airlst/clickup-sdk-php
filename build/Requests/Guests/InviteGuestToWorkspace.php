@@ -9,6 +9,8 @@ use Saloon\Enums\Method;
 use Saloon\Http\Request;
 use Saloon\Traits\Body\HasJsonBody;
 
+use function is_null;
+
 /**
  * InviteGuestToWorkspace.
  *
@@ -57,6 +59,6 @@ class InviteGuestToWorkspace extends Request implements HasBody
             'can_create_views' => $this->canCreateViews,
             'can_see_points_estimated' => $this->canSeePointsEstimated,
             'custom_role_id' => $this->customRoleId,
-        ]);
+        ], fn (mixed $value): bool => ! is_null($value));
     }
 }

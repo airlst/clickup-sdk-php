@@ -9,6 +9,8 @@ use Saloon\Enums\Method;
 use Saloon\Http\Request;
 use Saloon\Traits\Body\HasJsonBody;
 
+use function is_null;
+
 /**
  * CreateWorkspaceAuditLog.
  *
@@ -41,6 +43,6 @@ class CreateWorkspaceAuditLog extends Request implements HasBody
 
     public function defaultBody(): array
     {
-        return array_filter(['applicability' => $this->applicability, 'filter' => $this->filter, 'pagination' => $this->pagination]);
+        return array_filter(['applicability' => $this->applicability, 'filter' => $this->filter, 'pagination' => $this->pagination], fn (mixed $value): bool => ! is_null($value));
     }
 }

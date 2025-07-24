@@ -14,6 +14,5 @@ return $factory
     ->withBleedingEdge()
     ->level(8)
     ->useCacheDir('storage/framework/cache/phpstan')
-    ->ignoreError('arrayFilter.strict')
     ->ignoreError('missingType.iterableValue')
     ->create();

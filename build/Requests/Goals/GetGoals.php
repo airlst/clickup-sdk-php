@@ -7,6 +7,8 @@ namespace ClickUp\V2\Requests\Goals;
 use Saloon\Enums\Method;
 use Saloon\Http\Request;
 
+use function is_null;
+
 /**
  * GetGoals.
  *
@@ -31,6 +33,6 @@ class GetGoals extends Request
 
     protected function defaultQuery(): array
     {
-        return array_filter(['include_completed' => $this->includeCompleted]);
+        return array_filter(['include_completed' => $this->includeCompleted], fn (mixed $value): bool => ! is_null($value));
     }
 }

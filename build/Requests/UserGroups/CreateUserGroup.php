@@ -9,6 +9,8 @@ use Saloon\Enums\Method;
 use Saloon\Http\Request;
 use Saloon\Traits\Body\HasJsonBody;
 
+use function is_null;
+
 /**
  * CreateUserGroup.
  *
@@ -54,6 +56,6 @@ class CreateUserGroup extends Request implements HasBody
 
     public function defaultBody(): array
     {
-        return array_filter(['name' => $this->name, 'members' => $this->members, 'handle' => $this->handle]);
+        return array_filter(['name' => $this->name, 'members' => $this->members, 'handle' => $this->handle], fn (mixed $value): bool => ! is_null($value));
     }
 }

@@ -9,6 +9,8 @@ use Saloon\Enums\Method;
 use Saloon\Http\Request;
 use Saloon\Traits\Body\HasJsonBody;
 
+use function is_null;
+
 /**
  * createChatMessage.
  *
@@ -70,6 +72,6 @@ class CreateChatMessage extends Request implements HasBody
             'followers' => $this->followers,
             'content_format' => $this->contentFormat,
             'post_data' => $this->postData,
-        ]);
+        ], fn (mixed $value): bool => ! is_null($value));
     }
 }

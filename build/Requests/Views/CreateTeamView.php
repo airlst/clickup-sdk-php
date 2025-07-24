@@ -46,7 +46,7 @@ class CreateTeamView extends Request implements HasBody
 
     public function defaultBody(): array
     {
-        return array_filter([
+        return [
             'name' => $this->name,
             'type' => $this->type,
             'grouping' => $this->grouping,
@@ -56,6 +56,6 @@ class CreateTeamView extends Request implements HasBody
             'columns' => $this->columns,
             'team_sidebar' => $this->teamSidebar,
             'settings' => $this->settings,
-        ]);
+        ];
     }
 }

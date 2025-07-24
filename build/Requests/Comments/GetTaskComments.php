@@ -7,6 +7,8 @@ namespace ClickUp\V2\Requests\Comments;
 use Saloon\Enums\Method;
 use Saloon\Http\Request;
 
+use function is_null;
+
 /**
  * GetTaskComments.
  *
@@ -50,6 +52,6 @@ class GetTaskComments extends Request
             'team_id' => $this->teamId,
             'start' => $this->start,
             'start_id' => $this->startId,
-        ]);
+        ], fn (mixed $value): bool => ! is_null($value));
     }
 }

@@ -9,6 +9,8 @@ use Saloon\Enums\Method;
 use Saloon\Http\Request;
 use Saloon\Traits\Body\HasJsonBody;
 
+use function is_null;
+
 /**
  * UpdatePrivacyAndAccess.
  *
@@ -43,6 +45,6 @@ class UpdatePrivacyAndAccess extends Request implements HasBody
 
     public function defaultBody(): array
     {
-        return array_filter(['entries' => $this->entries, 'private' => $this->private]);
+        return array_filter(['entries' => $this->entries, 'private' => $this->private], fn (mixed $value): bool => ! is_null($value));
     }
 }

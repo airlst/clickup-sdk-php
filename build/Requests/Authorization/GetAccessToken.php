@@ -45,6 +45,6 @@ class GetAccessToken extends Request implements HasBody
 
     public function defaultBody(): array
     {
-        return array_filter(['client_id' => $this->clientId, 'client_secret' => $this->clientSecret, 'code' => $this->code]);
+        return ['client_id' => $this->clientId, 'client_secret' => $this->clientSecret, 'code' => $this->code];
     }
 }

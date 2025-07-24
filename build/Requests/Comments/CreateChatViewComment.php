@@ -37,6 +37,6 @@ class CreateChatViewComment extends Request implements HasBody
 
     public function defaultBody(): array
     {
-        return array_filter(['comment_text' => $this->commentText, 'notify_all' => $this->notifyAll]);
+        return ['comment_text' => $this->commentText, 'notify_all' => $this->notifyAll];
     }
 }

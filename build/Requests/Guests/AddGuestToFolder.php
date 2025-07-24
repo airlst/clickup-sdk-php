@@ -9,6 +9,8 @@ use Saloon\Enums\Method;
 use Saloon\Http\Request;
 use Saloon\Traits\Body\HasJsonBody;
 
+use function is_null;
+
 /**
  * AddGuestToFolder.
  *
@@ -41,11 +43,11 @@ class AddGuestToFolder extends Request implements HasBody
 
     public function defaultBody(): array
     {
-        return array_filter(['permission_level' => $this->permissionLevel]);
+        return ['permission_level' => $this->permissionLevel];
     }
 
     protected function defaultQuery(): array
     {
-        return array_filter(['include_shared' => $this->includeShared]);
+        return array_filter(['include_shared' => $this->includeShared], fn (mixed $value): bool => ! is_null($value));
     }
 }

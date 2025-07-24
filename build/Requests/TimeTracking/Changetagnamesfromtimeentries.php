@@ -34,6 +34,6 @@ class Changetagnamesfromtimeentries extends Request
 
     public function defaultBody(): array
     {
-        return array_filter(['name' => $this->name, 'new_name' => $this->newName, 'tag_bg' => $this->tagBg, 'tag_fg' => $this->tagFg]);
+        return ['name' => $this->name, 'new_name' => $this->newName, 'tag_bg' => $this->tagBg, 'tag_fg' => $this->tagFg];
     }
 }

@@ -7,6 +7,8 @@ namespace ClickUp\V2\Requests\TimeTracking;
 use Saloon\Enums\Method;
 use Saloon\Http\Request;
 
+use function is_null;
+
 /**
  * Getsingulartimeentry.
  *
@@ -50,6 +52,6 @@ class Getsingulartimeentry extends Request
             'include_location_names' => $this->includeLocationNames,
             'include_approval_history' => $this->includeApprovalHistory,
             'include_approval_details' => $this->includeApprovalDetails,
-        ]);
+        ], fn (mixed $value): bool => ! is_null($value));
     }
 }

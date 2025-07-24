@@ -7,6 +7,8 @@ namespace ClickUp\V2\Requests\Comments;
 use Saloon\Enums\Method;
 use Saloon\Http\Request;
 
+use function is_null;
+
 /**
  * GetChatViewComments.
  *
@@ -40,6 +42,6 @@ class GetChatViewComments extends Request
 
     protected function defaultQuery(): array
     {
-        return array_filter(['start' => $this->start, 'start_id' => $this->startId]);
+        return array_filter(['start' => $this->start, 'start_id' => $this->startId], fn (mixed $value): bool => ! is_null($value));
     }
 }

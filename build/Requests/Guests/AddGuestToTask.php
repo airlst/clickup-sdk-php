@@ -9,6 +9,8 @@ use Saloon\Enums\Method;
 use Saloon\Http\Request;
 use Saloon\Traits\Body\HasJsonBody;
 
+use function is_null;
+
 /**
  * AddGuestToTask.
  *
@@ -47,11 +49,11 @@ class AddGuestToTask extends Request implements HasBody
 
     public function defaultBody(): array
     {
-        return array_filter(['permission_level' => $this->permissionLevel]);
+        return ['permission_level' => $this->permissionLevel];
     }
 
     protected function defaultQuery(): array
     {
-        return array_filter(['include_shared' => $this->includeShared, 'custom_task_ids' => $this->customTaskIds, 'team_id' => $this->teamId]);
+        return array_filter(['include_shared' => $this->includeShared, 'custom_task_ids' => $this->customTaskIds, 'team_id' => $this->teamId], fn (mixed $value): bool => ! is_null($value));
     }
 }

@@ -7,6 +7,8 @@ namespace ClickUp\V2\Requests\Guests;
 use Saloon\Enums\Method;
 use Saloon\Http\Request;
 
+use function is_null;
+
 /**
  * RemoveGuestFromList.
  *
@@ -35,6 +37,6 @@ class RemoveGuestFromList extends Request
 
     protected function defaultQuery(): array
     {
-        return array_filter(['include_shared' => $this->includeShared]);
+        return array_filter(['include_shared' => $this->includeShared], fn (mixed $value): bool => ! is_null($value));
     }
 }

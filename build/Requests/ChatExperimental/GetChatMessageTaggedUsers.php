@@ -7,6 +7,8 @@ namespace ClickUp\V2\Requests\ChatExperimental;
 use Saloon\Enums\Method;
 use Saloon\Http\Request;
 
+use function is_null;
+
 /**
  * getChatMessageTaggedUsers.
  *
@@ -36,6 +38,6 @@ class GetChatMessageTaggedUsers extends Request
 
     protected function defaultQuery(): array
     {
-        return array_filter(['cursor' => $this->cursor, 'limit' => $this->limit]);
+        return array_filter(['cursor' => $this->cursor, 'limit' => $this->limit], fn (mixed $value): bool => ! is_null($value));
     }
 }

@@ -7,6 +7,8 @@ namespace ClickUp\V2\Requests\Users;
 use Saloon\Enums\Method;
 use Saloon\Http\Request;
 
+use function is_null;
+
 /**
  * GetUser.
  *
@@ -36,6 +38,6 @@ class GetUser extends Request
 
     protected function defaultQuery(): array
     {
-        return array_filter(['include_shared' => $this->includeShared]);
+        return array_filter(['include_shared' => $this->includeShared], fn (mixed $value): bool => ! is_null($value));
     }
 }

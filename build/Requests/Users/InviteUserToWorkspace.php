@@ -9,6 +9,8 @@ use Saloon\Enums\Method;
 use Saloon\Http\Request;
 use Saloon\Traits\Body\HasJsonBody;
 
+use function is_null;
+
 /**
  * InviteUserToWorkspace.
  *
@@ -41,6 +43,6 @@ class InviteUserToWorkspace extends Request implements HasBody
 
     public function defaultBody(): array
     {
-        return array_filter(['email' => $this->email, 'admin' => $this->admin, 'custom_role_id' => $this->customRoleId]);
+        return array_filter(['email' => $this->email, 'admin' => $this->admin, 'custom_role_id' => $this->customRoleId], fn (mixed $value): bool => ! is_null($value));
     }
 }

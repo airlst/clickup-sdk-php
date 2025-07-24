@@ -32,6 +32,6 @@ class EditKeyResult extends Request
 
     public function defaultBody(): array
     {
-        return array_filter(['steps_current' => $this->stepsCurrent, 'note' => $this->note]);
+        return ['steps_current' => $this->stepsCurrent, 'note' => $this->note];
     }
 }

@@ -7,6 +7,8 @@ namespace ClickUp\V2\Requests\Docs;
 use Saloon\Enums\Method;
 use Saloon\Http\Request;
 
+use function is_null;
+
 /**
  * searchDocs.
  *
@@ -55,6 +57,6 @@ class SearchDocs extends Request
             'parent_type' => $this->parentType,
             'limit' => $this->limit,
             'next_cursor' => $this->nextCursor,
-        ]);
+        ], fn (mixed $value): bool => ! is_null($value));
     }
 }

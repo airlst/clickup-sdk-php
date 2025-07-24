@@ -9,6 +9,8 @@ use Saloon\Enums\Method;
 use Saloon\Http\Request;
 use Saloon\Traits\Body\HasJsonBody;
 
+use function is_null;
+
 /**
  * AddDependency.
  *
@@ -42,11 +44,11 @@ class AddDependency extends Request implements HasBody
 
     public function defaultBody(): array
     {
-        return array_filter(['depends_on' => $this->dependsOn, 'depedency_of' => $this->depedencyOf]);
+        return array_filter(['depends_on' => $this->dependsOn, 'depedency_of' => $this->depedencyOf], fn (mixed $value): bool => ! is_null($value));
     }
 
     protected function defaultQuery(): array
     {
-        return array_filter(['custom_task_ids' => $this->customTaskIds, 'team_id' => $this->teamId]);
+        return array_filter(['custom_task_ids' => $this->customTaskIds, 'team_id' => $this->teamId], fn (mixed $value): bool => ! is_null($value));
     }
 }

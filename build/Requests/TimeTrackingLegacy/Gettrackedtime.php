@@ -7,6 +7,8 @@ namespace ClickUp\V2\Requests\TimeTrackingLegacy;
 use Saloon\Enums\Method;
 use Saloon\Http\Request;
 
+use function is_null;
+
 /**
  * Gettrackedtime.
  *
@@ -36,6 +38,6 @@ class Gettrackedtime extends Request
 
     protected function defaultQuery(): array
     {
-        return array_filter(['custom_task_ids' => $this->customTaskIds, 'team_id' => $this->teamId]);
+        return array_filter(['custom_task_ids' => $this->customTaskIds, 'team_id' => $this->teamId], fn (mixed $value): bool => ! is_null($value));
     }
 }

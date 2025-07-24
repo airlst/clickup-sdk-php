@@ -9,6 +9,8 @@ use Saloon\Enums\Method;
 use Saloon\Http\Request;
 use Saloon\Traits\Body\HasJsonBody;
 
+use function is_null;
+
 /**
  * CreateWebhook.
  *
@@ -49,6 +51,6 @@ class CreateWebhook extends Request implements HasBody
             'folder_id' => $this->folderId,
             'list_id' => $this->listId,
             'task_id' => $this->taskId,
-        ]);
+        ], fn (mixed $value): bool => ! is_null($value));
     }
 }

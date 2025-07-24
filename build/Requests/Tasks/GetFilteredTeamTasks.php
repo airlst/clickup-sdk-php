@@ -7,6 +7,8 @@ namespace ClickUp\V2\Requests\Tasks;
 use Saloon\Enums\Method;
 use Saloon\Http\Request;
 
+use function is_null;
+
 /**
  * GetFilteredTeamTasks.
  *
@@ -139,6 +141,6 @@ class GetFilteredTeamTasks extends Request
             'parent' => $this->parent,
             'include_markdown_description' => $this->includeMarkdownDescription,
             'custom_items' => $this->customItems,
-        ]);
+        ], fn (mixed $value): bool => ! is_null($value));
     }
 }

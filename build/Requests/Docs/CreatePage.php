@@ -9,6 +9,8 @@ use Saloon\Enums\Method;
 use Saloon\Http\Request;
 use Saloon\Traits\Body\HasJsonBody;
 
+use function is_null;
+
 /**
  * createPage.
  *
@@ -52,6 +54,6 @@ class CreatePage extends Request implements HasBody
             'sub_title' => $this->subTitle,
             'content' => $this->content,
             'content_format' => $this->contentFormat,
-        ]);
+        ], fn (mixed $value): bool => ! is_null($value));
     }
 }

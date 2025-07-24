@@ -7,6 +7,8 @@ namespace ClickUp\V2\Requests\Spaces;
 use Saloon\Enums\Method;
 use Saloon\Http\Request;
 
+use function is_null;
+
 /**
  * GetSpaces.
  *
@@ -31,6 +33,6 @@ class GetSpaces extends Request
 
     protected function defaultQuery(): array
     {
-        return array_filter(['archived' => $this->archived]);
+        return array_filter(['archived' => $this->archived], fn (mixed $value): bool => ! is_null($value));
     }
 }

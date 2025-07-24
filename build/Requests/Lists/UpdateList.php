@@ -7,6 +7,8 @@ namespace ClickUp\V2\Requests\Lists;
 use Saloon\Enums\Method;
 use Saloon\Http\Request;
 
+use function is_null;
+
 /**
  * UpdateList.
  *
@@ -52,6 +54,6 @@ class UpdateList extends Request
             'assignee' => $this->assignee,
             'status' => $this->status,
             'unset_status' => $this->unsetStatus,
-        ]);
+        ], fn (mixed $value): bool => ! is_null($value));
     }
 }

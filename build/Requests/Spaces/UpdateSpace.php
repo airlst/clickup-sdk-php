@@ -36,13 +36,13 @@ class UpdateSpace extends Request
 
     public function defaultBody(): array
     {
-        return array_filter([
+        return [
             'name' => $this->name,
             'color' => $this->color,
             'private' => $this->private,
             'admin_can_manage' => $this->adminCanManage,
             'multiple_assignees' => $this->multipleAssignees,
             'features' => $this->features,
-        ]);
+        ];
     }
 }

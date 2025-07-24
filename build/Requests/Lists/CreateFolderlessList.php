@@ -9,6 +9,8 @@ use Saloon\Enums\Method;
 use Saloon\Http\Request;
 use Saloon\Traits\Body\HasJsonBody;
 
+use function is_null;
+
 /**
  * CreateFolderlessList.
  *
@@ -53,6 +55,6 @@ class CreateFolderlessList extends Request implements HasBody
             'priority' => $this->priority,
             'assignee' => $this->assignee,
             'status' => $this->status,
-        ]);
+        ], fn (mixed $value): bool => ! is_null($value));
     }
 }

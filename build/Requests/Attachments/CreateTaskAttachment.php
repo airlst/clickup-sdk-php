@@ -9,6 +9,8 @@ use Saloon\Enums\Method;
 use Saloon\Http\Request;
 use Saloon\Traits\Body\HasJsonBody;
 
+use function is_null;
+
 /**
  * CreateTaskAttachment.
  *
@@ -43,11 +45,11 @@ class CreateTaskAttachment extends Request implements HasBody
 
     public function defaultBody(): array
     {
-        return array_filter(['attachment' => $this->attachment]);
+        return array_filter(['attachment' => $this->attachment], fn (mixed $value): bool => ! is_null($value));
     }
 
     protected function defaultQuery(): array
     {
-        return array_filter(['custom_task_ids' => $this->customTaskIds, 'team_id' => $this->teamId]);
+        return array_filter(['custom_task_ids' => $this->customTaskIds, 'team_id' => $this->teamId], fn (mixed $value): bool => ! is_null($value));
     }
 }

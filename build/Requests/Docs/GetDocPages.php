@@ -7,6 +7,8 @@ namespace ClickUp\V2\Requests\Docs;
 use Saloon\Enums\Method;
 use Saloon\Http\Request;
 
+use function is_null;
+
 /**
  * getDocPages.
  *
@@ -36,6 +38,6 @@ class GetDocPages extends Request
 
     protected function defaultQuery(): array
     {
-        return array_filter(['max_page_depth' => $this->maxPageDepth, 'content_format' => $this->contentFormat]);
+        return array_filter(['max_page_depth' => $this->maxPageDepth, 'content_format' => $this->contentFormat], fn (mixed $value): bool => ! is_null($value));
     }
 }

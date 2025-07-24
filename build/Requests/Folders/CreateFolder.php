@@ -32,6 +32,6 @@ class CreateFolder extends Request implements HasBody
 
     public function defaultBody(): array
     {
-        return array_filter(['name' => $this->name]);
+        return ['name' => $this->name];
     }
 }

@@ -7,6 +7,8 @@ namespace ClickUp\V2\Requests\Tasks;
 use Saloon\Enums\Method;
 use Saloon\Http\Request;
 
+use function is_null;
+
 /**
  * GetTasks.
  *
@@ -126,6 +128,6 @@ class GetTasks extends Request
             'custom_fields' => $this->customFields,
             'custom_field' => $this->customField,
             'custom_items' => $this->customItems,
-        ]);
+        ], fn (mixed $value): bool => ! is_null($value));
     }
 }

@@ -39,13 +39,13 @@ class UpdateGoal extends Request
 
     public function defaultBody(): array
     {
-        return array_filter([
+        return [
             'name' => $this->name,
             'due_date' => $this->dueDate,
             'description' => $this->description,
             'rem_owners' => $this->remOwners,
             'add_owners' => $this->addOwners,
             'color' => $this->color,
-        ]);
+        ];
     }
 }

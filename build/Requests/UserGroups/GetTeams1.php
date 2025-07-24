@@ -7,6 +7,8 @@ namespace ClickUp\V2\Requests\UserGroups;
 use Saloon\Enums\Method;
 use Saloon\Http\Request;
 
+use function is_null;
+
 /**
  * GetTeams1.
  *
@@ -37,6 +39,6 @@ class GetTeams1 extends Request
 
     protected function defaultQuery(): array
     {
-        return array_filter(['team_id' => $this->teamId, 'group_ids' => $this->groupIds]);
+        return array_filter(['team_id' => $this->teamId, 'group_ids' => $this->groupIds], fn (mixed $value): bool => ! is_null($value));
     }
 }

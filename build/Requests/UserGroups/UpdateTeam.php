@@ -7,6 +7,8 @@ namespace ClickUp\V2\Requests\UserGroups;
 use Saloon\Enums\Method;
 use Saloon\Http\Request;
 
+use function is_null;
+
 /**
  * UpdateTeam.
  *
@@ -47,6 +49,6 @@ class UpdateTeam extends Request
 
     public function defaultBody(): array
     {
-        return array_filter(['name' => $this->name, 'handle' => $this->handle, 'members' => $this->members]);
+        return array_filter(['name' => $this->name, 'handle' => $this->handle, 'members' => $this->members], fn (mixed $value): bool => ! is_null($value));
     }
 }

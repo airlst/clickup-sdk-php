@@ -41,13 +41,13 @@ class CreateGoal extends Request implements HasBody
 
     public function defaultBody(): array
     {
-        return array_filter([
+        return [
             'name' => $this->name,
             'due_date' => $this->dueDate,
             'description' => $this->description,
             'multiple_owners' => $this->multipleOwners,
             'owners' => $this->owners,
             'color' => $this->color,
-        ]);
+        ];
     }
 }

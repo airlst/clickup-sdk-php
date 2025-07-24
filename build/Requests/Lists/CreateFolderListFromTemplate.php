@@ -9,6 +9,8 @@ use Saloon\Enums\Method;
 use Saloon\Http\Request;
 use Saloon\Traits\Body\HasJsonBody;
 
+use function is_null;
+
 /**
  * CreateFolderListFromTemplate.
  *
@@ -48,6 +50,6 @@ class CreateFolderListFromTemplate extends Request implements HasBody
 
     public function defaultBody(): array
     {
-        return array_filter(['name' => $this->name, 'options' => $this->options]);
+        return array_filter(['name' => $this->name, 'options' => $this->options], fn (mixed $value): bool => ! is_null($value));
     }
 }
