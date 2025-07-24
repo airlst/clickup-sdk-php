@@ -35,6 +35,7 @@ use ClickUp\V2\Resource\Webhooks;
 use ClickUp\V2\Resource\Workspaces;
 use Saloon\Http\Auth\TokenAuthenticator;
 use Saloon\Http\Connector;
+use Saloon\Traits\Plugins\AlwaysThrowOnErrors;
 
 /**
  * ClickUp API v2 Reference.
@@ -51,6 +52,8 @@ use Saloon\Http\Connector;
  */
 class ClickUpSDK extends Connector
 {
+    use AlwaysThrowOnErrors;
+
     public function __construct(
         protected readonly string $personalToken,
     ) {}

@@ -12,6 +12,7 @@ use Nette\PhpGenerator\ClassType;
 use Nette\PhpGenerator\PhpFile;
 use Saloon\Http\Auth\TokenAuthenticator;
 use Saloon\Http\Connector;
+use Saloon\Traits\Plugins\AlwaysThrowOnErrors;
 
 use function sprintf;
 
@@ -25,7 +26,8 @@ class ConnectorGenerator extends Generator
     protected function generateConnectorClass(ApiSpecification $specification): ?PhpFile
     {
         $classType = new ClassType($this->config->connectorName);
-        $classType->setExtends(Connector::class);
+        $classType->setExtends(Connector::class)
+            ->addTrait(AlwaysThrowOnErrors::class);
 
         if ($specification->name !== null && $specification->name !== '' && $specification->name !== '0') {
             $classType->addComment($specification->name);
@@ -55,7 +57,8 @@ class ConnectorGenerator extends Generator
         $namespace = $classFile
             ->addNamespace("{$this->config->namespace}")
             ->addUse(Connector::class)
-            ->addUse(TokenAuthenticator::class);
+            ->addUse(TokenAuthenticator::class)
+            ->addUse(AlwaysThrowOnErrors::class);
 
         $collections = collect($specification->endpoints)
             ->map(fn (Endpoint $endpoint): string => NameHelper::connectorClassName($endpoint->collection !== null && $endpoint->collection !== '' && $endpoint->collection !== '0' ? $endpoint->collection : $this->config->fallbackResourceName)) // @phpstan-ignore-line
