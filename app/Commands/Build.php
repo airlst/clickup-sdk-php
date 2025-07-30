@@ -7,6 +7,7 @@ namespace ClickUp\V2\SDKBuilder\Commands;
 use ClickUp\V2\SDKBuilder\Generators\ConnectorGenerator;
 use ClickUp\V2\SDKBuilder\Generators\RequestGenerator;
 use ClickUp\V2\SDKBuilder\Generators\ResourceGenerator;
+use ClickUp\V2\SDKBuilder\Helpers\SpecFixerHelper;
 use ClickUp\V2\SDKBuilder\Parsers\OpenApiParser;
 use Crescat\SaloonSdkGenerator\CodeGenerator;
 use Crescat\SaloonSdkGenerator\Data\Generator\Config;
@@ -23,6 +24,8 @@ use function file_exists;
 use function file_get_contents;
 use function file_put_contents;
 use function is_null;
+use function json_decode;
+use function json_encode;
 use function mkdir;
 use function sprintf;
 use function storage_path;
@@ -54,7 +57,9 @@ class Build extends Command
                 return;
             }
 
-            file_put_contents($specFile, $spec);
+            $spec = SpecFixerHelper::fix(json_decode($spec));
+
+            file_put_contents($specFile, json_encode($spec, JSON_PRETTY_PRINT));
         }
 
         if (! file_exists($specFile)) {

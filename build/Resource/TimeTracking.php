@@ -26,7 +26,7 @@ class TimeTracking extends Resource
      * @param float|int $teamId                 Workspace ID
      * @param float|int $startDate              Unix time in milliseconds
      * @param float|int $endDate                Unix time in milliseconds
-     * @param float|int $assignee               Filter by `user_id`. For multiple assignees, separate `user_id` using commas.\
+     * @param mixed     $assignee               Filter by `user_id`. For multiple assignees, separate `user_id` using commas.\
      *                                          \
      *                                          **Example:** `assignee=1234,9876`\
      *                                          \
@@ -48,7 +48,7 @@ class TimeTracking extends Resource
         float|int $teamId,
         float|int|null $startDate = null,
         float|int|null $endDate = null,
-        float|int|null $assignee = null,
+        mixed $assignee = null,
         ?bool $includeTaskTags = null,
         ?bool $includeLocationNames = null,
         ?bool $includeApprovalHistory = null,

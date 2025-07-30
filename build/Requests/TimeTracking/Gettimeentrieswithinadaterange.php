@@ -35,7 +35,7 @@ class Gettimeentrieswithinadaterange extends Request
      * @param float|int      $teamId                 Workspace ID
      * @param float|int|null $startDate              Unix time in milliseconds
      * @param float|int|null $endDate                Unix time in milliseconds
-     * @param float|int|null $assignee               Filter by `user_id`. For multiple assignees, separate `user_id` using commas.\
+     * @param mixed|null     $assignee               Filter by `user_id`. For multiple assignees, separate `user_id` using commas.\
      *                                               \
      *                                               **Example:** `assignee=1234,9876`\
      *                                               \
@@ -57,7 +57,7 @@ class Gettimeentrieswithinadaterange extends Request
         protected float|int $teamId,
         protected float|int|null $startDate = null,
         protected float|int|null $endDate = null,
-        protected float|int|null $assignee = null,
+        protected mixed $assignee = null,
         protected ?bool $includeTaskTags = null,
         protected ?bool $includeLocationNames = null,
         protected ?bool $includeApprovalHistory = null,
