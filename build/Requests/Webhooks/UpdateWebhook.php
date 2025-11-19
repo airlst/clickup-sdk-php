@@ -22,7 +22,7 @@ class UpdateWebhook extends Request
     public function __construct(
         protected string $webhookId,
         protected string $endpoint,
-        protected string $events,
+        protected mixed $events,
         protected string $status,
     ) {}
 

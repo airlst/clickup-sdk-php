@@ -31505,7 +31505,10 @@
                                         "type": "string"
                                     },
                                     "events": {
-                                        "type": "string"
+                                        "type": [
+                                            "array",
+                                            "string"
+                                        ]
                                     },
                                     "status": {
                                         "type": "string"

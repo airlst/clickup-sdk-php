@@ -40,7 +40,7 @@ class Webhooks extends Resource
     /**
      * @param string $webhookId e506-4a29-9d42-26e504e3435e (uuid)
      */
-    public function updateWebhook(string $webhookId, string $endpoint, string $events, string $status): Response
+    public function updateWebhook(string $webhookId, string $endpoint, mixed $events, string $status): Response
     {
         return $this->connector->send(new UpdateWebhook($webhookId, $endpoint, $events, $status));
     }

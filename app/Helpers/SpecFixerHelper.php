@@ -22,15 +22,13 @@ class SpecFixerHelper
             })
             ->toArray();
 
-        $spec->paths->{'/v2/webhook/{webhook_id}'}->put->parameters = collect($spec->paths->{'/v2/webhook/{webhook_id}'}->put->parameters) // @phpstan-ignore-line
-            ->map(function (stdClass $parameter): stdClass {
-                if ($parameter->name === 'events') {
-                    $parameter->schema = (object) [
-                        'type' => ['array', 'string'],
-                    ];
+        $spec->paths->{'/v2/webhook/{webhook_id}'}->put->requestBody->content->{'application/json'}->schema->properties = collect($spec->paths->{'/v2/webhook/{webhook_id}'}->put->requestBody->content->{'application/json'}->schema->properties) // @phpstan-ignore-line
+            ->map(function (stdClass $property, string $name): stdClass {
+                if ($name === 'events') {
+                    $property->type = ['array', 'string'];
                 }
 
-                return $parameter;
+                return $property;
             })
             ->toArray();
 
