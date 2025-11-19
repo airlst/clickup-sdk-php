@@ -10,7 +10,8 @@ use Saloon\Http\Request;
 /**
  * GetView.
  *
- * View information about a specific task or page view.
+ * View information about a specific task or page view. The information returned about a view varies by
+ * the type of view.
  */
 class GetView extends Request
 {

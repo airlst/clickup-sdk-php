@@ -10,7 +10,7 @@ use Saloon\Http\Request;
 /**
  * GetThreadedComments.
  *
- * View threaded comments. The parent comment is not included.
+ * View threaded comments. The parent comment is not included in the response.
  */
 class GetThreadedComments extends Request
 {

@@ -14,7 +14,10 @@ use function is_null;
 /**
  * CreateFolderListFromTemplate.
  *
- * Create a new list using a list template in a Folder.
+ * Create a new list using a list template in a Folder. Publicly shared templates must be [added to
+ * your
+ * Workspace](https://help.clickup.com/hc/en-us/articles/6326023965591-Add-a-template-to-your-library)
+ * before you can use them with the public API.
  * This request runs synchronously by default with
  * `return_immediately=true`.
  * The request returns the future List ID immediatly, but the List may not

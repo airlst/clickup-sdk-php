@@ -34,14 +34,12 @@ class CreateTask extends Request implements HasBody
      * @param bool|null      $checkRequiredCustomFields When creating a task via API any required Custom Fields are ignored by default (`false`).\
      *                                                  \
      *                                                  You can enforce required Custom Fields by including `check_required_custom_fields: true`.
-     * @param array|null     $customFields              [Filter by Custom Fields.](doc:filtertasks)
+     * @param array|null     $customFields              You can include one or more Custom Fields to set them when creating a new task.\
+     *                                                  \
+     *                                                  Custom Fields that use object and array type values are nullable by sending `"value": null`.
      * @param float|int|null $customItemId              The custom task type ID for this task. A value of `null` (default) creates a standard task type "Task".\
      *                                                  \
      *                                                  To get a list of available custom task type IDs for your Workspace, use the [Get Custom Task Types endpoint](ref:getcustomitems).
-     * @param bool|null      $customTaskIds             if you want to reference a task by its custom task id, this value must be `true`
-     * @param float|int|null $teamId                    When the `custom_task_ids` parameter is set to `true`, the Workspace ID must be provided using the `team_id` parameter.
-     *                                                  \
-     *                                                  For example: `custom_task_ids=true&team_id=123`.
      */
     public function __construct(
         protected float|int $listId,
@@ -66,8 +64,6 @@ class CreateTask extends Request implements HasBody
         protected ?bool $checkRequiredCustomFields = null,
         protected ?array $customFields = null,
         protected float|int|null $customItemId = null,
-        protected ?bool $customTaskIds = null,
-        protected float|int|null $teamId = null,
     ) {}
 
     public function resolveEndpoint(): string
@@ -100,10 +96,5 @@ class CreateTask extends Request implements HasBody
             'custom_fields' => $this->customFields,
             'custom_item_id' => $this->customItemId,
         ], fn (mixed $value): bool => ! is_null($value));
-    }
-
-    protected function defaultQuery(): array
-    {
-        return array_filter(['custom_task_ids' => $this->customTaskIds, 'team_id' => $this->teamId], fn (mixed $value): bool => ! is_null($value));
     }
 }

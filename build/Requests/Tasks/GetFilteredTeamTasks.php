@@ -72,7 +72,6 @@ class GetFilteredTeamTasks extends Request
      *                                                Only set Custom Field values display in the `value` property of the `custom_fields` parameter. The `=` operator isn't supported with Label Custom Fields.\
      *                                                \
      *                                                Learn more about [filtering using Custom Fields.](doc:taskfilters)
-     * @param bool|null   $customTaskIds              if you want to reference a task by its custom task id, this value must be `true`
      * @param string|null $parent                     include the parent task ID to return subtasks
      * @param bool|null   $includeMarkdownDescription to return task descriptions in Markdown format, use `?include_markdown_description=true`
      * @param array|null  $customItems                Filter by custom task types. For example: \
@@ -103,7 +102,6 @@ class GetFilteredTeamTasks extends Request
         protected ?int $dateDoneGt = null,
         protected ?int $dateDoneLt = null,
         protected ?array $customFields = null,
-        protected ?bool $customTaskIds = null,
         protected ?string $parent = null,
         protected ?bool $includeMarkdownDescription = null,
         protected ?array $customItems = null,
@@ -121,13 +119,13 @@ class GetFilteredTeamTasks extends Request
             'order_by' => $this->orderBy,
             'reverse' => $this->reverse,
             'subtasks' => $this->subtasks,
-            'space_ids' => $this->spaceIds,
-            'project_ids' => $this->projectIds,
+            'space_ids[]' => $this->spaceIds,
+            'project_ids[]' => $this->projectIds,
             'list_ids[]' => $this->listIds,
-            'statuses' => $this->statuses,
+            'statuses[]' => $this->statuses,
             'include_closed' => $this->includeClosed,
-            'assignees' => $this->assignees,
-            'tags' => $this->tags,
+            'assignees[]' => $this->assignees,
+            'tags[]' => $this->tags,
             'due_date_gt' => $this->dueDateGt,
             'due_date_lt' => $this->dueDateLt,
             'date_created_gt' => $this->dateCreatedGt,
@@ -137,10 +135,9 @@ class GetFilteredTeamTasks extends Request
             'date_done_gt' => $this->dateDoneGt,
             'date_done_lt' => $this->dateDoneLt,
             'custom_fields' => $this->customFields,
-            'custom_task_ids' => $this->customTaskIds,
             'parent' => $this->parent,
             'include_markdown_description' => $this->includeMarkdownDescription,
-            'custom_items' => $this->customItems,
+            'custom_items[]' => $this->customItems,
         ], fn (mixed $value): bool => ! is_null($value));
     }
 }

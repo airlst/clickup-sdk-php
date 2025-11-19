@@ -10,7 +10,9 @@ use Saloon\Http\Request;
 /**
  * GetListViews.
  *
- * View the task and page views available for a List.<br> Views and required views are separate
+ * View the task and page views available for a List.\
+ *  \
+ * Views and required views are separate
  * responses.
  */
 class GetListViews extends Request

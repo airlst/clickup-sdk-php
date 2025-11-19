@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace ClickUp\V2\Resource;
 
+use ClickUp\V2\Requests\Workspaces\GetAuthorizedTeams;
 use ClickUp\V2\Requests\Workspaces\GetWorkspaceplan;
 use ClickUp\V2\Requests\Workspaces\GetWorkspaceseats;
 use ClickUp\V2\Resource;
@@ -11,6 +12,11 @@ use Saloon\Http\Response;
 
 class Workspaces extends Resource
 {
+    public function getAuthorizedTeams(): Response
+    {
+        return $this->connector->send(new GetAuthorizedTeams());
+    }
+
     /**
      * @param string $teamId Workspace ID
      */

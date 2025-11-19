@@ -36,6 +36,9 @@ class Tasks extends Resource
      * @param bool      $includeClosed              Include or excluse closed tasks. By default, they are excluded.\
      *                                              \
      *                                              To include closed tasks, use `include_closed: true`.
+     * @param bool      $includeTiml                Include Tasks in Multiple Lists. By default, tasks that exist in multiple lists are excluded from the response.\
+     *                                              \
+     *                                              To include tasks that exist in multiple lists, use `include_timl: true`.
      * @param array     $assignees                  Filter by Assignees. For example: \
      *                                              \
      *                                              `?assignees[]=1234&assignees[]=5678`
@@ -75,6 +78,7 @@ class Tasks extends Resource
         ?bool $subtasks = null,
         ?array $statuses = null,
         ?bool $includeClosed = null,
+        ?bool $includeTiml = null,
         ?array $assignees = null,
         ?array $watchers = null,
         ?array $tags = null,
@@ -90,7 +94,7 @@ class Tasks extends Resource
         ?array $customField = null,
         ?array $customItems = null,
     ): Response {
-        return $this->connector->send(new GetTasks($listId, $archived, $includeMarkdownDescription, $page, $orderBy, $reverse, $subtasks, $statuses, $includeClosed, $assignees, $watchers, $tags, $dueDateGt, $dueDateLt, $dateCreatedGt, $dateCreatedLt, $dateUpdatedGt, $dateUpdatedLt, $dateDoneGt, $dateDoneLt, $customFields, $customField, $customItems));
+        return $this->connector->send(new GetTasks($listId, $archived, $includeMarkdownDescription, $page, $orderBy, $reverse, $subtasks, $statuses, $includeClosed, $includeTiml, $assignees, $watchers, $tags, $dueDateGt, $dueDateLt, $dateCreatedGt, $dateCreatedLt, $dateUpdatedGt, $dateUpdatedLt, $dateDoneGt, $dateDoneLt, $customFields, $customField, $customItems));
     }
 
     /**
@@ -105,14 +109,12 @@ class Tasks extends Resource
      * @param bool      $checkRequiredCustomFields When creating a task via API any required Custom Fields are ignored by default (`false`).\
      *                                             \
      *                                             You can enforce required Custom Fields by including `check_required_custom_fields: true`.
-     * @param array     $customFields              [Filter by Custom Fields.](doc:filtertasks)
+     * @param array     $customFields              You can include one or more Custom Fields to set them when creating a new task.\
+     *                                             \
+     *                                             Custom Fields that use object and array type values are nullable by sending `"value": null`.
      * @param float|int $customItemId              The custom task type ID for this task. A value of `null` (default) creates a standard task type "Task".\
      *                                             \
      *                                             To get a list of available custom task type IDs for your Workspace, use the [Get Custom Task Types endpoint](ref:getcustomitems).
-     * @param bool      $customTaskIds             if you want to reference a task by its custom task id, this value must be `true`
-     * @param float|int $teamId                    When the `custom_task_ids` parameter is set to `true`, the Workspace ID must be provided using the `team_id` parameter.
-     *                                             \
-     *                                             For example: `custom_task_ids=true&team_id=123`.
      */
     public function createTask(
         float|int $listId,
@@ -137,13 +139,12 @@ class Tasks extends Resource
         ?bool $checkRequiredCustomFields = null,
         ?array $customFields = null,
         float|int|null $customItemId = null,
-        ?bool $customTaskIds = null,
-        float|int|null $teamId = null,
     ): Response {
-        return $this->connector->send(new CreateTask($listId, $name, $description, $assignees, $archived, $groupAssignees, $tags, $status, $priority, $dueDate, $dueDateTime, $timeEstimate, $startDate, $startDateTime, $points, $notifyAll, $parent, $markdownContent, $linksTo, $checkRequiredCustomFields, $customFields, $customItemId, $customTaskIds, $teamId));
+        return $this->connector->send(new CreateTask($listId, $name, $description, $assignees, $archived, $groupAssignees, $tags, $status, $priority, $dueDate, $dueDateTime, $timeEstimate, $startDate, $startDateTime, $points, $notifyAll, $parent, $markdownContent, $linksTo, $checkRequiredCustomFields, $customFields, $customItemId));
     }
 
     /**
+     * @param bool      $customTaskIds              if you want to reference a task by its custom task id, this value must be `true`
      * @param float|int $teamId                     When the `custom_task_ids` parameter is set to `true`, the Workspace ID must be provided using the `team_id` parameter.
      *                                              \
      *                                              For example: `custom_task_ids=true&team_id=123`.
@@ -159,12 +160,13 @@ class Tasks extends Resource
      */
     public function getTask(
         string $taskId,
+        ?bool $customTaskIds = null,
         float|int|null $teamId = null,
         ?bool $includeSubtasks = null,
         ?bool $includeMarkdownDescription = null,
         ?array $customFields = null,
     ): Response {
-        return $this->connector->send(new GetTask($taskId, $teamId, $includeSubtasks, $includeMarkdownDescription, $customFields));
+        return $this->connector->send(new GetTask($taskId, $customTaskIds, $teamId, $includeSubtasks, $includeMarkdownDescription, $customFields));
     }
 
     /**
@@ -264,7 +266,6 @@ class Tasks extends Resource
      *                                              Only set Custom Field values display in the `value` property of the `custom_fields` parameter. The `=` operator isn't supported with Label Custom Fields.\
      *                                              \
      *                                              Learn more about [filtering using Custom Fields.](doc:taskfilters)
-     * @param bool      $customTaskIds              if you want to reference a task by its custom task id, this value must be `true`
      * @param string    $parent                     include the parent task ID to return subtasks
      * @param bool      $includeMarkdownDescription to return task descriptions in Markdown format, use `?include_markdown_description=true`
      * @param array     $customItems                Filter by custom task types. For example: \
@@ -295,12 +296,11 @@ class Tasks extends Resource
         ?int $dateDoneGt = null,
         ?int $dateDoneLt = null,
         ?array $customFields = null,
-        ?bool $customTaskIds = null,
         ?string $parent = null,
         ?bool $includeMarkdownDescription = null,
         ?array $customItems = null,
     ): Response {
-        return $this->connector->send(new GetFilteredTeamTasks($teamId, $page, $orderBy, $reverse, $subtasks, $spaceIds, $projectIds, $listIds, $statuses, $includeClosed, $assignees, $tags, $dueDateGt, $dueDateLt, $dateCreatedGt, $dateCreatedLt, $dateUpdatedGt, $dateUpdatedLt, $dateDoneGt, $dateDoneLt, $customFields, $customTaskIds, $parent, $includeMarkdownDescription, $customItems));
+        return $this->connector->send(new GetFilteredTeamTasks($teamId, $page, $orderBy, $reverse, $subtasks, $spaceIds, $projectIds, $listIds, $statuses, $includeClosed, $assignees, $tags, $dueDateGt, $dueDateLt, $dateCreatedGt, $dateCreatedLt, $dateUpdatedGt, $dateUpdatedLt, $dateDoneGt, $dateDoneLt, $customFields, $parent, $includeMarkdownDescription, $customItems));
     }
 
     /**

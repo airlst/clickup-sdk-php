@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace ClickUp\V2\Resource;
 
 use ClickUp\V2\Requests\Authorization\GetAccessToken;
-use ClickUp\V2\Requests\Authorization\GetAuthorizedTeams;
 use ClickUp\V2\Requests\Authorization\GetAuthorizedUser;
 use ClickUp\V2\Resource;
 use Saloon\Http\Response;
@@ -25,10 +24,5 @@ class Authorization extends Resource
     public function getAuthorizedUser(): Response
     {
         return $this->connector->send(new GetAuthorizedUser());
-    }
-
-    public function getAuthorizedTeams(): Response
-    {
-        return $this->connector->send(new GetAuthorizedTeams());
     }
 }

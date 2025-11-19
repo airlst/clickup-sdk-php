@@ -35,7 +35,7 @@ class Build extends Command
 {
     protected const string NAMESPACE = 'ClickUp\V2';
     protected const string TYPE = 'openapi';
-    protected $signature = 'build {spec-url=https://developer.clickup.com/openapi/673cf4cfdca96a0019533cad} {--no-download}';
+    protected $signature = 'build {spec-url=https://developer.clickup.com/openapi/clickup-api-v2-reference.json} {--no-download}';
     protected $description = 'Build an SDK';
 
     public function handle(): void

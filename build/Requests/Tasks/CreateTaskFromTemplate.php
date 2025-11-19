@@ -12,7 +12,10 @@ use Saloon\Traits\Body\HasJsonBody;
 /**
  * CreateTaskFromTemplate.
  *
- * Create a new task using a task template.
+ * Create a new task using a task template defined in your workspace. Publicly shared templates must be
+ * [added to your
+ * Workspace](https://help.clickup.com/hc/en-us/articles/6326023965591-Add-a-template-to-your-library)
+ * before you can use them with the public API.
  */
 class CreateTaskFromTemplate extends Request implements HasBody
 {

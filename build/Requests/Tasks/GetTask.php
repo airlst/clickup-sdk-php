@@ -25,6 +25,7 @@ class GetTask extends Request
     protected Method $method = Method::GET;
 
     /**
+     * @param bool|null      $customTaskIds              if you want to reference a task by its custom task id, this value must be `true`
      * @param float|int|null $teamId                     When the `custom_task_ids` parameter is set to `true`, the Workspace ID must be provided using the `team_id` parameter.
      *                                                   \
      *                                                   For example: `custom_task_ids=true&team_id=123`.
@@ -40,6 +41,7 @@ class GetTask extends Request
      */
     public function __construct(
         protected string $taskId,
+        protected ?bool $customTaskIds = null,
         protected float|int|null $teamId = null,
         protected ?bool $includeSubtasks = null,
         protected ?bool $includeMarkdownDescription = null,
@@ -54,6 +56,7 @@ class GetTask extends Request
     protected function defaultQuery(): array
     {
         return array_filter([
+            'custom_task_ids' => $this->customTaskIds,
             'team_id' => $this->teamId,
             'include_subtasks' => $this->includeSubtasks,
             'include_markdown_description' => $this->includeMarkdownDescription,

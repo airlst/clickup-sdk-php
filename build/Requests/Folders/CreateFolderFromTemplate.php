@@ -15,9 +15,12 @@ use function is_null;
  * CreateFolderFromTemplate.
  *
  * Create a new Folder using a Folder template within a Space. This endpoint allows you to create a
- * folder with all its nested assets (lists, tasks, etc.) from a predefined template.
- * This request can
- * be run asynchronously or synchronously via the `return_immediately` parameter.
+ * folder with all its nested assets (lists, tasks, etc.) from a predefined template available in your
+ * Workspace. Publicly shared templates must be [added to your
+ * Workspace](https://help.clickup.com/hc/en-us/articles/6326023965591-Add-a-template-to-your-library)
+ * before you can use them with the public API.
+ * This request can be run asynchronously or synchronously
+ * via the `return_immediately` parameter.
  */
 class CreateFolderFromTemplate extends Request implements HasBody
 {

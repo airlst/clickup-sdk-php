@@ -17,7 +17,8 @@ use function is_null;
  *  \
  * This endpoint only includes tasks where the specified
  * `list_id` is their home List. Tasks added to the `list_id` with a different home List are not
- * included in the response. \
+ * included in the response by default. To include tasks that exist in multiple lists, use the
+ * `include_timl` parameter. \
  *  \
  * The `time_spent` field displays time tracked in milliseconds, and is
  * only included in the response for tasks with time entries.
@@ -43,6 +44,9 @@ class GetTasks extends Request
      * @param bool|null   $includeClosed              Include or excluse closed tasks. By default, they are excluded.\
      *                                                \
      *                                                To include closed tasks, use `include_closed: true`.
+     * @param bool|null   $includeTiml                Include Tasks in Multiple Lists. By default, tasks that exist in multiple lists are excluded from the response.\
+     *                                                \
+     *                                                To include tasks that exist in multiple lists, use `include_timl: true`.
      * @param array|null  $assignees                  Filter by Assignees. For example: \
      *                                                \
      *                                                `?assignees[]=1234&assignees[]=5678`
@@ -82,6 +86,7 @@ class GetTasks extends Request
         protected ?bool $subtasks = null,
         protected ?array $statuses = null,
         protected ?bool $includeClosed = null,
+        protected ?bool $includeTiml = null,
         protected ?array $assignees = null,
         protected ?array $watchers = null,
         protected ?array $tags = null,
@@ -114,6 +119,7 @@ class GetTasks extends Request
             'subtasks' => $this->subtasks,
             'statuses' => $this->statuses,
             'include_closed' => $this->includeClosed,
+            'include_timl' => $this->includeTiml,
             'assignees' => $this->assignees,
             'watchers' => $this->watchers,
             'tags' => $this->tags,

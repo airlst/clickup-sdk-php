@@ -10,9 +10,8 @@ use Saloon\Http\Request;
 /**
  * getFolderAvailableFields.
  *
- * View the Custom Fields you have access to in a specific Folder. Get Folder Custom Fields only
- * returns Custom Fields created at the Folder level. Custom Fields created at the List level are not
- * included.
+ * View the Custom Fields you have access to in a Folder. Get Folder Custom Fields only returns Custom
+ * Fields created at the Folder level. Custom Fields created at the List level are not included.
  */
 class GetFolderAvailableFields extends Request
 {

@@ -5,19 +5,15 @@ declare(strict_types=1);
 namespace ClickUp\V2;
 
 use ClickUp\V2\Resource\Attachments;
-use ClickUp\V2\Resource\AuditLogs;
 use ClickUp\V2\Resource\Authorization;
-use ClickUp\V2\Resource\ChatExperimental;
 use ClickUp\V2\Resource\Comments;
 use ClickUp\V2\Resource\CustomFields;
 use ClickUp\V2\Resource\CustomTaskTypes;
-use ClickUp\V2\Resource\Docs;
 use ClickUp\V2\Resource\Folders;
 use ClickUp\V2\Resource\Goals;
 use ClickUp\V2\Resource\Guests;
 use ClickUp\V2\Resource\Lists;
 use ClickUp\V2\Resource\Members;
-use ClickUp\V2\Resource\PrivacyAndAccess;
 use ClickUp\V2\Resource\Roles;
 use ClickUp\V2\Resource\SharedHierarchy;
 use ClickUp\V2\Resource\Spaces;
@@ -68,19 +64,9 @@ class ClickUpSDK extends Connector
         return new Attachments($this);
     }
 
-    public function auditLogs(): AuditLogs
-    {
-        return new AuditLogs($this);
-    }
-
     public function authorization(): Authorization
     {
         return new Authorization($this);
-    }
-
-    public function chatExperimental(): ChatExperimental
-    {
-        return new ChatExperimental($this);
     }
 
     public function comments(): Comments
@@ -96,11 +82,6 @@ class ClickUpSDK extends Connector
     public function customTaskTypes(): CustomTaskTypes
     {
         return new CustomTaskTypes($this);
-    }
-
-    public function docs(): Docs
-    {
-        return new Docs($this);
     }
 
     public function folders(): Folders
@@ -126,11 +107,6 @@ class ClickUpSDK extends Connector
     public function members(): Members
     {
         return new Members($this);
-    }
-
-    public function privacyAndAccess(): PrivacyAndAccess
-    {
-        return new PrivacyAndAccess($this);
     }
 
     public function roles(): Roles
